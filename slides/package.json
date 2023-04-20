@@ -3,7 +3,13 @@
   "scripts": {
     "build-0": "slidev build --out dist/0-intro --base /slides/0-intro/ 0-intro.md",
     "dev-0": "slidev 0-intro.md",
-    "export-0": "slidev export 0-intro.md"
+    "export-0": "slidev export 0-intro.md",
+
+    "build-A": "slidev build --out dist/A-intro-to-rust --base /slides/A/ A-intro-to-rust.md",
+    "dev-A": "slidev A-intro-to-rust.md",
+    "export-A": "slidev export A-intro-to-rust.md",
+
+    "_": ""
   },
   "dependencies": {
     "@slidev/cli": "^0.40.0",

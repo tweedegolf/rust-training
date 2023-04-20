@@ -53,13 +53,25 @@ layout: default
 ---
 # Workshop format
 
+- 4 parts
+- 30-45 min presentation each
+- 15-45 min exercises each
+
 ---
 layout: default
 ---
 
-# Today
+# Reminder
 <br/>
 
-TODO
-
 *Installation instructions: <https://workshop.tweede.golf>*
+
+Follow them now if you haven't yet!
+
+---
+layout: section
+---
+
+# Why Rust?
+
+TODO
