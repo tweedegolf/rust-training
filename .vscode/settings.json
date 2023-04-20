@@ -1,0 +1,8 @@
+{
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 500,
+    "rust-analyzer.linkedProjects": [
+        "exercises/0-intro/Cargo.toml"
+    ],
+}
