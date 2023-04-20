@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "build-0": "slidev build --out dist/0-intro --base /slides/0-intro/ 0-intro.md",
+    "dev-0": "slidev 0-intro.md",
+    "export-0": "slidev export 0-intro.md"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.40.0",
+    "@slidev/theme-default": "*",
+    "@slidev/theme-seriph": "*"
+  },
+  "name": "rust-workshop",
+  "devDependencies": {
+    "playwright-chromium": "^1.31.1"
+  }
+}

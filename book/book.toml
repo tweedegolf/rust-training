@@ -2,7 +2,6 @@
 authors = ["Henk Oordt"]
 title = "Tweede golf Rust workshop - Exercises"
 
-src = "book"
 language = "en"
 multilingual = false
 
