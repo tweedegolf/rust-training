@@ -1,6 +1,6 @@
 # Module A1 - Basix Syntax
 
-[Slides](/slides/A-intro-to-rust)
+<a href="/slides/A-intro-to-rust" target="_blank">Slides</a>
 
 ## A1.1 Basic syntax
 Open `exercises/A1/1-basic-syntax` in your editor. This folder contains a number of exercises with which you can practise basic Rust syntax.

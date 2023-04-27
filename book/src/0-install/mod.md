@@ -1,11 +1,11 @@
 # Module 0 - Installing the tools
 
-[Slides](/slides/0-intro/)
+<a href="/slides/0-intro/" target="_blank">Slides</a>
 
 In this file you'll find instructions on how to install the tools we'll use during the workshop.
 
 All of these tools are available for Linux, macOS and Windows users.
-We'll need the tools to write and compile our Rust code, and allow for remote mentoring.
+We'll need the tools to write and compile our Rust code.
 *Important: these instructions are to be followed at home, before the start of the first workshop.*
 *If you have any problems with the installation process, please contact us!*
 

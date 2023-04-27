@@ -1,6 +1,6 @@
 # Module A2 - Ownership & references
 
-[Slides](/slides/A-intro-to-rust)
+<a href="/slides/A-intro-to-rust" target="_blank">Slides</a>
 
 ## A2.1 Move semantics
 *This exercise is adapted from the [move semantics exercise](https://github.com/rust-lang/rustlings/tree/main/exercises/move_semantics) from Rustlings*

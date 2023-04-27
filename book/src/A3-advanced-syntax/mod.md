@@ -1,6 +1,6 @@
 # Module A3 Advanced Syntax
 
-[Slides](/slides/A-intro-to-rust)
+<a href="/slides/A-intro-to-rust" target="_blank">Slides</a>
 
 ## A3.1 Error Propagation
 
