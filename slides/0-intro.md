@@ -82,4 +82,4 @@ layout: section
 
 # Rust at Tweede golf
 
-[Slides](https://docs.google.com/presentation/d/1eDDcesg8dAlqDKgNkgjtxBVtH9oy17CqdKDGb61QydY/edit?usp=sharing)
+[Slides](https://docs.google.com/presentation/d/1M4jGqNsyKnUpCELt9nQnEUAzCUJwv3RR3KhKWeDlqYo/edit?usp=sharing)
