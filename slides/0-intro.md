@@ -43,7 +43,11 @@ layout: three-slots
 ::left::
 
 ##  Dion Dokter
-- TODO
+- Embedded software engineer
+- Joined Tweede golf in 2021
+- Full-time Rust since 2019
+- Worked with LoRaWAN, UWB, LTE
+- Created stackdump, nrf-modem & device-driver crates
 
 ::right::
 <img src="https://tweedegolf.nl/images/dion.jpg" alt="Photo Dion" width="300" />
