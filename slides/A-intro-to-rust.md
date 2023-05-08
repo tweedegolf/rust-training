@@ -1343,7 +1343,7 @@ layout: two-cols
 </v-click>
 <v-click>
 
-2. *Any* number of immutable *references* at the same time *iff no mutable reference* exists
+2. *Any* number of immutable *references* at the same time *if no mutable reference* exists
 </v-click>
 <v-click>
 
