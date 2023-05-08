@@ -11,7 +11,7 @@ This exercise enables you to practise with move semantics. It works similarly to
 cargo run --bin 01
 ```
 
-`01.rs` should compile as is, but you'll have to make sure the others compile as well. For some exercises, instructions are included as doc comments at the top of the file. Make sure to adhere to them.
+Make all exercises compile. For some of them, extra instructions are included as doc comments at the top of the file. Make sure to adhere to them.
 
 
 ## A2.2 Borrowing
