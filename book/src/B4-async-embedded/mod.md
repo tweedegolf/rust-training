@@ -1,4 +1,7 @@
 # Module B4: Async on embedded
+
+<a href="/slides/B4-async-embedded.pdf" target="_blank">Slides</a>
+
 Using Embassy, we can run asynchronous Rust code on embedded devices. In this exercise, we'll give Embassy a try.
 
 ## B4 Async LIS3DH ID

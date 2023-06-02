@@ -1,5 +1,7 @@
 # Module B1: Embedded basics
 
+<a href="/slides/B1-basics-B2-drivers.pdf" target="_blank">Slides</a>
+
 This first part will give an overview of how the Rust Embedded ecosystem is built up.
 
 We'll then use our newly gained knowledge to get our first application running and read out the ID of the LIS3DH accelerometer.

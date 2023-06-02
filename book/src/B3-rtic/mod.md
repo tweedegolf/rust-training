@@ -1,5 +1,8 @@
 
 # Module B3: RTIC
+
+<a href="/slides/B3-rtic.pdf" target="_blank">Slides</a>
+
 The goal of this exercise is to get acquainted with RTIC. Use your experience (and code) from parts B1 and B2.
 
 ## B3 Simple RTIC app

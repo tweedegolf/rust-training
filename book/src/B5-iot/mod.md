@@ -1,4 +1,7 @@
 # Module B5 - Rust for IoT
+
+*There are no slides for this module*
+
 In this module, we'll have a look at an example of a bigger Rust project.
 
 ## B5 Device-host communication
