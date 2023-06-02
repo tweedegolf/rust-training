@@ -3,7 +3,7 @@
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 500,
     "rust-analyzer.linkedProjects": [
-        "exercises/0-intro/Cargo.toml",
+        "exercises/0-intro/host/Cargo.toml",
         "exercises/A1/1-basic-syntax/Cargo.toml",
         "exercises/A2/1-move-semantics/Cargo.toml",
         "exercises/A2/2-borrowing/Cargo.toml",
@@ -13,5 +13,12 @@
         "exercises/A3/4-boxed-data/Cargo.toml",
         "exercises/A3/5-bonus-ring-buffer/Cargo.toml",
         "exercises/A4/1-local-storage-vec/Cargo.toml",
+        "exercises/B1-B2/Cargo.toml",
+        "exercises/B3/Cargo.toml",
+        "exercises/B4/Cargo.toml",
+        "exercises/B5/cli/Cargo.toml",
+        "exercises/B5/format/Cargo.toml",
+        "exercises/B5/firmware/Cargo.toml",
     ],
+    "rust-analyzer.check.allTargets": false,
 }

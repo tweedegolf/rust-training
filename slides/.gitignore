@@ -6,3 +6,7 @@ dist-*
 tmp/
 yarn-error.log
 */**/target
+
+!/B1-basics-B2-drivers.pdf
+!/B3-rtic.pdf
+!/B4-async-embedded.pdf

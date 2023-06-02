@@ -91,15 +91,15 @@ cargo run
 ```
 
 This command may take a while to run the first time, as Cargo will first fetch the crate index from the registry.
-It will compile and run the `intro` package, which you can find in `exercises/0-intro`.
+It will compile and run the `intro` package, which you can find in `exercises/0-intro/host`.
 If everything goes well, you should see some output:
 
 ```
-   Compiling intro v0.1.0 ([REDACTED]/rust-workshop/exercises/0-intro)
+   Compiling intro v0.1.0 ([REDACTED]/rust-workshop/exercises/0-intro/host)
     Finished dev [unoptimized + debuginfo] target(s) in 0.11s
      Running `target/debug/intro`
 🦀 Hello, world! 🦀
 You've successfully compiled and run your first Rust project!
 ```
 
-If Rust-Analyzer is set up correctly, you can also click the '▶️ Run'-button that is shown in `exercises/0-intro/src/main.rs`.
+If Rust-Analyzer is set up correctly, you can also click the '▶️ Run'-button that is shown in `exercises/0-intro/host/src/main.rs`.
