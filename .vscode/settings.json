@@ -4,6 +4,7 @@
     "files.autoSaveDelay": 500,
     "rust-analyzer.linkedProjects": [
         "exercises/0-intro/host/Cargo.toml",
+        "exercises/0-intro/embedded/Cargo.toml",
         "exercises/A1/1-basic-syntax/Cargo.toml",
         "exercises/A2/1-move-semantics/Cargo.toml",
         "exercises/A2/2-borrowing/Cargo.toml",
