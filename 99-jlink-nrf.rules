@@ -1,2 +1,2 @@
 # Nordic nRF52840DK on-board SEGGER J-Link
-ATTRS{idVendor}=="1366", ATTRS{idProduct}=="1015", MODE:="0666"
+ATTRS{idVendor}=="1366", ATTRS{idProduct}=="1051", MODE:="0666"
