@@ -86,7 +86,7 @@ Clone the repository. Instructions on cloning the repository can be found here: 
 Now that you've got the code on your machine, navigate to it using your favorite terminal and run:
 
 ```
-cd exercises/0-intro
+cd exercises/0-intro/host
 cargo run
 ```
 
@@ -110,7 +110,7 @@ This part is relevant only if you're partaking in one of the workshops on embedd
 ## Hardware
 You should have received the following parts:
 
-- nRF52840-DK or nRF52-DK
+- nRF52840-DK
 - Breadboard
 - LIS3DH Breakout board
 - Male-to-male breadboard wires
