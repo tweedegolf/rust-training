@@ -20,6 +20,9 @@
         "exercises/B5/cli/Cargo.toml",
         "exercises/B5/format/Cargo.toml",
         "exercises/B5/firmware/Cargo.toml",
+        "exercises/C3/1-crc-in-c/Cargo.toml",
+        "exercises/C3/2-crc-in-rust/Cargo.toml",
+        "exercises/C3/3-tweetnacl-bindgen/Cargo.toml",
     ],
     "rust-analyzer.check.allTargets": false,
 }
