@@ -130,7 +130,7 @@ This instructs Cargo to compile our crate as a dynamic library.
 
 ## C3.3 Bindgen
 
-Use `cargo bindgen` to generate the FFI bindings. Bindgen will look at a C header file, and generate rust functions, types and constants based on the C definitions.
+Use `bindgen` to generate the FFI bindings. Bindgen will look at a C header file, and generate rust functions, types and constants based on the C definitions.
 
 But the generated code is ugly and non-idiomatic. To wrap a C library properly, good API design and documentation is needed. 
 
