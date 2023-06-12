@@ -123,7 +123,7 @@ Please check that everything is complete. If not, please contact us.
 
 Then, we'll install some tools needed to flash the mcu and inspect the code.
 
-Install the `thumbv7em-none-eabi` toolchain with the following command:
+Install the `thumbv7em-none-eabihf` toolchain with the following command:
 ```bash
 rustup target add thumbv7em-none-eabihf
 ```
@@ -185,6 +185,10 @@ cargo run --release --bin test
 
 If everything works correctly, you should now see the accelerometer samples being printed on the display. If not, don't worry and contact us.
 
+If not, you may have an accelerometer that uses the alternate i2c address. If so, run this instead:
+```bash
+cargo run --release --bin test --features alternate-addr
+```
 
 ## Docs
 Datasheets, manuals, and schematics of the parts we are using in the embedded workshops.

@@ -16,6 +16,9 @@ defmt = "0.3.0"
 version = "0.16.0"
 features = ["rt"]
 
+[features]
+alternate-addr = []
+
 [profile.release]
 debug = true
 lto = true

@@ -66,7 +66,13 @@ fn start() -> ! {
         "Now going to initialize the LIS3DH driver. Please check connection if this goes wrong"
     );
 
-    let mut lis3dh = lis3dh::Lis3dh::new_i2c(i2c, lis3dh::SlaveAddr::Default).unwrap();
+    let addr = if cfg!(feature = "alternate-addr") {
+        lis3dh::SlaveAddr::Alternate
+    } else {
+        lis3dh::SlaveAddr::Default
+    };
+
+    let mut lis3dh = lis3dh::Lis3dh::new_i2c(i2c, addr).unwrap();
 
     defmt::println!(
         "Found Lis3dh. Device id: {}",
