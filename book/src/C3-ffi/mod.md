@@ -92,7 +92,7 @@ This instructs Cargo to compile our crate as a dynamic library.
 3. Create a C header file `crc_in_rust.h`
 
     ```c
-    #include <inttypes.h> // uint32_t, uint8_t
+    #include <stdint.h> // uint32_t, uint8_t
     #include <stddef.h> // size_t
 
     uint32_t crc32(const uint8_t data[], size_t data_length);
@@ -101,7 +101,7 @@ This instructs Cargo to compile our crate as a dynamic library.
 4. Use the rust `crc32` function in C
 
     ```c
-    #include <inttypes.h> // uint32_t, uint8_t
+    #include <stdint.h> // uint32_t, uint8_t
     #include <stddef.h> // size_t
     #include <stdio.h> // printf
     #include "crc_in_rust.h"
@@ -112,7 +112,7 @@ This instructs Cargo to compile our crate as a dynamic library.
 
         uint32_t hash = crc32(data, data_length);
 
-        printf("Hash: 0x%d\n", hash);
+        printf("Hash: %d\n", hash);
 
         return 0;
     }
