@@ -14,8 +14,6 @@ use hal::{
     Timer,
 };
 
-use rtt_target::rprintln;
-
 use self::rx_buffer::UarteRxBuffer;
 pub enum UarteEvent {
     EndRx, // End of RX transaction
@@ -66,17 +64,7 @@ where
 
         // Now we set up the uarte0 peripheral.
         let buffer_slice = buffer.as_mut_slice();
-        let slice_len = {
-            #[cfg(feature = "nrf52dk")]
-            {
-                buffer_slice.len() as u8
-            }
-
-            #[cfg(feature = "nrf52840dk")]
-            {
-                buffer_slice.len() as u16
-            }
-        };
+        let slice_len = buffer_slice.len() as u16;
 
         // Set up DMA for RX transactions
         // Point to RX buffer
@@ -137,17 +125,7 @@ where
             self.uarte.events_txstarted.reset();
         }
 
-        let slice_len = {
-            #[cfg(feature = "nrf52dk")]
-            {
-                bytes.len() as u8
-            }
-
-            #[cfg(feature = "nrf52840dk")]
-            {
-                bytes.len() as u16
-            }
-        };
+        let slice_len = bytes.len() as u16;
 
         // Setup transaction parameters for DMA
         // Point to TX buffer
