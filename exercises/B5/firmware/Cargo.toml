@@ -29,7 +29,6 @@ features = ["derive"]
 default-features = false
 
 [dependencies.nrf52840-hal]
-optional = true
 version = "0.16.0"
 features = ["rt"]
 
