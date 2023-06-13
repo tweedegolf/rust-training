@@ -29,7 +29,7 @@ features = ["derive"]
 default-features = false
 
 [dependencies.nrf52840-hal]
-version = "0.16.0"
+version = "0.14.1" # Last version where UARTE works with our code
 features = ["rt"]
 
 [profile.release]
