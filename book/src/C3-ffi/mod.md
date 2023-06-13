@@ -4,7 +4,7 @@
 
 This module is about having Rust code interact with C code and vice-versa.
 
-**The exercises in this module require a C compiler (e.g. Clang) to be present on your system**
+> **Note: Bindgen depends on Clang being installed. See [these instructions](https://rust-lang.github.io/rust-bindgen/requirements.html).** This is required for the the 3rd exercise. For the first and exercise any C compiler will suffice, like clang, msvc and gcc.
 
 ## C3.1 CRC in C
 
@@ -135,8 +135,6 @@ Use `bindgen` to generate the FFI bindings. Bindgen will look at a C header file
 But the generated code is ugly and non-idiomatic. To wrap a C library properly, good API design and documentation is needed. 
 
 We'll be making rust bindings for the [tweetnacl](https://tweetnacl.cr.yp.to/) C library. Goal: implement `crypto_hash_sha256_tweet`
-
-
 
 Below you find instructions for using bindgen and wrapping `crypto_hash_sha512_tweet`. Follow the instructions, then repeat the steps for `crypto_hash_sha256_tweet`
 
