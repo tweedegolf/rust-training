@@ -53,6 +53,24 @@ layout: three-slots
 <img src="https://tweedegolf.nl/images/dion.jpg" alt="Photo Dion" width="300" />
 
 ---
+layout: three-slots
+---
+
+# Who are we?
+
+::left::
+
+##  Folkert de Vries
+- Software engineer
+- Joined Tweede golf in 2021
+- Worked on NTP, PTP, P2000
+- Contributor Roc programming language
+- Talk to me about compilers, linkers, functional & systems programming
+
+::right::
+<img src="https://tweedegolf.nl/images/folkert.jpg" alt="Photo Folkert" width="300" />
+
+---
 layout: default
 ---
 # Workshop format
