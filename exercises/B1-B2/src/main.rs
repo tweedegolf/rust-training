@@ -8,8 +8,11 @@ mod lis3dh;
 
 #[cortex_m_rt::entry]
 fn main() -> ! {
+    // We prefix a variable name with an underscore to
+    // turn off warnings about it not being used.
     let _cp = cortex_m::Peripherals::take().unwrap();
-    let _dp = hal::pac::Peripherals::take().unwrap();
+    // Use `dp` to get a handle to the TWIM peripheral
+    let dp = hal::pac::Peripherals::take().unwrap();
 
     rtt_init_print!(BlockIfFull);
     rprintln!("Starting");

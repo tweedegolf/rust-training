@@ -84,7 +84,7 @@ fn start() -> ! {
         let sample = lis3dh.accel_norm().unwrap();
         write!(
             &mut uart,
-            "X: {:.3}\nY: {:.3}\nZ: {:.3}\r\n",
+            "X: {:.3}\tY: {:.3}\tZ: {:.3}\r\n",
             sample.x, sample.y, sample.z
         )
         .unwrap();
