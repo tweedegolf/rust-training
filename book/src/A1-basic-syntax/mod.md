@@ -1,4 +1,4 @@
-# Module A1 - Basix Syntax
+# Module A1 - Basic Syntax
 
 <a href="/slides/A-intro-to-rust" target="_blank">Slides</a>
 
