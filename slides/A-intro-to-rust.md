@@ -15,7 +15,7 @@ An introduction to the Rust language and its features
 layout: two-cols
 ---
 
-# Today
+# Overview
 ## Part 1: Basic Syntax
 - Get acquainted with Rust
 - Work with basic syntax and operators
@@ -26,7 +26,7 @@ layout: two-cols
 ## Part 3: Advanced Syntax
 - Work with more advanced syntax and operators
 
-## Part 4: Traits & Generics
+## Part 4 (bonus): Traits & Generics
 - Understand Rust type generics
 - Work with traits to make code generic
 
