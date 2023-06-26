@@ -10,6 +10,9 @@
     "build-C": "slidev build --out dist/C-advanced-rust --base /slides/C-advanced-rust/ C-advanced-rust.md",
     "dev-C": "slidev C-advanced-rust.md",
     "export-C": "slidev export C-advanced-rust.md",
+    "build-D": "slidev build --out dist/D-concurrency-parallelism --base /slides/D-concurrency-parallelism/ D-concurrency-parallelism.md",
+    "dev-D": "slidev D-concurrency-parallelism.md",
+    "export-D": "slidev export D-concurrency-parallelism.md",
     "_": ""
   },
   "dependencies": {
