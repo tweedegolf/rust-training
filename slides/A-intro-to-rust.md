@@ -1,3 +1,15 @@
+---
+theme: default
+class: text-center
+highlighter: shiki
+lineNumbers: true
+drawings:
+  persist: false
+fonts:
+  mono: Fira Mono
+layout: cover
+---
+
 # Rust programming
 
 Module A: Introduction to Rust
