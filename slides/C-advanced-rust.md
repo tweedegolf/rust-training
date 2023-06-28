@@ -618,7 +618,7 @@ layout: default
 # Practice time!
 &nbsp;
 
-C1 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/C1-prallel-rust/mod.html)
+C1 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/C1-parallel-rust/mod.html)
 
 ---
 layout: cover
