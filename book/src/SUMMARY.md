@@ -14,6 +14,6 @@
 - [B4 - Async on embedded](./B4-async-embedded/mod.md)
 - [B5 - Rust in IoT](./B5-iot/mod.md)
 # Part C - Advanced Rust
-- [C1 - Parallel Rust]()
+- [C1 - Parallel Rust](./C1-parallel-rust/mod.md)
 - [C2 - Async foundations]()
 - [C3 - Foreign Function Interface](./C3-ffi/mod.md)

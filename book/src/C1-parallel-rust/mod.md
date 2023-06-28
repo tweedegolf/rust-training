@@ -1,14 +1,14 @@
-# Module D - Concurrency & Parallelism 
+# Module C1 - Parallel Rust
 
-[Slides](/slides/D/) (or [pdf](/slides/D-concurrency-parallelism.pdf))
+<a href="/slides/C-advanced-rust" target="_blank">Slides</a>
 
 ## D.1 TF-IDF ★★ 
 
-Follow the instructions in the comments of `excercises/D/1-tf-ifd/src/main.rs`!
+Follow the instructions in the comments of `excercises/C1/1-tf-idf/src/main.rs`!
 
 ## D.2 Basic Mutex ★★★
 
-Follow the instructions in the comments of `excercises/D/2-mutex/src/main.rs`!
+Follow the instructions in the comments of `excercises/C1/2-mutex/src/main.rs`!
 
 ## D.3 Advanced Mutex (bonus) ★★★★
 
@@ -20,4 +20,4 @@ This functionality is exposed in the [atomic_wait crate](https://docs.rs/atomic-
 - implement `lock`. Be careful about spurious wakes: after `wait` returns, you must stil check the condition
 - implement unlocking (`Drop for MutexGuard<T>` using `wake_one`.
 
-The linked chapter goes on to further optimize the mutex. This really is no longer part of a 101 course, but we won't stop you if you try (and will still try to help if you get stuck)!
+The linked chapter goes on to further optimize the mutex. This really is no longer part of this workshop, but we won't stop you if you try (and will still try to help if you get stuck)!
