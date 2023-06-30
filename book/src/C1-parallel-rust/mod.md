@@ -2,15 +2,15 @@
 
 <a href="/slides/C-advanced-rust" target="_blank">Slides</a>
 
-## D.1 TF-IDF ★★ 
+## C.1 TF-IDF ★★ 
 
 Follow the instructions in the comments of `excercises/C1/1-tf-idf/src/main.rs`!
 
-## D.2 Basic Mutex ★★★
+## C.2 Basic Mutex ★★★
 
 Follow the instructions in the comments of `excercises/C1/2-mutex/src/main.rs`!
 
-## D.3 Advanced Mutex (bonus) ★★★★
+## C.3 Advanced Mutex (bonus) ★★★★
 
 The basic mutex performs a spin-loop while waiting to take the lock. That is terribly inefficient. Luckily, your operating system is able to wait until the lock becomes available, and will just put the thread to sleep in the meantime. 
 
