@@ -37,7 +37,7 @@ layout: two-cols
 - Introduction Rust `async` programming
 - Uncovering `Future` type
 - Mechanics behind `async`/`await`
-- Running `async` woth Tokio
+- Creating our own async primitives
 
 ::right::
 
@@ -619,6 +619,37 @@ layout: default
 &nbsp;
 
 C1 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/C1-parallel-rust/mod.html)
+
+---
+layout: cover
+---
+
+# Part 2
+Async Rust
+
+- Introduction Rust `async` programming
+- Uncovering `Future` type
+- Mechanics behind `async`/`await`
+- Creating our own async primitives
+
+---
+layout: default
+---
+
+# What is async rust?
+
+```rust
+use tokio::fs;
+use std::net::SocketAddr;
+
+async fn read_address() -> Result<SocketAddr, Box<dyn std::error::Error + 'static>> {
+    let contents = fs::read("address.txt").await?;
+    let address: SocketAddr = String::from_utf8_lossy(&contents).parse()?;
+    Ok(address)
+}
+```
+
+
 
 ---
 layout: cover
