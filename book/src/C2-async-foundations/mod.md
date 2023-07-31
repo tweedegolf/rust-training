@@ -1,8 +1,8 @@
-# Module C1 - Parallel Rust
+# Module C2 - Async foundations
 
 <a href="/slides/C-advanced-rust" target="_blank">Slides</a>
 
-## C.1 TF-IDF ★★ 
+<!-- ## C.1 TF-IDF ★★ 
 
 Follow the instructions in the comments of `excercises/C1/1-tf-idf/src/main.rs`!
 
@@ -20,4 +20,4 @@ This functionality is exposed in the [atomic_wait crate](https://docs.rs/atomic-
 - implement `lock`. Be careful about spurious wakes: after `wait` returns, you must stil check the condition
 - implement unlocking (`Drop for MutexGuard<T>` using `wake_one`.
 
-The linked chapter goes on to further optimize the mutex. This really is no longer part of this workshop, but we won't stop you if you try (and will still try to help if you get stuck)!
+The linked chapter goes on to further optimize the mutex. This really is no longer part of this workshop, but we won't stop you if you try (and will still try to help if you get stuck)! -->

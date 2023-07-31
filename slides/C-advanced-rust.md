@@ -638,6 +638,8 @@ layout: default
 
 # What is async rust?
 
+Async function:
+
 ```rust
 use tokio::fs;
 use std::net::SocketAddr;
@@ -649,7 +651,134 @@ async fn read_address() -> Result<SocketAddr, Box<dyn std::error::Error + 'stati
 }
 ```
 
+This is sweet, but can we have less sugar?
 
+```rust
+use tokio::fs;
+use std::net::SocketAddr;
+use std::future::Future;
+
+fn read_address() -> impl Future<Output = Result<SocketAddr, Box<dyn std::error::Error + 'static>>> {
+    async {
+        let contents = fs::read("address.txt").await?;
+        let address: SocketAddr = String::from_utf8_lossy(&contents).parse()?;
+        Ok(address)          
+    }
+}
+```
+
+---
+layout: two-cols
+---
+
+# Async block?
+
+Rust syntax
+
+Instructs the compiler to turn the code block into a statemachine
+
+```rust
+let my_future = async {
+    let a = rand();
+    sleep().await;
+    let b = a + rand();
+    sleep().await;
+    let c = (a + b + rand()).to_string();
+    sleep().await;
+    c
+};
+```
+
+But how do we interact with the statemachine?
+
+::right::
+
+This statemachine would roughly look like:
+
+```rust
+enum AnonymousFuture {
+    Stage0 {
+        a: u32
+    },
+    Stage1 {
+        a: u32,
+        b: u32,
+    }
+    Stage2 {
+        c: String,
+    }
+}
+```
+
+---
+layout: default
+---
+
+# Future
+
+Trait in the std
+
+```rust
+pub trait Future {
+    type Output;
+
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output>;
+}
+```
+
+- Async statemachines implement `Future`
+- A future moves forward by polling
+- Keep polling until ready with output
+
+```rust
+pub enum Poll<T> {
+    Ready(T),
+    Pending,
+}
+```
+
+- `Pin` guarantees `Self` isn't moved
+- `poll` should not be called after it has previously returned
+
+---
+layout: two-cols
+---
+
+# Polling a future
+
+- The thing doing the polling is called the executor
+- Continuously polling is inefficient
+- What can we improve?
+
+::right::
+
+```mermaid
+sequenceDiagram
+    Executor->>Future: Poll
+    Future-->>Executor: Pending
+    Executor->>Future: Poll
+    Future-->>Executor: Pending
+    Executor->>Future: Poll
+    Future-->>Executor: Ready<T>
+```
+
+---
+layout: two-cols
+---
+# Wakers
+
+::right::
+
+```mermaid
+sequenceDiagram
+    Executor->>Future: Poll
+    Future->>Interrupt: Register waker
+    Future-->>Executor: Pending
+    Note over Executor,Interrupt: ⚡ Wait until interrupt fires ⚡
+    Interrupt->>Executor: Wake using the waker
+    Executor->>Future: Poll
+    Future-->>Executor: Ready<T>
+```
 
 ---
 layout: cover

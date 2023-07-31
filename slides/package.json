@@ -15,7 +15,8 @@
   "dependencies": {
     "@slidev/cli": "^0.42",
     "@slidev/theme-default": "*",
-    "@slidev/theme-seriph": "*"
+    "@slidev/theme-seriph": "*",
+    "mermaid": "^10.3.0"
   },
   "name": "rust-workshop",
   "devDependencies": {
