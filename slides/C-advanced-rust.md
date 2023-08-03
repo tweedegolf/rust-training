@@ -689,10 +689,9 @@ let my_future = async {
 };
 ```
 
-But how do we interact with the statemachine?
-
 ::right::
 
+Only data carried over await points are kept.
 This statemachine would roughly look like:
 
 ```rust
@@ -709,6 +708,8 @@ enum AnonymousFuture {
     }
 }
 ```
+
+But how do we interact with the statemachine?
 
 ---
 layout: default
@@ -748,18 +749,23 @@ layout: two-cols
 
 - The thing doing the polling is called the executor
 - Continuously polling is inefficient
+  - Cpu needs to stay active
+  - Difficult to do something else in the meantime
 - What can we improve?
 
 ::right::
 
 ```mermaid
 sequenceDiagram
-    Executor->>Future: Poll
-    Future-->>Executor: Pending
-    Executor->>Future: Poll
-    Future-->>Executor: Pending
-    Executor->>Future: Poll
-    Future-->>Executor: Ready<T>
+    autonumber
+    activate Executor
+    Executor ->> +Future: Poll
+    Future -->> -Executor: Pending
+    Executor ->> +Future: Poll
+    Future -->> -Executor: Pending
+    Executor ->> +Future: Poll
+    Future -->> -Executor: Ready<T>
+    deactivate Executor
 ```
 
 ---
@@ -767,18 +773,201 @@ layout: two-cols
 ---
 # Wakers
 
+Wakers are tied to the executor
+
+- Given to poll via the context parameter
+
+```rust {lineNumbers:false}
+impl<'a> Context<'a> {
+    pub const fn from_waker(waker: &'a Waker) -> Self;
+    pub const fn waker(&self) -> &'a Waker;
+}
+```
+
+- Call the waker's `wake` function to call a function defined in the executor
+
+```rust {lineNumbers:false}
+impl Waker {
+    pub fn wake(self);
+    pub fn wake_by_ref(&self);
+    // ...
+}
+```
+
+- Waker contains a function pointer to the executer
+
 ::right::
 
 ```mermaid
 sequenceDiagram
-    Executor->>Future: Poll
-    Future->>Interrupt: Register waker
-    Future-->>Executor: Pending
-    Note over Executor,Interrupt: ⚡ Wait until interrupt fires ⚡
-    Interrupt->>Executor: Wake using the waker
-    Executor->>Future: Poll
-    Future-->>Executor: Ready<T>
+    autonumber
+    activate Executor
+    Executor ->> +Future: Poll
+    Future ->> Interrupt: Register waker
+    Future -->> -Executor: Pending
+    deactivate Executor
+    Executor ->> Executor: Sleeping
+    Note over Executor,Interrupt: ⚡ Interrupt fires ⚡
+    activate Interrupt
+    Interrupt ->> Future: Change some state
+    Interrupt ->> -Executor: Wake using the waker
+    activate Executor
+    Executor ->> +Future: Poll
+    Future -->> -Executor: Ready<T>
+    deactivate Executor
 ```
+
+---
+layout: two-cols
+---
+
+# Async mutex
+
+Let's build a simple async Mutex using atomics.
+
+*[Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=709a24c5244b245dc1cb949c37c04901)*
+
+There will be a flaw, can you spot it?
+
+```rust {lineNumbers:false}
+use futures::task::AtomicWaker; // <- Very helpful crate
+
+pub struct AsyncMutex<T> {
+    /// Contains the value.
+    /// UnsafeCell gives us interior mutability.
+    inner: UnsafeCell<T>,
+    locked: AtomicBool,
+    waiter: AtomicWaker,
+}
+
+unsafe impl<T: Send> Send for AsyncMutex<T> {}
+unsafe impl<T: Send> Sync for AsyncMutex<T> {}
+```
+
+::right::
+
+```rust {lineNumbers:false}
+impl<T> AsyncMutex<T> {
+    pub const fn new(value: T) -> Self {
+        Self {
+            inner: UnsafeCell::new(value),
+            locked: AtomicBool::new(false),
+            waiter: AtomicWaker::new(),
+        }
+    }
+
+    pub async fn lock(&self) -> AsyncMutexGuard<'_, T> {
+        AsyncMutexLockFuture { mutex: self }.await
+    }
+}
+```
+
+---
+layout: default
+---
+
+# Async mutex - lock future
+
+Let's build a simple async Mutex using atomics.
+
+```rust
+pub struct AsyncMutexLockFuture<'m, T> {
+    mutex: &'m AsyncMutex<T>,
+}
+
+impl<'m, T> Future for AsyncMutexLockFuture<'m, T> {
+    type Output = AsyncMutexGuard<'m, T>;
+
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+        self.mutex.waiter.register(cx.waker());
+
+        if self
+            .mutex
+            .locked
+            .compare_exchange(false, true, Ordering::AcqRel, Ordering::Acquire)
+            .is_ok()
+        {
+            // We got the mutex
+            return Poll::Ready(AsyncMutexGuard { mutex: self.mutex });
+        }
+
+        Poll::Pending
+    }
+}
+```
+
+---
+layout: two-cols
+---
+
+# Async mutex - guard
+
+Let's build a simple async Mutex using atomics.
+
+```rust
+pub struct AsyncMutexGuard<'m, T> {
+    mutex: &'m AsyncMutex<T>,
+}
+
+impl<'m, T> Drop for AsyncMutexGuard<'m, T> {
+    fn drop(&mut self) {
+        self.mutex.locked.store(
+            false,
+            Ordering::Release
+        );
+        self.mutex.waiter.wake();
+    }
+}
+```
+
+::right::
+
+```rust
+impl<'m, T> Deref for AsyncMutexGuard<'m, T> {
+    type Target = T;
+
+    fn deref(&self) -> &<Self as Deref>::Target {
+        // Safety: Only one guard exists
+        unsafe { &*self.mutex.inner.get() }
+    }
+}
+
+impl<'m, T> DerefMut for AsyncMutexGuard<'m, T> {
+    fn deref_mut(&mut self)
+        -> &mut <Self as Deref>::Target {
+        // Safety: Only one guard exists
+        unsafe { &mut *self.mutex.inner.get() }
+    }
+}
+```
+
+---
+layout: default
+---
+
+# Async mutex - use it
+
+That's it!
+
+```rust
+static MUTEX: AsyncMutex<u32> = AsyncMutex::new(5);
+
+let mut guard = MUTEX.lock().await;
+*guard += 5;
+drop(guard);
+
+assert_eq!(*MUTEX.lock().await, 10);
+```
+
+Have you spotted the flaw?
+
+<v-click>
+<div>
+
+We only have one waker slot, so multiple waiters will bump each other out, which is inefficient.
+
+</div>
+</v-click>
 
 ---
 layout: cover
