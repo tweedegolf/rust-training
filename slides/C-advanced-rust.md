@@ -970,6 +970,17 @@ We only have one waker slot, so multiple waiters will bump each other out, which
 </v-click>
 
 ---
+layout: default
+---
+
+# Time for exercises
+
+Let's build an async primitive ourselves!
+
+C2 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/C2-async-foundations/mod.html)
+
+
+---
 layout: cover
 ---
 

@@ -2,22 +2,28 @@
 
 <a href="/slides/C-advanced-rust" target="_blank">Slides</a>
 
-<!-- ## C.1 TF-IDF ★★ 
+## C2.1
 
-Follow the instructions in the comments of `excercises/C1/1-tf-idf/src/main.rs`!
+We're going to build an observable variable, a bit similar in idea to a condvar.
 
-## C.2 Basic Mutex ★★★
+It should have the following use:
 
-Follow the instructions in the comments of `excercises/C1/2-mutex/src/main.rs`!
+```rust
+pub static CPU_TEMPERATURE: Observable<f32> = Observable::new(20.0);
 
-## C.3 Advanced Mutex (bonus) ★★★★
+async fn throttle_if_cpu_temp_high(cpu: &mut Cpu) -> ! {
+    loop {
+        CPU_TEMPERATURE
+            .wait_until(|temperature| temperature > 90.0)
+            .await;
 
-The basic mutex performs a spin-loop while waiting to take the lock. That is terribly inefficient. Luckily, your operating system is able to wait until the lock becomes available, and will just put the thread to sleep in the meantime. 
+        cpu.throttle();
 
-This functionality is exposed in the [atomic_wait crate](https://docs.rs/atomic-wait/latest/atomic_wait/index.html). The [section on implementing a mutex](https://marabos.nl/atomics/building-locks.html#mutex) from "Rust Atomics and Locks" explains how to use it.
+        CPU_TEMPERATURE
+            .wait_until(|temperature| temperature < 80.0)
+            .await;
 
-- change the `AtomicBool` for a `AtomicU32`
-- implement `lock`. Be careful about spurious wakes: after `wait` returns, you must stil check the condition
-- implement unlocking (`Drop for MutexGuard<T>` using `wake_one`.
-
-The linked chapter goes on to further optimize the mutex. This really is no longer part of this workshop, but we won't stop you if you try (and will still try to help if you get stuck)! -->
+        cpu.un_throttle();
+    }
+}
+```
