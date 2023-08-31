@@ -10,6 +10,9 @@
     "build-C": "slidev build --out dist/C-advanced-rust --base /slides/C-advanced-rust/ C-advanced-rust.md",
     "dev-C": "slidev C-advanced-rust.md",
     "export-C": "slidev export C-advanced-rust.md",
+    "build-Z": "slidev build --out dist/Z-wrap-up --base /slides/Z-wrap-up/ Z-wrap-up.md",
+    "dev-Z": "slidev Z-wrap-up.md",
+    "export-Z": "slidev export Z-wrap-up.md",
     "_": ""
   },
   "dependencies": {
@@ -20,6 +23,7 @@
   },
   "name": "rust-workshop",
   "devDependencies": {
+    "@iconify-json/ri": "^1.1.12",
     "playwright-chromium": "^1.31.1"
   }
 }

@@ -1,6 +1,9 @@
 ---
 theme: tweedegolf
 lineNumbers: true
+fonts:
+  mono: 'IBM Plex Mono'
+  sans: 'IBM Plex Sans'
 drawings:
   persist: false
 layout: cover
@@ -2581,11 +2584,3 @@ layout: default
 &nbsp;
 
 A4 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/A4-traits-generics/mod.html)
-
----
-layout: section
----
-
-# That's a wrap!
-
-Any further questions?
