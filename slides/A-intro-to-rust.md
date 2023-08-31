@@ -1,6 +1,9 @@
 ---
 theme: tweedegolf
 lineNumbers: true
+fonts:
+  mono: 'IBM Plex Mono'
+  sans: 'IBM Plex Sans'
 drawings:
   persist: false
 layout: cover

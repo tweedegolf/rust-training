@@ -20,6 +20,7 @@
   },
   "name": "rust-workshop",
   "devDependencies": {
+    "@iconify-json/ri": "^1.1.12",
     "playwright-chromium": "^1.31.1"
   }
 }

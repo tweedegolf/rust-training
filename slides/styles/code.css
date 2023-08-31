@@ -6,12 +6,23 @@
   display: none;
 }
 
-a.playground {
-  display: inline-block;
-  margin-bottom: 10px;
+div[layout="two-cols"] div.col-right {
+  padding-left: 10px;
+  padding-top: 53px;
 }
 
-div[layout="two-cols"] div.col-right {
-  padding-left:10px;
-   padding-top: 53px;
+img.logo-small {
+  width: 125px;
+  margin: 20px 5px;
+  display: inline-block;
+}
+
+img.face {
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+}
+
+span.light {
+  font-weight: lighter;
 }
