@@ -15,7 +15,8 @@
   "dependencies": {
     "@slidev/cli": "^0.42",
     "@slidev/theme-default": "*",
-    "@slidev/theme-seriph": "*"
+    "@slidev/theme-seriph": "*",
+    "slidev-theme-tweedegolf": "ssh://git@github.com:tweedegolf/slidev-theme-tweedegolf.git"
   },
   "name": "rust-workshop",
   "devDependencies": {

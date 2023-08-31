@@ -1,21 +1,20 @@
 ---
-theme: default
-class: text-center
-highlighter: shiki
+theme: tweedegolf
 lineNumbers: true
 info: "Rust 101: Course intro"
 drawings:
   persist: false
-fonts:
-  mono: Fira Mono
 layout: cover
 title: 'Rust - 0: Introduction'
 ---
 
-# Rust - 0: Course intro
+
+# Rust programming
 
 A language empowering everyone
 to build reliable and efficient software.
+
+<img src="https://raw.githubusercontent.com/tweedegolf/slidev-theme-tweedegolf/1bc81d09e326fcecb531108a5a3bcd9e1856dd84/images/shield-large.png" class=bg-image>
 
 ---
 layout: three-slots
