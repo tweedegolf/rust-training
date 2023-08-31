@@ -26,6 +26,8 @@ Finish yours if you haven't yet!
 
 Thanks!
 
+<https://workshop.tweede.golf/Z-outro.html>
+
 ---
 layout: cover
 ---
