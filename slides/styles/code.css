@@ -2,6 +2,10 @@
   white-space: pre-wrap;
 }
 
+p, li {
+  font-weight: lighter;
+}
+
 .slidev-code-line-numbers .no-line-numbers .slidev-code code .line::before {
   display: none;
 }

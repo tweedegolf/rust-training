@@ -1,14 +1,12 @@
 ---
 theme: tweedegolf
 lineNumbers: true
-info: "Rust 101: Course intro"
 fonts:
   mono: 'IBM Plex Mono'
   sans: 'IBM Plex Sans'
 drawings:
   persist: false
 layout: cover
-title: 'Rust - 0: Introduction'
 ---
 
 
@@ -26,10 +24,10 @@ layout: with-footer
 
 # A quick note about Tweede golf
 
-- **Leading Rust agency in NL** <span class="light">running Rust in production since 2017</span>
-- **Working on Rust adoption** <span class="light">through both Rust 101 and in-company workshops</span>
-- **Working on Rust projects** <span class="light">like Rust implementations of PTP, NTP, sudo and su</span>
-- **Active community member** <span class="light">organizing RustNL 2023 and active in various Rust meetups</span>
+- **Leading Rust agency in NL** Running Rust in production since 2017
+- **Working on Rust adoption** Through both Rust 101 and in-company workshops
+- **Working on Rust projects** Like Rust implementations of PTP, NTP, sudo and su
+- **Active community member** Organizing RustNL 2023 and active in various Rust meetups
 
 <br/><br/>
 
@@ -136,10 +134,10 @@ layout: with-footer
 # What Rust brings
 
 
-- **Multi-purpose** <span class="light">Build high-quality software, from cloud embedded and systems</span>
-- **Core strenghs** <span class="light">"C-like" performance, with memory safety and modern ergonomics</span>
-- **Confident developers** <span class="light">SO's most admired (loved) language for 8 years in a row</span>
-- **Momentum** <span class="light">Adopted by big tech: Chromium, Linux & Windows kernels</span>
+- **Multi-purpose** Build high-quality software, from cloud embedded and systems
+- **Core strenghs** "C-like" performance, with memory safety and modern ergonomics
+- **Confident developers** SO's most admired (loved) language for 8 years in a row
+- **Momentum** Adopted by big tech: Chromium, Linux & Windows kernels
 
 ---
 layout: with-footer
@@ -149,9 +147,9 @@ layout: with-footer
 
 Sure there are. The things mentioned most often:
 
-- **Steep learning curve** <span class="light">Getting *productive* with Rust takes relatively little time, though</span>
-- **Relatively new ecosystem** <span class="light">Do your research before getting started</span>
-- **Compiling large projects can be slow** <span class="light">Similar to template-heavy C++</span>
+- **Steep learning curve** Getting *productive* with Rust takes relatively little time, though
+- **Relatively new ecosystem** Do your research before getting started
+- **Compiling large projects can be slow** Similar to template-heavy C++
 
 ---
 layout: with-footer
@@ -181,9 +179,19 @@ t.join();
 layout: with-footer
 ---
 
+# Evaluation
+
+A 5 minute survey
+
+- Share your thoughts - help us improve!
+- Anonymously if desired
+
+---
+layout: with-footer
+---
+
 # Reminder
 
-*Installation instructions: <https://workshop.tweede.golf>*
+Installation instructions: <https://workshop.tweede.golf>
 
-Follow them now if you haven't yet!
 
