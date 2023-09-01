@@ -1,4 +1,4 @@
-# Module Z - Wrap-up
+# Wrap-up
 
 <a href="/slides/Z-wrap-up/" target="_blank">Slides</a>
 

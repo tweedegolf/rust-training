@@ -186,7 +186,7 @@ A 5 minute survey
 - Share your thoughts - help us improve!
 - Anonymously if desired
 
-<https://workshop.tweede.golf/Z-outro.html>
+<https://workshop.tweede.golf/wrap-up.html>
 
 ---
 layout: with-footer

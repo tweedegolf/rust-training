@@ -18,5 +18,4 @@
 - [C2 - Async foundations]()
 - [C3 - Foreign Function Interface](./C3-ffi/mod.md)
 
-# Wrap-up
-- [Z - Wrap-up](./Z-outro.md)
+[Wrap-up](./wrap-up.md)
