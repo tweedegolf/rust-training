@@ -19,27 +19,6 @@ to build reliable and efficient software.
 <img src="https://raw.githubusercontent.com/tweedegolf/slidev-theme-tweedegolf/1bc81d09e326fcecb531108a5a3bcd9e1856dd84/images/shield-large.png" class=bg-image>
 
 ---
-layout: with-footer
----
-
-# A quick note about Tweede golf
-
-- **Leading Rust agency in NL** Running Rust in production since 2017
-- **Working on Rust adoption** Through both Rust 101 and in-company workshops
-- **Working on Rust projects** Like Rust implementations of PTP, NTP, sudo and su
-- **Active community member** Organizing RustNL 2023 and active in various Rust meetups
-
-<br/><br/>
-
-<center>
-  <img class="logo-small" src="https://tweedegolf.nl/06f290cc0f37.png" alt="Ferrous">
-  <img class="logo-small" src="https://tweedegolf.nl/21df02fc203f.png" alt="GAMA">
-  <img class="logo-small" src="https://tweedegolf.nl/0e1499aea7d7.jpg" alt="DIS">
-  <img class="logo-small" src="https://tweedegolf.nl/ca5589b58a30.png" alt="NLNet">
-  <img class="logo-small" src="https://tweedegolf.nl/1495c30ec80b.png" alt="Technolution">
-</center>
-
----
 layout: two-cols
 ---
 
@@ -117,6 +96,26 @@ layout: two-cols
   <img class="face" src="https://tweedegolf.nl/images/marcvoortgwebsite.jpg" alt="Photo Marc"/>
 </center>
 
+---
+layout: with-footer
+---
+
+# A quick note about Tweede golf
+
+- **Leading Rust agency in NL** Running Rust in production since 2017
+- **Working on Rust adoption** Through both Rust 101 and in-company workshops
+- **Working on Rust projects** Like Rust implementations of PTP, NTP, sudo and su
+- **Active community member** Organizing RustNL 2023 and active in various Rust meetups
+
+<br/><br/>
+
+<center>
+  <img class="logo-small" src="https://tweedegolf.nl/06f290cc0f37.png" alt="Ferrous">
+  <img class="logo-small" src="https://tweedegolf.nl/21df02fc203f.png" alt="GAMA">
+  <img class="logo-small" src="https://tweedegolf.nl/0e1499aea7d7.jpg" alt="DIS">
+  <img class="logo-small" src="https://tweedegolf.nl/ca5589b58a30.png" alt="NLNet">
+  <img class="logo-small" src="https://tweedegolf.nl/1495c30ec80b.png" alt="Technolution">
+</center>
 
 ---
 layout: cover
