@@ -1898,7 +1898,8 @@ fn divide(x: i64, y: i64) -> Result<i64, DivideError> {
 fn div_zero_fails() {
   match divide(10, 0) {
     Ok(div) => println!("{}", div),
-    Err(e) => println!("Could not divide by zero"),
+    Err(DivideError::DivisionByZero) => println!("Could not divide by zero"),
+    Err(DivideError::CannotDivideOne) => println!("Apparently cannot devide 1"),
   }
 }
 ```
@@ -1935,13 +1936,13 @@ Results are so common that there is a special operator associated with them, the
 `?` operator
 
 ```rust
-fn can_fail() -> Result<i64, Error> {
-  let intermediate_result = match divide(10, 0) {
+fn can_fail(n: i32, m: i32) -> Result<i64, Error> {
+  let intermediate_result = match divide(10, n) {
     Ok(ir) => ir,
     Err(e) => return Err(e);
   };
 
-  match divide(intermediate_result, 0) {
+  match divide(intermediate_result, m) {
     Ok(sec) => Ok(sec * 2),
     Err(e) => Err(e),
   }
@@ -1953,9 +1954,9 @@ fn can_fail() -> Result<i64, Error> {
 Look how this function changes if we use the `?` operator
 
 ```rust
-fn can_fail() -> Result<i64, Error> {
-  let intermediate_result = divide(10, 0)?;
-  Ok(divide(intermediate_result, 0)? * 2)
+fn can_fail(n: i32, m: i32) -> Result<i64, Error> {
+  let intermediate_result = divide(10, n)?;
+  Ok(divide(intermediate_result, m)? * 2)
 }
 ```
 
@@ -1992,7 +1993,7 @@ impl IpAddress {
   fn as_u32(&self) -> Option<u32> {
     match self {
       IpAddress::Ipv4(a, b, c, d) => a << 24 + b << 16 + c << 8 + d
-      _ => None,_
+      _ => None,
     }
   }
 }
@@ -2185,10 +2186,10 @@ fn main() {
 Using ranges
 
 ```rust
-fn sum(data: &[i32]) -> i32 { /* ... */ }
+fn concat_chars(data: &[char]) -> String { /* ... */ }
 
 fn main() {
-  let v = vec![0, 1, 2, 3, 4, 5, 6];
+  let v = vec!['⭐', '❤️', '🤠', '🐴', '🚃', '🐠'];
   let all = sum(&v[..]);
   let except_first = sum(&v[1..]);
   let except_last = sum(&v[..5]);
