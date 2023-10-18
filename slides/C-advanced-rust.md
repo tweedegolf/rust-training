@@ -739,7 +739,8 @@ pub enum Poll<T> {
 ```
 
 - `Pin` guarantees `Self` isn't moved
-- `poll` should not be called after it has previously returned
+- `poll` should not be called after it has previously returned `Ready`
+
 
 ---
 layout: two-cols
