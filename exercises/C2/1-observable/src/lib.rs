@@ -8,7 +8,7 @@ pub struct Observable<T> {
 
 impl<T: Clone> Observable<T> {
     /// Construct a new observable
-    pub const fn new(init: T) -> Self {
+    pub fn new(init: T) -> Self {
         todo!()
     }
 

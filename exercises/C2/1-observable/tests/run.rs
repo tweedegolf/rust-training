@@ -1,17 +1,19 @@
-use std::{sync::atomic::{AtomicBool, Ordering}, time::Duration};
 use observable::Observable;
+use std::{
+    sync::atomic::{AtomicBool, Ordering},
+    sync::Arc,
+    time::Duration,
+};
 
-pub static CPU_TEMPERATURE: Observable<f32> = Observable::new(20.0);
-
-async fn throttle_if_cpu_temp_high(cpu: &Cpu) -> ! {
+async fn throttle_if_cpu_temp_high(cpu: &Cpu, cpu_temperature: Arc<Observable<f32>>) -> ! {
     loop {
-        CPU_TEMPERATURE
+        cpu_temperature
             .wait_until(|temperature| *temperature > 90.0)
             .await;
 
         cpu.throttle();
 
-        CPU_TEMPERATURE
+        cpu_temperature
             .wait_until(|temperature| *temperature < 80.0)
             .await;
 
@@ -21,26 +23,29 @@ async fn throttle_if_cpu_temp_high(cpu: &Cpu) -> ! {
 
 #[tokio::test]
 async fn run_cpu_test() {
-    static CPU: Cpu = Cpu { throttled: AtomicBool::new(false) };
+    let cpu_temperature = Arc::new(Observable::new(20.0));
+    static CPU: Cpu = Cpu {
+        throttled: AtomicBool::new(false),
+    };
 
-    tokio::spawn(throttle_if_cpu_temp_high(&CPU));
+    tokio::spawn(throttle_if_cpu_temp_high(&CPU, cpu_temperature.clone()));
 
     tokio::time::sleep(Duration::from_millis(10)).await;
     assert!(!CPU.is_throttled());
 
-    CPU_TEMPERATURE.set(50.0); 
+    cpu_temperature.set(50.0).await;
     tokio::time::sleep(Duration::from_millis(10)).await;
     assert!(!CPU.is_throttled());
 
-    CPU_TEMPERATURE.set(95.0); 
+    cpu_temperature.set(95.0).await;
     tokio::time::sleep(Duration::from_millis(10)).await;
     assert!(CPU.is_throttled());
 
-    CPU_TEMPERATURE.set(85.0); 
+    cpu_temperature.set(85.0).await;
     tokio::time::sleep(Duration::from_millis(10)).await;
     assert!(CPU.is_throttled());
 
-    CPU_TEMPERATURE.set(75.0); 
+    cpu_temperature.set(75.0).await;
     tokio::time::sleep(Duration::from_millis(10)).await;
     assert!(CPU.is_throttled());
 }
