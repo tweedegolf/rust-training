@@ -47,7 +47,7 @@ async fn run_cpu_test() {
 
     cpu_temperature.set(75.0).await;
     tokio::time::sleep(Duration::from_millis(10)).await;
-    assert!(CPU.is_throttled());
+    assert!(!CPU.is_throttled());
 }
 
 struct Cpu {
