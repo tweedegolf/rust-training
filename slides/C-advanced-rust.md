@@ -1035,11 +1035,6 @@ Hence, a much looser coupling:
 ---
 layout: default
 ---
-<img src="https://faultlore.com/blah/c-isnt-a-language/abi-kiss.png" class="ml-50 h-120 rounded shadow" />
-
----
-layout: default
----
 # Rust & C disagree
 
 - Different memory layout
@@ -1214,7 +1209,7 @@ These need special, manual treatment
 ---
 layout: default
 ---
-# `cargo-bindgen`
+# `bindgen`
 
 Generates rust API bindings based on C header files
 
@@ -1252,7 +1247,7 @@ C and Rust don't just work together, we must
 - tell rust the name and type of extern functions
 - force rust to use the C calling convention
 - use only types that have a C-compatible representation
-- `cargo-bindgen` automates parts of this process
+- `bindgen` automates parts of this process
 
 ---
 layout: default
