@@ -673,7 +673,7 @@ layout: two-cols
 
 Rust syntax
 
-Instructs the compiler to turn the code block into a statemachine
+Instructs the compiler to turn the code block into a state machine
 
 ```rust
 let my_future = async {
@@ -690,7 +690,7 @@ let my_future = async {
 ::right::
 
 Only data carried over await points are kept.
-This statemachine would roughly look like:
+This state machine would roughly look like:
 
 ```rust
 enum AnonymousFuture {
@@ -707,7 +707,7 @@ enum AnonymousFuture {
 }
 ```
 
-But how do we interact with the statemachine?
+But how do we interact with the state machine?
 
 ---
 layout: default
@@ -725,7 +725,7 @@ pub trait Future {
 }
 ```
 
-- Async statemachines implement `Future`
+- Async state machines implement `Future`
 - A future moves forward by polling
 - Keep polling until ready with output
 
