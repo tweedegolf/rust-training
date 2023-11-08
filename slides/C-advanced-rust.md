@@ -634,7 +634,7 @@ Async Rust
 layout: default
 ---
 
-# What is async rust?
+# What is async Rust?
 
 Async function:
 
