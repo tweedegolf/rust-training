@@ -748,7 +748,7 @@ layout: two-cols
 
 - The thing doing the polling is called the executor
 - Continuously polling is inefficient
-  - Cpu needs to stay active
+  - CPU needs to stay active
   - Difficult to do something else in the meantime
 - What can we improve?
 
