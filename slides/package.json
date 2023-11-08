@@ -16,10 +16,11 @@
     "_": ""
   },
   "dependencies": {
-    "@slidev/cli": "^0.42",
+    "@slidev/cli": "^0.43",
     "@slidev/theme-default": "*",
     "@slidev/theme-seriph": "*",
-    "slidev-theme-tweedegolf": "ssh://git@github.com:tweedegolf/slidev-theme-tweedegolf.git"
+    "mermaid": "^10.3.0",
+    "slidev-theme-tweedegolf": "https://github.com/tweedegolf/slidev-theme-tweedegolf.git"
   },
   "name": "rust-workshop",
   "devDependencies": {
