@@ -1,18 +1,19 @@
 ---
-theme: default
-class: text-center
-highlighter: shiki
+theme: tweedegolf
 lineNumbers: true
+fonts:
+  mono: 'IBM Plex Mono'
+  sans: 'IBM Plex Sans'
 drawings:
   persist: false
-fonts:
-  mono: Fira Mono
 layout: cover
 ---
 
 # Rust programming
 
 Module A: Introduction to Rust
+
+<img src="https://raw.githubusercontent.com/tweedegolf/slidev-theme-tweedegolf/1bc81d09e326fcecb531108a5a3bcd9e1856dd84/images/shield-large.png" class=bg-image>
 
 ---
 layout: cover
@@ -28,17 +29,25 @@ layout: two-cols
 ---
 
 # Overview
-## Part 1: Basic Syntax
+**Part 1: Basic Syntax**
 - Get acquainted with Rust
 - Work with basic syntax and operators
 
-## Part 2: Ownership and References
+<br/>
+<br/>
+
+**Part 2: Ownership and References**
 - Understand the rules of the Rust ownership model
+
 ::right::
-## Part 3: Advanced Syntax
+**Part 3: Advanced Syntax**
 - Work with more advanced syntax and operators
 
-## Part 4 (bonus): Traits & Generics
+<br/>
+<br/>
+<br/>
+
+**Part 4: Traits & Generics**
 - Understand Rust type generics
 - Work with traits to make code generic
 
@@ -237,7 +246,7 @@ layout: two-cols
 # Integers
 
 | Length        | Signed  | Unsigned |
-|---------------|---------|----------|
+| ------------- | ------- | -------- |
 | 8 bits        | `i8`    | `u8`     |
 | 16 bits       | `i16`   | `u16`    |
 | 32 bits       | `i32`   | `u32`    |
@@ -702,11 +711,6 @@ layout: cover
 
 # Part 2
 Ownership and References
-
----
-layout: section
----
-# Rust's ownership model
 
 ---
 layout: two-cols
@@ -2580,11 +2584,3 @@ layout: default
 &nbsp;
 
 A4 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/A4-traits-generics/mod.html)
-
----
-layout: section
----
-
-# That's a wrap!
-
-Any further questions?

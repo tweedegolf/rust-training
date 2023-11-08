@@ -627,6 +627,13 @@
   dependencies:
     "@iconify/types" "*"
 
+"@iconify-json/ri@^1.1.12":
+  version "1.1.12"
+  resolved "https://registry.yarnpkg.com/@iconify-json/ri/-/ri-1.1.12.tgz#f5a012d4ffb032dbfc73b795921096c28fc33faf"
+  integrity sha512-s5VsyMWYuUuTB5bATJRoDQKGqo6W0dsxvOBrJI/P2H9QI7IAaAWl8zHxseSjoUGG6AwZwWwDMW9YPULPt+vA6w==
+  dependencies:
+    "@iconify/types" "*"
+
 "@iconify/types@*", "@iconify/types@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@iconify/types/-/types-2.0.0.tgz#ab0e9ea681d6c8a1214f30cd741fe3a20cc57f57"
@@ -978,6 +985,10 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/d3-time/-/d3-time-3.0.0.tgz#e1ac0f3e9e195135361fa1a1d62f795d87e6e819"
   integrity sha512-sZLCdHvBUcNby1cB6Fd3ZBrABbjz3v1Vm90nysCQ6Vt7vd6e/h9Lt7SiJUoEX0l4Dzc7P5llKyhqSi1ycSf1Hg==
+"@slidev/types@^0.42.9":
+  version "0.42.11"
+  resolved "https://registry.yarnpkg.com/@slidev/types/-/types-0.42.11.tgz#a9c806aa3a15df615f8439052efb89e510664576"
+  integrity sha512-K7+UWzEQpUe3eEFs7ktm3tw17Ke9ZOJPTy7yGSlZfWl4jCTf9Z0HNKECPLQ3JGL6EkJ4Wyy1y0HE92/20cTn0Q==
 
 "@types/debug@^4.0.0":
   version "4.1.8"
@@ -1814,7 +1825,7 @@ cliui@^8.0.1:
     strip-ansi "^6.0.1"
     wrap-ansi "^7.0.0"
 
-codemirror-theme-vars@^0.1.1:
+codemirror-theme-vars@^0.1.1, codemirror-theme-vars@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/codemirror-theme-vars/-/codemirror-theme-vars-0.1.2.tgz#60db6877d16a400809e919b9bec33d72dbab1dfa"
   integrity sha512-WTau8X2q58b0SOAY9DO+iQVw8JKVEgyQIqArp2D732tcc+pobbMta3bnVMdQdmgwuvNrOFFr6HoxPRoQOgooFA==
@@ -3851,7 +3862,7 @@ prettier@^2.8.8:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
-prism-theme-vars@^0.2.2:
+prism-theme-vars@^0.2.2, prism-theme-vars@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/prism-theme-vars/-/prism-theme-vars-0.2.4.tgz#c92b8747a70ced8675538454900f88f08d053558"
   integrity sha512-B3Pht+GCT87sZph7hMRLlCQXzCM0awW7Rhk08RavpqRW4LEQOeqN0uMG4QCWkul2tr8PB61YAOJGUrEW+1uuJA==
@@ -4078,6 +4089,15 @@ slash@^4.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
 
+"slidev-theme-tweedegolf@ssh://git@github.com:tweedegolf/slidev-theme-tweedegolf.git":
+  version "0.0.0"
+  resolved "ssh://git@github.com:tweedegolf/slidev-theme-tweedegolf.git#1bc81d09e326fcecb531108a5a3bcd9e1856dd84"
+  dependencies:
+    "@slidev/types" "^0.42.9"
+    codemirror-theme-vars "^0.1.2"
+    prism-theme-vars "^0.2.4"
+    theme-vitesse "^0.7.2"
+
 source-map-js@^1.0.1, source-map-js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
@@ -4204,6 +4224,11 @@ theme-vitesse@^0.1.12:
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/theme-vitesse/-/theme-vitesse-0.1.14.tgz#e239d44fb0e61b3d0471fc86784b22e8b632dc96"
   integrity sha512-b5s+Zpfaw5+djoCJ9AEbcTbpiTlLsOvGM9oblDmmWRGWNqg9oXtEYO/uwubwx77novHBI6zNuwZRHKNlAIBo4A==
+
+theme-vitesse@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/theme-vitesse/-/theme-vitesse-0.7.2.tgz#a1de4f4e1f4d19de0ea6a27e622ab2e99735a3cf"
+  integrity sha512-e214q5dCGCkjORY0el6lz+JEmZIR1HQOnGhKehMYh0jJaZgqbPKbwHIULsBvQsUM4Q+ZX0AzBgKbUU2UksYOCg==
 
 titleize@^3.0.0:
   version "3.0.0"

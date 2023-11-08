@@ -1,17 +1,15 @@
 ---
-theme: default
-class: text-center
-highlighter: shiki
+theme: tweedegolf
 lineNumbers: true
 drawings:
   persist: false
-fonts:
-  mono: Fira Mono
 layout: cover
 ---
 # Rust programming
 
 Module C: Advanced Rust
+
+<img src="https://raw.githubusercontent.com/tweedegolf/slidev-theme-tweedegolf/1bc81d09e326fcecb531108a5a3bcd9e1856dd84/images/shield-large.png" class=bg-image>
 
 ---
 layout: cover
@@ -27,13 +25,13 @@ layout: two-cols
 ---
 # Overview
 
-## Part 1: Parallel Rust
+**Part 1: Parallel Rust**
 - Parallelize a program with Rayon
 - Work with threads in rust
 - Reason about exclusive access
 - Implement a basic Mutex
 
-## Part 2: Async foundations
+**Part 2: Async foundations**
 - Introduction Rust `async` programming
 - Uncovering `Future` type
 - Mechanics behind `async`/`await`
@@ -41,7 +39,7 @@ layout: two-cols
 
 ::right::
 
-## Part 3: FFI
+**Part 3: FFI**
 - Working with C from Rust and vice versa
 - Work with `cargo bindgen`
 - Make nice Rust APIs around C libraries
@@ -64,12 +62,12 @@ layout: default
 ---
 # Concurrency vs. Parallelism
 
-| **Concurrency**  | **Parallelism**   |
-| -------          | ------------      |
-| Interleaves work | Parallelizes work |
-| 1 or more cores  | 2 or more cores   |
+| **Concurrency**                                                                                                          | **Parallelism**                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Interleaves work                                                                                                         | Parallelizes work                                                                                                                                                      |
+| 1 or more cores                                                                                                          | 2 or more cores                                                                                                                                                        |
 | <img src="https://tienda.bricogeek.com/6417-thickbox_default/sparkfun-thing-plus-esp32-wroom.jpg" class="h-40 center" /> | <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/IBM_Blue_Gene_P_supercomputer.jpg/1920px-IBM_Blue_Gene_P_supercomputer.jpg" class="h-40 center" /> |
-| Waiting for events | Waiting for computation |
+| Waiting for events                                                                                                       | Waiting for computation                                                                                                                                                |
 
 ---
 theme: default
