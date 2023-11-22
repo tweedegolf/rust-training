@@ -35,7 +35,7 @@ layout: two-cols
 - Introduction Rust `async` programming
 - Uncovering `Future` type
 - Mechanics behind `async`/`await`
-- Running `async` woth Tokio
+- Creating our own async primitives
 
 ::right::
 
@@ -622,6 +622,367 @@ C1 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/C1-
 layout: cover
 ---
 
+# Part 2
+Async Rust
+
+- Introduction Rust `async` programming
+- Uncovering `Future` type
+- Mechanics behind `async`/`await`
+- Creating our own async primitives
+
+---
+layout: default
+---
+
+# What is async Rust?
+
+Async function:
+
+```rust
+use tokio::fs;
+use std::net::SocketAddr;
+
+async fn read_address() -> Result<SocketAddr, Box<dyn std::error::Error + 'static>> {
+    let contents = fs::read("address.txt").await?;
+    let address: SocketAddr = String::from_utf8_lossy(&contents).parse()?;
+    Ok(address)
+}
+```
+
+This is sweet, but can we have less sugar?
+
+```rust
+use tokio::fs;
+use std::net::SocketAddr;
+use std::future::Future;
+
+fn read_address() -> impl Future<Output = Result<SocketAddr, Box<dyn std::error::Error + 'static>>> {
+    async {
+        let contents = fs::read("address.txt").await?;
+        let address: SocketAddr = String::from_utf8_lossy(&contents).parse()?;
+        Ok(address)          
+    }
+}
+```
+
+---
+layout: two-cols
+---
+
+# Async block?
+
+Rust syntax
+
+Instructs the compiler to turn the code block into a state machine
+
+```rust
+let my_future = async {
+    let a = rand();
+    sleep().await;
+    let b = a + rand();
+    sleep().await;
+    let c = (a + b + rand()).to_string();
+    sleep().await;
+    c
+};
+```
+
+::right::
+
+Only data carried over await points are kept.
+This state machine would roughly look like:
+
+```rust
+enum AnonymousFuture {
+    Stage0 {
+        a: u32
+    },
+    Stage1 {
+        a: u32,
+        b: u32,
+    }
+    Stage2 {
+        c: String,
+    }
+}
+```
+
+But how do we interact with the state machine?
+
+---
+layout: default
+---
+
+# Future
+
+Trait in the std
+
+```rust
+pub trait Future {
+    type Output;
+
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output>;
+}
+```
+
+- Async state machines implement `Future`
+- A future moves forward by polling
+- Keep polling until ready with output
+
+```rust
+pub enum Poll<T> {
+    Ready(T),
+    Pending,
+}
+```
+
+- `Pin` guarantees `Self` isn't moved
+- `poll` should not be called after it has previously returned `Ready`
+
+
+---
+layout: two-cols
+---
+
+# Polling a future
+
+- The thing doing the polling is called the executor
+- Continuously polling is inefficient
+  - CPU needs to stay active
+  - Difficult to do something else in the meantime
+- What can we improve?
+
+::right::
+
+```mermaid
+sequenceDiagram
+    autonumber
+    activate Executor
+    Executor ->> +Future: Poll
+    Future -->> -Executor: Pending
+    Executor ->> +Future: Poll
+    Future -->> -Executor: Pending
+    Executor ->> +Future: Poll
+    Future -->> -Executor: Ready<T>
+    deactivate Executor
+```
+
+---
+layout: two-cols
+---
+# Wakers
+
+Wakers are tied to the executor
+
+- Given to poll via the context parameter
+
+```rust {lineNumbers:false}
+impl<'a> Context<'a> {
+    pub const fn from_waker(waker: &'a Waker) -> Self;
+    pub const fn waker(&self) -> &'a Waker;
+}
+```
+
+- Call the waker's `wake` function to call a function defined in the executor
+
+```rust {lineNumbers:false}
+impl Waker {
+    pub fn wake(self);
+    pub fn wake_by_ref(&self);
+    // ...
+}
+```
+
+- Waker contains a function pointer to the executer
+
+::right::
+
+```mermaid
+sequenceDiagram
+    autonumber
+    activate Executor
+    Executor ->> +Future: Poll
+    Future ->> Interrupt: Register waker
+    Future -->> -Executor: Pending
+    deactivate Executor
+    Executor ->> Executor: Sleeping
+    Note over Executor,Interrupt: ⚡ Interrupt fires ⚡
+    activate Interrupt
+    Interrupt ->> Future: Change some state
+    Interrupt ->> -Executor: Wake using the waker
+    activate Executor
+    Executor ->> +Future: Poll
+    Future -->> -Executor: Ready<T>
+    deactivate Executor
+```
+
+---
+layout: two-cols
+---
+
+# Async mutex
+
+Let's build a simple async Mutex using atomics.
+
+*[Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=709a24c5244b245dc1cb949c37c04901)*
+
+There will be a flaw, can you spot it?
+
+```rust {lineNumbers:false}
+use futures::task::AtomicWaker; // <- Very helpful crate
+
+pub struct AsyncMutex<T> {
+    /// Contains the value.
+    /// UnsafeCell gives us interior mutability.
+    inner: UnsafeCell<T>,
+    locked: AtomicBool,
+    waiter: AtomicWaker,
+}
+
+unsafe impl<T: Send> Send for AsyncMutex<T> {}
+unsafe impl<T: Send> Sync for AsyncMutex<T> {}
+```
+
+::right::
+
+```rust {lineNumbers:false}
+impl<T> AsyncMutex<T> {
+    pub const fn new(value: T) -> Self {
+        Self {
+            inner: UnsafeCell::new(value),
+            locked: AtomicBool::new(false),
+            waiter: AtomicWaker::new(),
+        }
+    }
+
+    pub async fn lock(&self) -> AsyncMutexGuard<'_, T> {
+        AsyncMutexLockFuture { mutex: self }.await
+    }
+}
+```
+
+---
+layout: default
+---
+
+# Async mutex - lock future
+
+Let's build a simple async Mutex using atomics.
+
+```rust
+pub struct AsyncMutexLockFuture<'m, T> {
+    mutex: &'m AsyncMutex<T>,
+}
+
+impl<'m, T> Future for AsyncMutexLockFuture<'m, T> {
+    type Output = AsyncMutexGuard<'m, T>;
+
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+        self.mutex.waiter.register(cx.waker());
+
+        if self
+            .mutex
+            .locked
+            .compare_exchange(false, true, Ordering::AcqRel, Ordering::Acquire)
+            .is_ok()
+        {
+            // We got the mutex
+            return Poll::Ready(AsyncMutexGuard { mutex: self.mutex });
+        }
+
+        Poll::Pending
+    }
+}
+```
+
+---
+layout: two-cols
+---
+
+# Async mutex - guard
+
+Let's build a simple async Mutex using atomics.
+
+```rust
+pub struct AsyncMutexGuard<'m, T> {
+    mutex: &'m AsyncMutex<T>,
+}
+
+impl<'m, T> Drop for AsyncMutexGuard<'m, T> {
+    fn drop(&mut self) {
+        self.mutex.locked.store(
+            false,
+            Ordering::Release
+        );
+        self.mutex.waiter.wake();
+    }
+}
+```
+
+::right::
+
+```rust
+impl<'m, T> Deref for AsyncMutexGuard<'m, T> {
+    type Target = T;
+
+    fn deref(&self) -> &<Self as Deref>::Target {
+        // Safety: Only one guard exists
+        unsafe { &*self.mutex.inner.get() }
+    }
+}
+
+impl<'m, T> DerefMut for AsyncMutexGuard<'m, T> {
+    fn deref_mut(&mut self)
+        -> &mut <Self as Deref>::Target {
+        // Safety: Only one guard exists
+        unsafe { &mut *self.mutex.inner.get() }
+    }
+}
+```
+
+---
+layout: default
+---
+
+# Async mutex - use it
+
+That's it!
+
+```rust
+static MUTEX: AsyncMutex<u32> = AsyncMutex::new(5);
+
+let mut guard = MUTEX.lock().await;
+*guard += 5;
+drop(guard);
+
+assert_eq!(*MUTEX.lock().await, 10);
+```
+
+Have you spotted the flaw?
+
+<v-click>
+<div>
+
+We only have one waker slot, so multiple waiters will bump each other out, which is inefficient.
+
+</div>
+</v-click>
+
+---
+layout: default
+---
+
+# Time for exercises
+
+Let's build an async primitive ourselves!
+
+C2 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/C2-async-foundations/mod.html)
+
+
+---
+layout: cover
+---
+
 # Part 3
 Foreign Function Interface
 
@@ -670,11 +1031,6 @@ Hence, a much looser coupling:
 - Have the linker stitch everything together
 </div>
 </v-click>
-
----
-layout: default
----
-<img src="https://faultlore.com/blah/c-isnt-a-language/abi-kiss.png" class="ml-50 h-120 rounded shadow" />
 
 ---
 layout: default
@@ -853,7 +1209,7 @@ These need special, manual treatment
 ---
 layout: default
 ---
-# `cargo-bindgen`
+# `bindgen`
 
 Generates rust API bindings based on C header files
 
@@ -891,7 +1247,7 @@ C and Rust don't just work together, we must
 - tell rust the name and type of extern functions
 - force rust to use the C calling convention
 - use only types that have a C-compatible representation
-- `cargo-bindgen` automates parts of this process
+- `bindgen` automates parts of this process
 
 ---
 layout: default
