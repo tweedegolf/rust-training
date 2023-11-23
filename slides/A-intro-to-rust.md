@@ -614,7 +614,7 @@ statements
 # Expressions
 
 - Expressions make up most of the Rust code you write
-- Includes all control flow such as `if` and `while`
+- Includes some of the control flow such as `if` and `loop`
 - Includes scoping braces (`{` and `}`)
 - An expression can be turned into a statement by adding a semicolon (`;`)
 
