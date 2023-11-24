@@ -28,7 +28,7 @@ layout: two-cols
 <br/>
 
 - Embedded software engineer & Rust-lang trainer
-- 4 year Rust experience
+- 5 year Rust experience
 - Work on IoT devices using Rust
 - Maintainer of Rust 101
 
