@@ -1,4 +1,4 @@
-#include <inttypes.h> // uint32_t, uint8_t
+#include <stdint.h> // uint32_t, uint8_t
 #include <stddef.h> // size_t
 
 unsigned int CRCTable[256] = { 
