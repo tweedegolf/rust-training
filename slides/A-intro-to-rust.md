@@ -2190,10 +2190,10 @@ fn concat_chars(data: &[char]) -> String { /* ... */ }
 
 fn main() {
   let v = vec!['⭐', '❤️', '🤠', '🐴', '🚃', '🐠'];
-  let all = sum(&v[..]);
-  let except_first = sum(&v[1..]);
-  let except_last = sum(&v[..5]);
-  let except_ends = sum(&v[1..5]);
+  let all = concat_chars(&v[..]);
+  let except_first = concat_chars(&v[1..]);
+  let except_last = concat_chars(&v[..5]);
+  let except_ends = concat_chars(&v[1..5]);
 }
 ```
 
