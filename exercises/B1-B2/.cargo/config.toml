@@ -1,5 +1,5 @@
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
-runner = "probe-rs run --chip nRF52840 --catch-reset --catch-hardfault"
+runner = "probe-rs run --chip nRF52840 --catch-reset --catch-hardfault --allow-erase-all"
 
 rustflags = [
   "-C", "link-arg=-Tlink.x",
