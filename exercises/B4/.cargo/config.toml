@@ -1,6 +1,5 @@
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
-# replace nRF52840_xxAA with your chip as listed in `probe-run --list-chips`
-runner = "probe-run --chip nRF52840_xxAA --erase-all"
+runner = "probe-rs run --chip nRF52840 --catch-reset --catch-hardfault"
 
 [build]
 target = "thumbv7em-none-eabihf"

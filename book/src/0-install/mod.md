@@ -137,7 +137,7 @@ sudo apt install -y libusb-1.0-0-dev libftdi1-dev libudev-dev
 On `all platforms`:
 ```bash
 rustup component add llvm-tools rustfmt clippy
-cargo install probe-run
+cargo install probe-rs --features cli
 ```
 
 If you're on `linux`, you'll need to update your udev rules.

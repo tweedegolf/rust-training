@@ -15,7 +15,7 @@ Try to run the existing project and then fill in the functionality as instructed
 
 To use that project, you can use the following commands from inside that folder using the terminal:
 - `cargo build`: Builds the project
-- `cargo run`: Builds the project, flashes it to the device and listens for any logs which it will display in the terminal. (This uses the `probe-run` tool)
+- `cargo run`: Builds the project, flashes it to the device and listens for any logs which it will display in the terminal. (This uses the `probe-rs run` tool)
 
 In both cases you can add the `--release` flag to turn on optimizations.
 
