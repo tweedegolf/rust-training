@@ -411,7 +411,7 @@ instead.
 
 # Strings
 ```rust
-    // Owned, heap-allocated string *slice*
+    // Owned, heap-allocated string
     let s1: String = String::from("Hello, 🌍!");
 ```
 
