@@ -2,7 +2,7 @@
 //! and works as it should.
 #![no_std]
 #![no_main]
-use core::{fmt::Write};
+use core::fmt::Write;
 use cortex_m_rt::entry;
 use hal::{
     pac,
