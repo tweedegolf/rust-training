@@ -3,29 +3,24 @@ name = "part_3"
 version = "0.1.0"
 edition = "2021"
 
-[features]
-default = ["nightly"]
-nightly = ["embassy-executor/nightly", "embassy-nrf/nightly", "embassy-nrf/unstable-traits", "embedded-io/async"]
-
 [dependencies]
-embassy-futures = { version = "0.1.0", git = "https://github.com/embassy-rs/embassy.git", rev = "7f96359" }
-embassy-sync = { version = "0.2.0", git = "https://github.com/embassy-rs/embassy.git", rev = "7f96359", features = ["defmt"] }
-embassy-executor = { version = "0.2.0", git = "https://github.com/embassy-rs/embassy.git", rev = "7f96359", features = ["arch-cortex-m", "executor-thread", "nightly", "defmt", "integrated-timers"] }
-embassy-time = { version = "0.1.0", git = "https://github.com/embassy-rs/embassy.git", rev = "7f96359", features = ["defmt", "defmt-timestamp-uptime"] }
-embassy-nrf = { version = "0.1.0", git = "https://github.com/embassy-rs/embassy.git", rev = "7f96359", features = ["defmt", "nrf52840", "time-driver-rtc1", "gpiote", "unstable-pac", "time"] }
-embedded-io = "0.4.0"
+embassy-futures = { version = "0.1.1" }
+embassy-sync = { version = "0.5.0", features = ["defmt"] }
+embassy-executor = { version = "0.5.0", features = ["arch-cortex-m", "executor-thread", "defmt", "integrated-timers"] }
+embassy-time = { version = "0.3.0", features = ["defmt", "defmt-timestamp-uptime"] }
+embassy-nrf = { version = "0.1.0", features = ["defmt", "nrf52840", "time-driver-rtc1", "gpiote", "unstable-pac", "time"] }
+embedded-io = "0.6.1"
 
-defmt = "0.3.4"
+defmt = "0.3.5"
 defmt-rtt = "0.4"
 
-static_cell = "1.0"
+static_cell = "2.0.0"
 cortex-m = { version = "0.7.6", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7.0"
 panic-probe = { version = "0.3", features = ["print-defmt"] }
 futures = { version = "0.3.17", default-features = false, features = ["async-await"] }
 rand = { version = "0.8.4", default-features = false }
 embedded-storage = "0.3.0"
-usbd-hid = "0.6.0"
 serde = { version = "1.0.136", default-features = false }
 
 [profile.release]

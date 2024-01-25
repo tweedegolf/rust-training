@@ -1,6 +1,5 @@
 #![no_std]
 #![no_main]
-#![feature(type_alias_impl_trait)]
 
 use defmt::unwrap;
 use embassy_executor::Spawner;
@@ -40,7 +39,7 @@ async fn recv_task(led: AnyPin, receiver: Receiver<'static, NoopRawMutex, LedSta
     let mut led = Output::new(led, Level::Low, OutputDrive::Standard);
 
     loop {
-        let received_state = receiver.recv().await;
+        let received_state = receiver.receive().await;
 
         defmt::trace!("Received: {}", received_state);
 
