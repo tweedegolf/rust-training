@@ -136,7 +136,7 @@ sudo apt install -y libusb-1.0-0-dev libftdi1-dev libudev-dev
 
 On `all platforms`:
 ```bash
-rustup component add llvm-tools-preview rustfmt clippy
+rustup component add llvm-tools rustfmt clippy
 cargo install probe-run
 ```
 
