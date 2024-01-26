@@ -126,7 +126,10 @@ This instructs Cargo to compile our crate as a dynamic library.
     Hash: -1386739207
     ```
 
-
+    > *Note*:
+    >
+    > On windows, you should link with `crc_in_rust.dll.lib` and make sure the dll and the final exe are
+    > in the same directory when you execute it.
 
 ## C3.3 Bindgen
 
