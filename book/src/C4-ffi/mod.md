@@ -1,4 +1,4 @@
-# Module C3 - Foreign Function Interface
+# Module C4 - Foreign Function Interface
 
 <a href="/slides/C-advanced-rust" target="_blank">Slides</a>
 
@@ -6,7 +6,7 @@ This module is about having Rust code interact with C code and vice-versa.
 
 > **Note: Bindgen depends on Clang being installed. See [these instructions](https://rust-lang.github.io/rust-bindgen/requirements.html).** This is required for the the 3rd exercise. For the first and exercise any C compiler will suffice, like clang, msvc and gcc.
 
-## C3.1 CRC in C
+## C4.1 CRC in C
 
 Use a CRC checksum function written in C in a Rust program
 
@@ -52,7 +52,7 @@ Use a CRC checksum function written in C in a Rust program
     In the above example, the correct output is `0x9ae0daaf`
 
 
-## C3.2 CRC in Rust
+## C4.2 CRC in Rust
 
 Use a CRC checksum function written in Rust in a C program
 
@@ -131,7 +131,7 @@ This instructs Cargo to compile our crate as a dynamic library.
     > On windows, you should link with `crc_in_rust.dll.lib` and make sure the dll and the final exe are
     > in the same directory when you execute it.
 
-## C3.3 Bindgen
+## C4.3 Bindgen
 
 Use `bindgen` to generate the FFI bindings. Bindgen will look at a C header file, and generate rust functions, types and constants based on the C definitions.
 

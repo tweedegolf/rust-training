@@ -1,8 +1,8 @@
-# Module C2 - Async foundations
+# Module C3 - Async foundations
 
 <a href="/slides/C-advanced-rust" target="_blank">Slides</a>
 
-## C2.1
+## C3.1
 
 We're going to build an observable variable, a bit similar in idea to a condvar.
 
@@ -28,7 +28,7 @@ async fn throttle_if_cpu_temp_high(cpu: &mut Cpu) -> ! {
 }
 ```
 
-Go to exercise C2/1-observable and implement the type.
+Go to exercise C3/1-observable and implement the type.
 Run `cargo test` in that folder to check if your implementation works.
 
 Extra questions and challenges:
