@@ -57,6 +57,28 @@ de-facto standard for running async programs on non-embedded hardware
 ---
 layout: default
 ---
+# `axum`
+
+```rust
+use axum::{
+    routing::get,
+    Router,
+};
+
+#[tokio::main]
+async fn main() {
+    // build our application with a single route
+    let app = Router::new().route("/", get(|| async { "Hello, World!" }));
+
+    // run our app with hyper, listening globally on port 3000
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
+```
+
+---
+layout: default
+---
 # `clap`
 
 Command Line Interface (CLI) generation
@@ -108,6 +130,48 @@ Hello Me!
 ```
 
 ---
+layout: default
+---
+# `rayon`
+
+Easy data-parallel computation
+
+```rust
+use rayon::prelude::*;
+fn sum_of_squares(input: &[i32]) -> i32 {
+    input.par_iter() // <-- just change that!
+         .map(|&i| i * i)
+         .sum()
+}
+```
+
+---
+layout: default
+---
+# `tracing`
+
+```rust
+pub fn shave(yak: usize) -> Result<(), Box<dyn Error + 'static>> {
+    // this creates an event at the DEBUG level with two fields:
+    // - `excitement`, with the key "excitement" and the value "yay!"
+    // - `message`, with the key "message" and the value "hello! I'm gonna shave a yak."
+    //
+    // unlike other fields, `message`'s shorthand initialization is just the string itself.
+    debug!(excitement = "yay!", "hello! I'm gonna shave a yak.");
+    if yak == 3 {
+        warn!("could not locate yak!");
+        // note that this is intended to demonstrate `tracing`'s features, not idiomatic
+        // error handling! in a library or application, you should consider returning
+        // a dedicated `YakError`. libraries like snafu or thiserror make this easy.
+        return Err(io::Error::new(io::ErrorKind::Other, "shaving yak failed!").into());
+    } else {
+        debug!("yak shaved successfully");
+    }
+    Ok(())
+}
+```
+
+---
 layout: cover
 ---
 # Cargo Commands
@@ -134,6 +198,46 @@ Clears the build cache for this project.
 `cargo clean -p foo` clears the artifacts for the `foo` crate
 
 the rust `target` dir grows very large over time
+
+---
+layout: default
+---
+# `cargo add`
+
+```sh
+$ cargo add regex
+$ cargo add serde serde_json -F serde/derive
+```
+
+---
+layout: default
+---
+# `cargo doc`
+
+The whole rust ecosystem uses the same docs format
+
+```rust
+    /// Creates a constant zero value of this `IntType`.
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use inkwell::context::Context;
+    /// use inkwell::values::AnyValue;
+    ///
+    /// let context = Context::create();
+    /// let i8_type = context.i8_type();
+    /// let i8_zero = i8_type.const_zero();
+    ///
+    /// assert_eq!(i8_zero.print_to_string().to_string(), "i8 0");
+    /// ```
+    pub fn const_zero(self) -> IntValue<'ctx> { /* ... */ }
+```
+
+documentation can have code snippets
+
+- these are checked automatically (for imports, types, etc)
+- asserts are evaluated with `cargo test`
 
 ---
 layout: default
