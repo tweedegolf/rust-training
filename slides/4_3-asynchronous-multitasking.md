@@ -763,6 +763,6 @@ layout: default
 
 &nbsp;
 
-Unit 4.3 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/asynchronous-multitasking.html)
+Unit 4.3 exercise description: [training.tweede.golf](https://training.tweede.golf/asynchronous-multitasking.html)
 
 *Don't forget to* `git pull`!

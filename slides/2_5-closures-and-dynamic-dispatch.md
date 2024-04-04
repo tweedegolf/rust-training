@@ -404,6 +404,6 @@ layout: default
 
 &nbsp;
 
-Unit 2.5 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/closures-and-dynamic-dispatch.html)
+Unit 2.5 exercise description: [training.tweede.golf](https://training.tweede.golf/closures-and-dynamic-dispatch.html)
 
 *Don't forget to* `git pull`!

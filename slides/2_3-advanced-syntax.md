@@ -1197,6 +1197,6 @@ struct Node {
 
 &nbsp;
 
-Unit 2.3 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/advanced-syntax.html)
+Unit 2.3 exercise description: [training.tweede.golf](https://training.tweede.golf/advanced-syntax.html)
 
 *Don't forget to* `git pull`!

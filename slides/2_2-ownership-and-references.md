@@ -829,6 +829,6 @@ layout: default
 
 &nbsp;
 
-Unit 2.2 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/ownership-and-references.html)
+Unit 2.2 exercise description: [training.tweede.golf](https://training.tweede.golf/ownership-and-references.html)
 
 *Don't forget to* `git pull`!

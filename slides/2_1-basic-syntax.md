@@ -687,6 +687,6 @@ layout: default
 
 &nbsp;
 
-Unit 2.1 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/basic-syntax.html)
+Unit 2.1 exercise description: [training.tweede.golf](https://training.tweede.golf/basic-syntax.html)
 
 *Don't forget to* `git pull`!

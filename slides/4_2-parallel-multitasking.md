@@ -494,6 +494,6 @@ layout: default
 
 &nbsp;
 
-Unit 4.2 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/parallel-multitasking.html)
+Unit 4.2 exercise description: [training.tweede.golf](https://training.tweede.golf/parallel-multitasking.html)
 
 *Don't forget to* `git pull`!

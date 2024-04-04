@@ -302,6 +302,6 @@ layout: default
 
 &nbsp;
 
-Unit 6.1 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/foreign-function-interface.html)
+Unit 6.1 exercise description: [training.tweede.golf](https://training.tweede.golf/foreign-function-interface.html)
 
 *Don't forget to* `git pull`!

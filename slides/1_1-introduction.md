@@ -184,7 +184,7 @@ A 5 minute survey
 - Share your thoughts - help us improve!
 - Anonymously if desired
 
-<https://workshop.tweede.golf/wrap-up.html>
+<https://training.tweede.golf/wrap-up.html>
 
 ---
 layout: with-footer
@@ -192,6 +192,6 @@ layout: with-footer
 
 # Reminder
 
-Installation instructions: <https://workshop.tweede.golf>
+Installation instructions: <https://training.tweede.golf>
 
 

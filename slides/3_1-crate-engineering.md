@@ -1076,6 +1076,6 @@ layout: default
 
 &nbsp;
 
-Unit 3.1 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/crate-engineering.html)
+Unit 3.1 exercise description: [training.tweede.golf](https://training.tweede.golf/crate-engineering.html)
 
 *Don't forget to* `git pull`!

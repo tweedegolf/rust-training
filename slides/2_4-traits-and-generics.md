@@ -802,6 +802,6 @@ layout: default
 
 &nbsp;
 
-Unit 2.4 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/traits-and-generics.html)
+Unit 2.4 exercise description: [training.tweede.golf](https://training.tweede.golf/traits-and-generics.html)
 
 *Don't forget to* `git pull`!

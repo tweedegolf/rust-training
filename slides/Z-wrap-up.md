@@ -27,7 +27,7 @@ Finish yours if you haven't yet!
 
 Thanks!
 
-<https://workshop.tweede.golf/wrap-up.html>
+<https://training.tweede.golf/wrap-up.html>
 
 ::right::
 
