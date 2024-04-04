@@ -31,7 +31,7 @@ Thanks!
 
 ::right::
 
-<img src="images/qr-eval-form.png">
+<img src="/images/qr-eval-form.png">
 
 ---
 layout: cover
