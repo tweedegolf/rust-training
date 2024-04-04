@@ -51,10 +51,13 @@ layout: with-footer
 
 - Follow us on [Twitter (X)](https://twitter.com/tweedegolfbv), [Fosstodon](https://fosstodon.org/@tweedegolf) or [LinkedIn](https://nl.linkedin.com/company/tweede-golf-software-engineering) for our latest articles on [Rust](https://tweedegolf.nl/en/blog/rust)
 - Dive into the [Rust Book](https://doc.rust-lang.org/book/)
-- Dive into [Rust 101](https://tweedegolf.nl/en/blog/80/rust-101-open-source-university-course)
+- Dive into [teach-rs](https://tweedegolf.nl/en/blog/117/teach-rs-rust-101-evolved)
 - Attend one of the upcoming [Rust Meetups](https://www.meetup.com/rust-nederland/events/)
+
+<v-click>
 
 **Interested in picking up Rust with help from us? Great! We can help with:**
 
 - Assessing the applicability of Rust for the projects you have in mind
 - Engineering work in combination with on-the-job training in your first Rust projects
+</v-click>

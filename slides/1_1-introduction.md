@@ -23,18 +23,18 @@ layout: two-cols
 ---
 
 # Who are we?
-
+ 
 ## Henk Oordt
 <br/>
 
-- Embedded software engineer & Rust-lang trainer
+- Embedded software engineer & Rust trainer
 - 5 year Rust experience
 - Work on IoT devices using Rust
-- Maintainer of Rust 101
+- Maintainer of teach-rs
 
 ::right::
 <center>
-  <img class="face" src="https://tweedegolf.nl/images/henk.jpg" alt="Photo Henk"/>
+  <img class="face" src="https://tweedegolf.nl/images/screenshot-from-2024-03-01-15-47-57.png" alt="Photo Henk"/>
 </center>
 ---
 layout: two-cols
@@ -110,11 +110,10 @@ layout: with-footer
 <br/><br/>
 
 <center>
-  <img class="logo-small" src="https://tweedegolf.nl/06f290cc0f37.png" alt="Ferrous">
-  <img class="logo-small" src="https://tweedegolf.nl/21df02fc203f.png" alt="GAMA">
-  <img class="logo-small" src="https://tweedegolf.nl/0e1499aea7d7.jpg" alt="DIS">
-  <img class="logo-small" src="https://tweedegolf.nl/ca5589b58a30.png" alt="NLNet">
-  <img class="logo-small" src="https://tweedegolf.nl/1495c30ec80b.png" alt="Technolution">
+  <img class="logo-small" src="https://tweedegolf.nl/assets/client-ferrous-Ykf5Lz41.png" alt="Ferrous">
+  <img class="logo-small" src="https://tweedegolf.nl/assets/client-dutch-iot-0SWpC6-d.jpg" alt="DIS">
+  <img class="logo-small" src="https://tweedegolf.nl/assets/client-nlnetlabs-gnLA7KUl.png" alt="NLNet">
+  <img class="logo-small" src="https://tweedegolf.nl/assets/client-technolution-s3BzJUDL.png" alt="Technolution">
 </center>
 
 ---
