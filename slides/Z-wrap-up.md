@@ -17,16 +17,21 @@ Evaluation, certificate and what’s next?
 <img src="https://raw.githubusercontent.com/tweedegolf/slidev-theme-tweedegolf/1bc81d09e326fcecb531108a5a3bcd9e1856dd84/images/shield-large.png" class=bg-image>
 
 ---
-layout: with-footer
+layout: three-slots
 ---
 
 # Evaluation
 
+::left::
 Finish yours if you haven't yet!
 
 Thanks!
 
 <https://workshop.tweede.golf/wrap-up.html>
+
+::right::
+
+<img src="images/qr-eval-form.png">
 
 ---
 layout: cover
