@@ -1,39 +1,37 @@
-# Module C4 - Foreign Function Interface
+# Unit 6.1 - Foreign Function Interface
 
-<a href="/slides/C-advanced-rust" target="_blank">Slides</a>
-
-This module is about having Rust code interact with C code and vice-versa.
-
-> **Note: Bindgen depends on Clang being installed. See [these instructions](https://rust-lang.github.io/rust-bindgen/requirements.html).** This is required for the the 3rd exercise. For the first and exercise any C compiler will suffice, like clang, msvc and gcc.
-
-## C4.1 CRC in C
+## Exercise 6.1.1: CRC in C
 
 Use a CRC checksum function written in C in a Rust program
 
-### Steps
+## prerequisites
 
-1. Add the `cc` build dependency, by adding to `Cargo.toml` the lines:
+- A C compiler
+
+
+## Steps
+
+1. Add the `cc` build dependency, by adding to `Crate.toml` the lines:
     ```toml
     [build-dependencies]
     cc = "1.0"
     ```
-2. Create `build.rs` in the root of the project (next to `Cargo.toml`) with contents
+2. Create `build.rs` with contents
     ```rust
     extern crate cc;
 
     fn main() {
         println!("cargo:rerun-if-changed=crc32.h");
         println!("cargo:rerun-if-changed=crc32.c");
-        cc::Build::new().file("crc32.c").compile("crc32");
+        cc::Build::new().file("crc32.c").compile("crc32.a");
     }
     ```
 
-    This will find your c code, compile it, and link it into the executable rust produces. It also instructs Cargo to re-compile the C code in case it changes.
-
+    This will find your c code, compile it, and link it into the executable rust produces
 3. In `main.rs`, define an extern (fill in the argument and return types)
     ```rust
     extern "C" {
-        fn CRC32( ... ) -> ...; // hint: https://doc.rust-lang.org/std/ffi
+        fn CRC32( ... ) -> ...; // hint: https://doc.rust-lang.org/std/os/raw
     }
     ```
 4. Now, create a rust wrapper that calls the extern function
@@ -50,13 +48,15 @@ Use a CRC checksum function written in C in a Rust program
     }
     ```
     In the above example, the correct output is `0x9ae0daaf`
-
-
-## C4.2 CRC in Rust
+## Exercise 6.1.2: CRC in Rust
 
 Use a CRC checksum function written in Rust in a C program
 
-### Steps
+## Requirements
+
+- A C compiler
+
+## Steps
 
 1. Change Cargo.toml to
 
@@ -75,8 +75,6 @@ Use a CRC checksum function written in Rust in a C program
     [dependencies]
     ```
 
-This instructs Cargo to compile our crate as a dynamic library.
-
 2. Expose an extern rust function 
 
     ```rust
@@ -92,7 +90,7 @@ This instructs Cargo to compile our crate as a dynamic library.
 3. Create a C header file `crc_in_rust.h`
 
     ```c
-    #include <stdint.h> // uint32_t, uint8_t
+    #include <inttypes.h> // uint32_t, uint8_t
     #include <stddef.h> // size_t
 
     uint32_t crc32(const uint8_t data[], size_t data_length);
@@ -101,7 +99,7 @@ This instructs Cargo to compile our crate as a dynamic library.
 4. Use the rust `crc32` function in C
 
     ```c
-    #include <stdint.h> // uint32_t, uint8_t
+    #include <inttypes.h> // uint32_t, uint8_t
     #include <stddef.h> // size_t
     #include <stdio.h> // printf
     #include "crc_in_rust.h"
@@ -112,7 +110,7 @@ This instructs Cargo to compile our crate as a dynamic library.
 
         uint32_t hash = crc32(data, data_length);
 
-        printf("Hash: %d\n", hash);
+        printf("Hash: 0x%d\n", hash);
 
         return 0;
     }
@@ -125,30 +123,65 @@ This instructs Cargo to compile our crate as a dynamic library.
     $ ./main
     Hash: -1386739207
     ```
+## Exercise 6.1.3: TweetNaCl Bindgen
 
-    > *Note*:
-    >
-    > On windows, you should link with `crc_in_rust.dll.lib` and make sure the dll and the final exe are
-    > in the same directory when you execute it.
-
-## C4.3 Bindgen
-
-Use `bindgen` to generate the FFI bindings. Bindgen will look at a C header file, and generate rust functions, types and constants based on the C definitions.
+Use `cargo bindgen` to generate the FFI bindings. Bindgen will look at a C header file, and generate rust functions, types and constants based on the C definitions.
 
 But the generated code is ugly and non-idiomatic. To wrap a C library properly, good API design and documentation is needed. 
 
-We'll be making rust bindings for the [tweetnacl](https://tweetnacl.cr.yp.to/) C library. Goal: implement `crypto_hash_sha256_tweet`
+### tweetnacl-bindgen
+
+Making rust bindings for the [tweetnacl](https://tweetnacl.cr.yp.to/) C library
+
+## Exercise: implement `crypto_hash_sha256_tweet`
 
 Below you find instructions for using bindgen and wrapping `crypto_hash_sha512_tweet`. Follow the instructions, then repeat the steps for `crypto_hash_sha256_tweet`
 
-#### Steps
-1. Have a look at `build.rs` and `src/lib.rs` to get an idea of how to configure `bindgen`. Can you explain in your own words how this setup works?
-> **You can refer to [The bindgen User Guide](https://rust-lang.github.io/rust-bindgen/) for information on how to use bindgen**
+## Instructions
 
-2. Run `cargo check` to verify everything is compiling correctly.
+Prerequisites:
 
-### Inspecting our bindings
-The output of `cargo check` contains a line with the `bindings.rs` path. Open that file.
+- a C compiler is installed on the system
+- bindgen, install with `cargo install bindgen-cli`
+
+Steps
+
+1. Create the rust bindings: `bindgen tweetnacl.h -o src/bindings.rs`
+2. Use `build.rs` to compile and link `tweetnacl.c`. Create `build.rs` and insert
+    ```rust
+    fn main() {
+        cc::Build::new()
+            .file("tweetnacl.c")
+            .compile("tweetnacl");   // outputs `libtweetnacl.a`
+    }
+    ```
+
+    And add this section to your `Cargo.toml`
+
+    ```toml
+    [build-dependencies]
+    cc = "1"
+    ```
+3. Create `src/lib.rs` with the contents `pub mod bindings;`. This will make the `bindings` module available in `main.rs`.
+4. Run `cargo check` to verify everything is compiling correctly.
+5. By default building will generate a bunch of warnings. we can turn those off by replacing our build.rs with
+
+    ```rust
+    fn main() {
+        cc::Build::new()
+            .warnings(false)
+            .extra_warnings(false)
+            .file("tweetnacl.c")
+            .compile("tweetnacl"); // outputs `libtweetnacl.a`
+    }
+    ```
+
+    and adding this line at the top of `src/bindings.rs`:
+    ```rust
+    #![allow(non_upper_case_globals)]
+    ```
+
+## Inspecting our bindings
 
 In the generated `bindings.rs` file we find this signature for the `crypto_hash_sha512_tweet` C function from tweetNaCl:
 
@@ -183,7 +216,7 @@ pub fn crypto_hash_sha512_tweet(out: &mut [u8], data: &[u8]) -> i32 {
 }
 ```
 
-### Modelling with types
+## Modelling with types
 
 But by looking at the tweetNaCl source code we can see that the contract is a bit stronger:
 
@@ -238,7 +271,7 @@ The compiler will turn this signature into the one we had before under the hood.
 
 > In detail: The C ABI mandates that any return value larger than those that fit in a register (typically 128 bits nowadays) are allocated on the caller's stack. The first argument to the function is the pointer to write the result into. LLVM, the backend used by the rust compiler has specific optimizations to make sure the function result is written directly into this pointer.
 
-### Writing our implementation
+## Writing our implementation
 
 Allright, with the signature worked out, we can write the actual implementation.
 
@@ -305,7 +338,7 @@ pub fn crypto_hash_sha512_tweet(data: &[u8]) -> [u8; 64] {
 
 And we're done: an idiomatic rust wrapper around the `crypto_hash_sha512_tweet`!
 
-### Uninitialized memory
+## Uninitialized memory
 
 There is one more trick: our current function initializes and zeroes out the memory for `result`. That is wasteful because the extern function will overwrite these zeroes. Because the extern function is linked in, the compiler likely does not have enough information to optimize the zeroing out away.
 
@@ -381,4 +414,4 @@ start:
 ```
 
 </p>
-</details> 
+</details>

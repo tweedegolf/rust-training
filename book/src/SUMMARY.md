@@ -1,22 +1,28 @@
 # Summary
 
-# Setup
-- [0 - Installation](./0-install/mod.md)
-# Part A - Intro to Rust
-- [A1 - Basic Syntax](./A1-basic-syntax/mod.md)
-- [A2 - Ownership & References](./A2-ownership-references/mod.md)
-- [A3 - Advanced Syntax](./A3-advanced-syntax/mod.md)
-- [A4 - Traits and Generics](./A4-traits-generics/mod.md)
-# Part B - Rust in embedded
-- [B1 - Embedded basics](./B1-embedded-basics/mod.md)
-- [B2 - Cross-platform drivers](./B2-drivers/mod.md)
-- [B3 - RTIC runtime](./B3-rtic/mod.md)
-- [B4 - Async on embedded](./B4-async-embedded/mod.md)
-- [B5 - Rust in IoT](./B5-iot/mod.md)
-# Part C - Advanced Rust
-- [C1 - Parallel Rust](./C1-parallel-rust/mod.md)
-- [C2 - Async Rust](./C2-async-rust/mod.md)
-- [C3 - Async foundations](./C3-async-foundations/mod.md)
-- [C4 - Foreign Function Interface](./C4-ffi/mod.md)
+- [Course Introduction]()
+	- [Introduction](introduction.md)
+
+- [Foundations of Rust]()
+	- [Basic Syntax](basic-syntax.md)
+	- [Ownership and References](ownership-and-references.md)
+	- [Advanced Syntax](advanced-syntax.md)
+	- [Traits and Generics](traits-and-generics.md)
+	- [Closures and Dynamic dispatch](closures-and-dynamic-dispatch.md)
+	- [Interior mutability](interior-mutability.md)
+
+- [Crate Engineering]()
+	- [Crate Engineering](crate-engineering.md)
+
+- [Multitasking]()
+	- [Introduction to Multitasking](introduction-to-multitasking.md)
+	- [Parallel Multitasking](parallel-multitasking.md)
+	- [Asynchronous Multitasking](asynchronous-multitasking.md)
+
+- [Rust for Web]()
+	- [Rust for Web](rust-for-web.md)
+
+- [Rust for Systems Programming]()
+	- [Foreign Function Interface](foreign-function-interface.md)
 
 [Wrap-up](./wrap-up.md)

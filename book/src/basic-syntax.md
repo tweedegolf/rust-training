@@ -1,11 +1,10 @@
-# Module A1 - Basic Syntax
+# Unit 2.1 - Basic Syntax
 
-<a href="/slides/A-intro-to-rust" target="_blank">Slides</a>
+## Exercise 2.1.1: Basic Syntax
 
-## A1.1 Basic syntax
-Open `exercises/A1/1-basic-syntax` in your editor. This folder contains a number of exercises with which you can practise basic Rust syntax.
+Open `exercises/2-foundations-of-rust/1-basic-syntax/1-basic-syntax` in your editor. This folder contains a number of exercises with which you can practise basic Rust syntax.
 
-While inside the `exercises/A1/1-basic-syntax` folder, to get started, run:
+While inside the `exercises/2-foundations-of-rust/1-basic-syntax/1-basic-syntax` folder, to get started, run:
 ```bash
 cargo run --bin 01
 ```
