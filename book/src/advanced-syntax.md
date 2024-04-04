@@ -1,5 +1,7 @@
 # Unit 2.3 - Advanced Syntax
 
+<a href="/slides/2_3/" target="_blank">Slides</a>
+
 ## Exercise 2.3.1: Error propagation
 
 Follow the instructions in the comments of `exercises/2-foundations-of-rust/3-advanced-syntax/1-error-propagation/src/main.rs`!

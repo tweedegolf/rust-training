@@ -1,5 +1,7 @@
 # Unit 2.2 - Ownership and References
 
+<a href="/slides/2_2/" target="_blank">Slides</a>
+
 ## Exercise 2.2.1: Move Semantics
 
 *This exercise is adapted from the [move semantics exercise](https://github.com/rust-lang/rustlings/tree/main/exercises/move_semantics) from Rustlings*

@@ -1,5 +1,7 @@
 # Unit 6.1 - Foreign Function Interface
 
+<a href="/slides/6_1/" target="_blank">Slides</a>
+
 ## Exercise 6.1.1: CRC in C
 
 Use a CRC checksum function written in C in a Rust program

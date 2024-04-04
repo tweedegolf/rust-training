@@ -1,5 +1,7 @@
 # Unit 5.1 - Rust for Web
 
+<a href="/slides/5_1/" target="_blank">Slides</a>
+
 ## Exercise 5.1.1: Pastebin
 
 This exercise is about writing a simple [pastebin](https://en.wikipedia.org/wiki/Pastebin) web server. Like the quizzer app, you will need to set up the project yourself. This webserver will be powered by [`axum`](https://lib.rs/crates/axum).

@@ -1,5 +1,7 @@
 # Unit 4.3 - Asynchronous Multitasking
 
+<a href="/slides/4_3/" target="_blank">Slides</a>
+
 ## Exercise 4.3.1: Async Channels
 
 Channels are a very useful way to communicate between threads and `async` tasks. They allow for decoupling your application into many tasks. You'll see how that can come in nicely in exercise E.2. In this exercise, you'll implement two variants: a oneshot channel and a multi-producer-single-consumer (MPSC) channel. If you're up for a challenge, you can write a broadcast channel as well.

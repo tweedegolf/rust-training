@@ -1,5 +1,7 @@
 # Unit 3.1 - Crate Engineering
 
+<a href="/slides/3_1/" target="_blank">Slides</a>
+
 ## Exercise 3.1.1: My Serde App
 
 *This exercise is adapted from the [serde_lifetimes exercise](https://github.com/ferrous-systems/teaching-material/blob/main/assignments/serde-lifetimes.adoc) by Ferrous Systems*

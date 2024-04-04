@@ -1,5 +1,7 @@
 # Unit 4.2 - Parallel Multitasking
 
+<a href="/slides/4_2/" target="_blank">Slides</a>
+
 ## Exercise 4.2.1: TF-IDF
 
 Follow the instructions in the comments of `exercises/4-multitasking/2-parallel-multitasking/1-tf-idf/src/main.rs`!

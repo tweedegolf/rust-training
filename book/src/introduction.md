@@ -1,5 +1,7 @@
 # Unit 1.1 - Introduction
 
+<a href="/slides/1_1/" target="_blank">Slides</a>
+
 ## Exercise 1.1.1: Setup Your Installation
 
 In this file you'll find instructions on how to install the tools we'll use during the course.
