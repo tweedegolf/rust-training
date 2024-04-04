@@ -1636,6 +1636,82 @@ C2 exercise description: [workshop.tweede.golf](https://workshop.tweede.golf/C2-
 
 
 ---
+layout: default
+---
+# Async combinators: join 
+
+sequential composition: awaits till all futures complete
+
+```rust
+let (res1, res2) = join!(fut1, fut2);
+
+match try_join!(fut1, fut2) {
+    Err(first_to_error) => ... 
+    Ok((ok1, ok2)) => ... 
+}
+```
+
+---
+layout: default
+---
+# Async combinators: select 
+
+parallel composition: completes when any future completes
+
+
+```rust
+async fn with_timeout<T, F: Future<Output = T>>(f: F, duration: Duration) -> Option<T> {
+    select! { 
+        _ = sleep(duration) => None,
+        result = f => Some(result),
+    }
+}
+```
+
+the other futures are **cancelled**
+
+---
+layout: default
+---
+# Cancel safety 
+
+A future is **cancel-safe** when partially completing it is observationally equivalent to not running it at all
+
+```rust
+select! { 
+    _ = sleep(duration) => None,
+    n = tokio::io::AsyncRead::read(&mut reader, &mut buf) => Some(n),
+}
+```
+
+```rust
+select! { 
+    _ = sleep(duration) => None,
+    result = tokio::io::AsyncBufReadExt::read_line(&mut reader, &mut buf) => Some(result),
+}
+```
+
+---
+layout: default
+---
+# Task
+
+A task is a light weight, non-blocking unit of execution. 
+
+> A task is similar to an OS thread, but rather than being managed by the OS scheduler, they are managed by the Tokio runtime. Another name for this general pattern is green threads.
+
+https://docs.rs/tokio/latest/tokio/task/index.html
+
+---
+layout: default
+---
+# Stream 
+
+A stream is the async equivalent of an iterator.
+
+because the `Stream` or `AsyncIterator` trait is not stable, these apis are not used the often today.
+
+---
 layout: cover
 ---
 
