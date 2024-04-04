@@ -50,7 +50,7 @@
     "dev-6_1": "slidev 6_1-foreign-function-interface.md",
     "build-6_1": "slidev build --out dist/6_1 --base /slides/6_1/ 6_1-foreign-function-interface.md",
     "export-6_1": "slidev export 6_1-foreign-function-interface.md",
-    "build-Y": "slidev build --out dist/Y-ecosystem-and-tooling --base Y-ecosystem-and-tooling.md",
+    "build-Y": "slidev build --out dist/Y-ecosystem-and-tooling --base --base /slides/y-ecosystem-and-tooling/ Y-ecosystem-and-tooling.md",
     "dev-Y": "slidev Y-ecosystem-and-tooling.md",
     "export-Y": "slidev export C-advanced-rust.md",
     "build-Z": "slidev build --out dist/Z-wrap-up --base /slides/Z-wrap-up/ Z-wrap-up.md",
