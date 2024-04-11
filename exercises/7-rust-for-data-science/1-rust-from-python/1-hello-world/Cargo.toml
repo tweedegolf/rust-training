@@ -1,0 +1,16 @@
+[package]
+name = "hello-py"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "hello_py"              # Name of your module
+crate-type = ["cdylib", "lib"] # Usable from outside as well as from Rust
+
+[dependencies]
+futures-lite = "2.3.0"
+num = "0.4.1"
+
+[dependencies.pyo3]
+version = "0.21.2"
+features = ["extension-module", "num-bigint", "experimental-async"]

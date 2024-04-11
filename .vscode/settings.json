@@ -25,6 +25,7 @@
         "exercises/6-rust-for-systems-programming/1-foreign-function-interface/1-crc-in-c/Cargo.toml",
         "exercises/6-rust-for-systems-programming/1-foreign-function-interface/2-crc-in-rust/Cargo.toml",
         "exercises/6-rust-for-systems-programming/1-foreign-function-interface/3-tweetnacl-bindgen/Cargo.toml",
+        "exercises/7-rust-for-data-science/1-rust-from-python/1-hello-world/Cargo.toml",
     ],
     "rust-analyzer.check.allTargets": false,
 }
