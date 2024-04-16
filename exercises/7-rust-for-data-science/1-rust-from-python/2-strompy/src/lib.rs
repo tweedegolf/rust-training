@@ -190,8 +190,8 @@ impl PieceOfWork {
 }
 
 mod strompychan {
+    use pyo3::{prelude::*, types::PyList};
     use std::sync::Arc;
-    use pyo3::prelude::*;
 
     use futures::lock::Mutex;
     use pychan::reader::PyBytesReader;
@@ -208,7 +208,7 @@ mod strompychan {
     #[derive(Clone)]
     /// Wraps a PyBytesReader, and allows for deserializing
     /// incoming bytes from that reader to MatrixBufs and Ops,
-    /// in a streaming fashion, as well as executing 
+    /// in a streaming fashion, as well as executing
     pub struct StrompyJsonReader {
         // Wrapping the actual object in Arc<Mutex> makes
         // this thing Send, Sync and allows for shared ownership
@@ -247,7 +247,26 @@ mod strompychan {
 
     #[pymethods]
     impl StrompyJsonReader {
-        /* Todo for part B: add an async method to StrompyJsonReader that yields a PyResult<Option<Vec<Vec<f64>>>>*/
+        /*
+            TODO PART B: add an async method to StrompyJsonReader that yields a PyResult<Option<Vec<Vec<f64>>>>
+            and is exposed with the name '`next`'
+        */
+        #[pyo3(name = "next")]
+        async fn next_py(&mut self) -> PyResult<Option<Py<PyList>>> {
+            let m = self.next().await?;
+            let pylist = m.map(|m| {
+                Python::with_gil(|py| {
+                    PyList::new_bound(
+                        py,
+                        m.d.chunks_exact(m.n)
+                            .into_iter()
+                            .map(|c| PyList::new_bound(py, c).unbind()),
+                    )
+                    .unbind()
+                })
+            });
+            Ok(pylist)
+        }
     }
 }
 
@@ -268,7 +287,12 @@ mod py {
 
     #[pyfunction]
     fn exec(json_bytes: &[u8]) -> PyResult<Vec<Vec<Vec<f64>>>> {
-        todo!("Implement exec for part A")
+        let work: Vec<PieceOfWork> = serde_json::from_reader(json_bytes).unwrap();
+
+        let mut results: Vec<MatrixBuf> = todo!("PART A: Execute each piece of work");
+
+        // Do you have an idea what this incantation does?
+        Ok(results.into_iter().map(Into::into).collect())
     }
 
     #[pyfunction]
@@ -282,7 +306,7 @@ mod py {
 
     #[pyfunction]
     async fn feed_bytes(mut writer: PyBytesSender, bytes: Py<PyBytes>) -> PyResult<()> {
-        todo!("Send the bytes to the writer for part B")
+        todo!("PART B: Send the bytes to the writer")
     }
 
     #[pymodule]
