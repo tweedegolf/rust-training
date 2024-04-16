@@ -20,11 +20,6 @@ Module 6: Rust for Systems Programming
 
 Foreign Function Interface
 
----
-
-# Learning objectives
-
-
 
 ---
 layout: default

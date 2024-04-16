@@ -28,7 +28,7 @@ Basic Syntax
 
 
 ---
-layout: section
+layout: cover
 ---
 # Meeting Rust
 
@@ -114,7 +114,7 @@ for the blocks
 - no explicit return keyword (will get back to that)
 -->
 ---
-layout: section
+layout: cover
 ---
 
 # Basic Syntax
