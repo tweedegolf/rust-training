@@ -1,5 +1,4 @@
 use std::{
-    borrow::Borrow,
     pin::Pin,
     task::{Context, Poll},
     thread::JoinHandle,
@@ -61,16 +60,3 @@ pub async fn print_sleep(duration: Duration) {
     );
 }
 
-// #[pyfunction]
-// async fn does_not_compile<'py>(arg: Bound<'py, PyAny>) -> Bound<'py, PyAny> {
-//     todo!()
-// }
-
-#[pyfunction]
-async fn does_compile(arg: Py<PyAny>) -> Py<PyAny> {
-    Python::with_gil(|py| { // (almost) no-op
-        let r: &Bound<'_, PyAny> = arg.bind(py);
-
-        todo!()
-    })
-}

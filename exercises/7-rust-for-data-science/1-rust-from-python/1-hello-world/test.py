@@ -1,10 +1,6 @@
 import hello_py
-import math
 
 hello_py.say_hello()
-
-fact = math.factorial(1024)
-print(fact)
 
 fact = hello_py.fact(1024)
 print(fact)

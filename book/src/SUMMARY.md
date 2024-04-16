@@ -24,4 +24,7 @@
 - [Rust for Systems Programming]()
 	- [Foreign Function Interface](foreign-function-interface.md)
 
+- [Rust for Data Science]()
+	- [Rust from Python](rust-from-python.md)
+
 [Wrap-up](./wrap-up.md)

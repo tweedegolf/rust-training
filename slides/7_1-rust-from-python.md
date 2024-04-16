@@ -583,7 +583,7 @@ layout: with-footer
 # `Limitations of async`/`await`
 
 - GIL held during execution of `Future`
-- `Send` + `'static`: no references
+- `Send` + `'static`: no references in signature
 
 ```rust{all|7-9}
 #[pyfunction]
