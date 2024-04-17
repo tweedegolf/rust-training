@@ -1,6 +1,7 @@
 use std::collections::BTreeMap;
-use std::sync::mpsc::Receiver;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
+
+use tokio::sync::mpsc::Receiver;
 
 use crate::message::Measurement;
 
@@ -15,7 +16,7 @@ struct DatabaseRow {
 
 // TODO asyncify
 #[tracing::instrument(skip_all)]
-pub fn run(receiver: Receiver<Measurement>) -> anyhow::Result<()> {
+pub async fn run(mut receiver: Receiver<Measurement>) -> anyhow::Result<()> {
     let mut database = csv::Writer::from_path("database.csv")?;
 
     loop {

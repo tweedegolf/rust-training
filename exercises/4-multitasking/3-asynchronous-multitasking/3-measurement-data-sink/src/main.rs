@@ -1,17 +1,14 @@
-// use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
-// use tokio::net::{TcpListener, TcpStream};
-// use tokio::sync::mpsc;
-use std::io::{BufRead, BufReader, Write};
-use std::net::{TcpListener, TcpStream};
-use std::sync::mpsc;
-
 use anyhow::Context;
+use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
+use tokio::net::{TcpListener, TcpStream};
+use tokio::sync::mpsc;
 use tracing::level_filters::LevelFilter;
 use tracing_subscriber::EnvFilter;
 
 use data_sink::message::{KeepAlive, Measurement};
 
-fn main() -> anyhow::Result<()> {
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
     // Setup logging
     let filter = EnvFilter::builder()
         .with_default_directive(LevelFilter::INFO.into())
@@ -20,32 +17,36 @@ fn main() -> anyhow::Result<()> {
     tracing_subscriber::fmt().with_env_filter(filter).init();
 
     // Setup backend
-    let (sender, receiver) = mpsc::channel();
-    std::thread::spawn(move || data_sink::database::run(receiver)); // TODO: Change to tokio::task
+    let (sender, receiver) = mpsc::channel(1024);
+    tokio::task::spawn(data_sink::database::run(receiver));
 
-    let listener = TcpListener::bind("[::1]:8080")?;
+    let listener = TcpListener::bind("[::1]:8080").await?;
 
     loop {
-        let (socket, _) = listener.accept()?;
+        let (socket, _) = listener.accept().await?;
         let sender = sender.clone();
-        std::thread::spawn(move || handle_client(socket, sender)); // TODO: Change to tokio::task
+        tokio::spawn(handle_client(socket, sender));
     }
 }
 
 // NOTE: make this an async fn
-pub fn handle_client(socket: TcpStream, backend: mpsc::Sender<Measurement>) -> anyhow::Result<()> {
+#[tracing::instrument(skip_all, fields(peer_addr = %socket.peer_addr()?), err)]
+pub async fn handle_client(
+    socket: TcpStream,
+    backend: mpsc::Sender<Measurement>,
+) -> anyhow::Result<()> {
     tracing::info!("New connection");
 
     let mut buffered = BufReader::new(socket);
 
     loop {
         let mut line = String::new();
-        buffered.read_line(&mut line)?;
+        buffered.read_line(&mut line).await?;
 
         match serde_json::from_str::<Measurement>(&line) {
             Ok(parsed) => {
                 tracing::debug!(node_id = parsed.node_id, "Received measurement");
-                backend.send(parsed)?;
+                backend.send(parsed).await?;
             }
             Err(err) => tracing::error!(?err, line, "Failed to deserialize"),
         }
@@ -58,6 +59,6 @@ pub fn handle_client(socket: TcpStream, backend: mpsc::Sender<Measurement>) -> a
         };
         let mut json = serde_json::to_string(&msg)?;
         json.push('\n');
-        buffered.get_mut().write_all(json.as_bytes())?;
+        buffered.get_mut().write_all(json.as_bytes()).await?;
     }
 }
