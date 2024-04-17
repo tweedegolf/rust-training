@@ -1,7 +1,10 @@
+use std::time::Duration;
+
 use anyhow::Context;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::net::{TcpListener, TcpStream};
 use tokio::sync::mpsc;
+use tokio::time::interval;
 use tracing::level_filters::LevelFilter;
 use tracing_subscriber::EnvFilter;
 
@@ -39,26 +42,29 @@ pub async fn handle_client(
 
     let mut buffered = BufReader::new(socket);
 
+    let mut interval = interval(Duration::from_secs(4));
+
     loop {
         let mut line = String::new();
-        buffered.read_line(&mut line).await?;
-
-        match serde_json::from_str::<Measurement>(&line) {
-            Ok(parsed) => {
-                tracing::debug!(node_id = parsed.node_id, "Received measurement");
-                backend.send(parsed).await?;
+        tokio::select! {
+            res =  buffered.read_line(&mut line) => {
+                res?;
+                match serde_json::from_str::<Measurement>(&line) {
+                    Ok(parsed) => {
+                        tracing::debug!(node_id = parsed.node_id, "Received measurement");
+                        backend.send(parsed).await?;
+                    }
+                    Err(err) => tracing::error!(?err, line, "Failed to deserialize"),
+                }
             }
-            Err(err) => tracing::error!(?err, line, "Failed to deserialize"),
+            _ = interval.tick() => {
+                let msg = KeepAlive {
+                    everything_is_fine: true,
+                };
+                let mut json = serde_json::to_string(&msg)?;
+                json.push('\n');
+                buffered.get_mut().write_all(json.as_bytes()).await?;
+            }
         }
-
-        // Make sure the sensor knows everything is still ok...
-        // Since the sensor sends a new measurement every second, and we only have to send a
-        // KeepAlive every 5 seconds this is fine
-        let msg = KeepAlive {
-            everything_is_fine: true,
-        };
-        let mut json = serde_json::to_string(&msg)?;
-        json.push('\n');
-        buffered.get_mut().write_all(json.as_bytes()).await?;
     }
 }
