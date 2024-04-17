@@ -2,17 +2,19 @@ use std::net::IpAddr;
 
 use anyhow::{anyhow, Context};
 use clap::{arg, Parser};
-use many_sensors::{KeepAlive, Measurement, Mood};
+use rand::{Rng, thread_rng};
 use rand::distributions::{Bernoulli, Open01, Uniform};
-use rand::{thread_rng, Rng};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader, Lines};
 use tokio::net::tcp::{ReadHalf, WriteHalf};
+use tokio::select;
 use tokio::signal::ctrl_c;
 use tokio::task::JoinSet;
+use tokio::time::{Duration, Instant, interval, Interval, timeout_at};
 use tokio::time::error::Elapsed;
-use tokio::time::{interval, timeout_at, Duration, Instant, Interval};
-use tracing_subscriber::filter::LevelFilter;
 use tracing_subscriber::EnvFilter;
+use tracing_subscriber::filter::LevelFilter;
+
+use many_sensors::{KeepAlive, Measurement, Mood};
 
 /// A tool that simulates (potentially many) clients sending measurements
 #[derive(Parser, Debug)]
@@ -53,7 +55,11 @@ async fn main() -> anyhow::Result<()> {
     // Start one task per simulated client
     let mut handles = JoinSet::new();
     for id in 0..args.clients {
-        handles.spawn(run_client(id, args));
+        if id == 0 {
+            handles.spawn(run_broken_client(id, args));
+        } else {
+            handles.spawn(run_client(id, args));
+        }
     }
     tracing::info!("All clients started. Waiting for them to finish");
 
@@ -109,6 +115,44 @@ async fn run_client(id: usize, args: &'static Args) -> anyhow::Result<()> {
                 return Ok(());
             }
         }
+    }
+}
+
+#[tracing::instrument(skip(args), err)]
+async fn run_broken_client(id: usize, args: &'static Args) -> anyhow::Result<()> {
+    let mut sock = tokio::net::TcpStream::connect((args.target, args.port)).await?;
+    let (rx, mut tx) = sock.split();
+    let mut lines = BufReader::new(rx).lines();
+
+    tracing::debug!("Connected to server");
+
+    let mut interval = interval(Duration::from_millis(1000));
+    loop {
+        let measurement = measure(id);
+        let mut json =
+            serde_json::to_string(&measurement).context("Could not serialize measurement")?;
+        json.push('\n');
+
+        for bytes in json.as_bytes().chunks(10) {
+            tx.write_all(bytes)
+                .await
+                .context("Could not send to server")?;
+            tx.flush().await?;
+
+            tokio::select! {
+                _ = interval.tick() => {}
+                res = ctrl_c() => {
+                    res.context("Failed to listen for Ctrl-C")?;
+                    tracing::debug!("Shutting down after Ctrl-C");
+                    return Ok(());
+                }
+            }
+        }
+
+        tracing::debug!(
+            "Sent measurement... only took {} seconds",
+            json.as_bytes().len() / 10
+        );
     }
 }
 
