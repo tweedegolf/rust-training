@@ -41,14 +41,14 @@ pub async fn handle_client(
     tracing::info!("New connection");
 
     let mut buffered = BufReader::new(socket);
+    let mut lines = buffered.lines();
 
     let mut interval = interval(Duration::from_secs(4));
 
     loop {
-        let mut line = String::new();
         tokio::select! {
-            res =  buffered.read_line(&mut line) => {
-                res?;
+            line = lines.next_line() => {
+                let line = line?.context("Connection closed")?;
                 match serde_json::from_str::<Measurement>(&line) {
                     Ok(parsed) => {
                         tracing::debug!(node_id = parsed.node_id, "Received measurement");
@@ -63,7 +63,7 @@ pub async fn handle_client(
                 };
                 let mut json = serde_json::to_string(&msg)?;
                 json.push('\n');
-                buffered.get_mut().write_all(json.as_bytes()).await?;
+                lines.get_mut().write_all(json.as_bytes()).await?;
             }
         }
     }
