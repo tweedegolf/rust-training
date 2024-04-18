@@ -53,10 +53,10 @@
     "dev-7_1": "slidev 7_1-rust-from-python.md",
     "build-7_1": "slidev build --out dist/7_1 --base /slides/7_1/ 7_1-rust-from-python.md",
     "export-7_1": "slidev export 7_1-rust-from-python.md",
-    "build-Y": "slidev build --out dist/Y-ecosystem-and-tooling --base --base /slides/y-ecosystem-and-tooling/ Y-ecosystem-and-tooling.md",
+    "build-Y": "slidev build --out dist/Y --base /slides/Y/ Y-ecosystem-and-tooling.md",
     "dev-Y": "slidev Y-ecosystem-and-tooling.md",
     "export-Y": "slidev export C-advanced-rust.md",
-    "build-Z": "slidev build --out dist/Z-wrap-up --base /slides/Z-wrap-up/ Z-wrap-up.md",
+    "build-Z": "slidev build --out dist/Z --base /slides/Z/ Z-wrap-up.md",
     "dev-Z": "slidev Z-wrap-up.md",
     "export-Z": "slidev export Z-wrap-up.md",
     "_": ""
