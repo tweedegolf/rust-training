@@ -1,6 +1,6 @@
 # Wrap-up
 
-<a href="/slides/Z-wrap-up/" target="_blank">Slides</a>
+<a href="/slides/Z/" target="_blank">Slides</a>
 
 ## Evaluation form
 
