@@ -1,5 +1,5 @@
 {
-  "name": "tweedegolf-rust-workshop",
+  "name": "tweedegolf-rust-training",
   "private": true,
   "dependencies": {
     "@slidev/cli": "^0.48",

@@ -15,7 +15,7 @@ layout: cover
 A language empowering everyone
 to build reliable and efficient software.
 
-## Workshop intro
+## Training intro
 <img src="https://raw.githubusercontent.com/tweedegolf/slidev-theme-tweedegolf/1bc81d09e326fcecb531108a5a3bcd9e1856dd84/images/shield-large.png" class=bg-image>
 
 ---
@@ -103,7 +103,7 @@ layout: with-footer
 # A quick note about Tweede golf
 
 - **Leading Rust agency in NL** Running Rust in production since 2017
-- **Working on Rust adoption** Through both Rust 101 and in-company workshops
+- **Working on Rust adoption** Through both teach-rs and in-company trainings
 - **Working on Rust projects** Like Rust implementations of PTP, NTP, sudo and su
 - **Active community member** Organizing RustNL 2023 and active in various Rust meetups
 
@@ -152,7 +152,7 @@ Sure there are. The things mentioned most often:
 ---
 layout: with-footer
 ---
-# Workshop format
+# Training format
 
 ```rust
 let t = thread::spawn(|| loop {
@@ -161,7 +161,7 @@ let t = thread::spawn(|| loop {
 })
 
 
-for part in workshop.parts() {
+for part in training.parts() {
     part.slides();
     part.exercises();
 }

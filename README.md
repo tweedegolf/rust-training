@@ -1,7 +1,7 @@
-# Tweede golf Rust workshops
+# Tweede golf Rust trainings
 
-Exercises material and slides for Tweede golf's Rust workshops
+Exercises material and slides for Tweede golf's Rust trainings
 
 The rendered instructions can be found at <https://training.tweede.golf>
 
-This workshop material is based on the [Rust 101](https://github.com/tweedegolf/101-rs) university course
+This training material is based on the [teach-rs](https://github.com/tweedegolf/teach-rs) university course
