@@ -219,7 +219,7 @@ $ maturin develop
    Compiling pyo3-ffi v0.21.1
    Compiling pyo3 v0.21.1
    Compiling pyo3-macros v0.21.1
-   Compiling hello-py v0.1.0 (/home/hd/dev/tg/edu/rust-workshop/exercises/7-rust-for-data-science/1-rust-from-python/1-hello-world)
+   Compiling hello-py v0.1.0 (/home/hd/dev/tg/edu/rust-training/exercises/7-rust-for-data-science/1-rust-from-python/1-hello-world)
     Finished dev [unoptimized + debuginfo] target(s) in 6.84s
 📦 Built wheel for CPython 3.12 to /tmp/.tmpWV4WTB/hello_py-0.1.0-cp312-cp312-linux_x86_64.whl
 ✏️  Setting installed package as editable

@@ -10,7 +10,7 @@ layout: cover
 ---
 
 
-# Workshop wrap-up
+# Training wrap-up
 
 Evaluation, certificate and what’s next?
 
@@ -41,12 +41,12 @@ layout: cover
 
 Receive a certificate?
 
-Send an email with subject **‘Certificate’**,<br/>your **full name** and the **name of the workshop**<br/>you participated in to
+Send an email with subject **‘Certificate’**,<br/>your **full name** and the **name of the training**<br/>you participated in to
 
-**workshops@tweedegolf.com**
+**training@tweedegolf.com**
 
 
-<img src="/images/workshop-cert.svg" class="bg-image" style="height: 400px">
+<img src="/images/training-cert.svg" class="bg-image" style="height: 400px">
 
 ---
 layout: with-footer
