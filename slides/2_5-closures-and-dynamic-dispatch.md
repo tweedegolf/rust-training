@@ -37,8 +37,8 @@ layout: default
 
 ```rust
 fn foo() -> impl Fn(i64, i64) -> i64 {
-    z = 42;
-    |x, y| x + y + z
+    let z = 42;
+    move |x, y| x + y + z
 }
 
 fn bar() -> i64 {
@@ -128,8 +128,9 @@ fn main() {
         todo!("read args");
     let mut logger = match log_file {
         Some(log_path) => FileLogger { log_path },
-        Nome => StdOutLogger,
+        None => StdOutLogger,
     };
+
     log("Hello, world!🦀", &mut logger);
 }
 ```
@@ -148,7 +149,7 @@ error[E0308]: `match` arms have incompatible types
    |  ______________________-
 18 | |         Some(log_path) => FileLogger { log_path },
    | |                           ----------------------- this is found to be of type `FileLogger`
-19 | |         Nome => StdOutLogger,
+19 | |         None => StdOutLogger,
    | |                 ^^^^^^^^^^^^ expected struct `FileLogger`, found struct `StdOutLogger`
 20 | |     };
    | |_____- `match` arms have incompatible types
@@ -229,7 +230,7 @@ fn main() {
     // Create a trait object that implements `Write`
     let logger: &mut dyn Write = match log_file {
         Some(log_path) => &mut FileLogger { log_path },
-        Nome => &mut StdOutLogger,
+        None => &mut StdOutLogger,
     };
 }
 ```
@@ -247,7 +248,7 @@ fn main() {
     // Create a trait object that implements `Write`
     let logger: &mut dyn Write = match log_file {
         Some(log_path) => &mut FileLogger { log_path },
-        Nome => &mut StdOutLogger,
+        None => &mut StdOutLogger,
     };
 
     log("Hello, world!🦀", &mut logger);
@@ -284,7 +285,7 @@ fn main() {
     // Create a trait object that implements `Write`
     let logger: &mut dyn Write = match log_file {
         Some(log_path) => &mut FileLogger { log_path },
-        Nome => &mut StdOutLogger,
+        None => &mut StdOutLogger,
     };
 
     log("Hello, world!🦀", logger);
@@ -311,7 +312,7 @@ fn main() {
     // Create a trait object that implements `Write`
     let logger: &mut dyn Write = match log_file {
         Some(log_path) => &mut FileLogger { log_path },
-        Nome => &mut StdOutLogger,
+        None => &mut StdOutLogger,
     };
 
 
