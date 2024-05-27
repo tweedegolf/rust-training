@@ -27,4 +27,7 @@
 - [Rust for Data Science]()
 	- [Rust from Python](rust-from-python.md)
 
+- [Rust for Embedded]()
+	- [Ecosystem](embedded-ecosystem.md)
+
 [Wrap-up](./wrap-up.md)

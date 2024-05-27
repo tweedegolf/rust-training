@@ -1,0 +1,17 @@
+[package]
+name = "lis3dh-id"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
+cortex-m-rt = "0.7.3"
+nrf52840-hal = { version = "0.18.0", features = ["rt"] }
+rtt-target = "0.5.0"
+embedded-hal = "1.0.0"
+
+[profile.release]
+debug = true
+lto = true
