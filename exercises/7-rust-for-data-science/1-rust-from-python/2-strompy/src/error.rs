@@ -1,5 +1,5 @@
 use std::{
-    fmt::Display,
+    fmt::{write, Display},
     num::{ParseFloatError, ParseIntError},
 };
 
@@ -16,6 +16,7 @@ pub enum StrompyError {
     Struson(struson::reader::ReaderError),
     ParseFloat(ParseFloatError),
     ParseInt(std::num::ParseIntError),
+    InvalidDimensions,
 }
 
 impl Display for StrompyError {
@@ -25,6 +26,9 @@ impl Display for StrompyError {
             StrompyError::Struson(e) => write!(f, "Struson error: {e}"),
             StrompyError::ParseFloat(e) => write!(f, "ParseFloat error: {e}"),
             StrompyError::ParseInt(e) => write!(f, "ParseInt error: {e}"),
+            StrompyError::InvalidDimensions => {
+                write!(f, "Invalid matrix dimensions to perform that operation")
+            }
         }
     }
 }

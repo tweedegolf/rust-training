@@ -4,7 +4,7 @@ use heapless::Vec as HeaplessVec;
 use nalgebra as na;
 use struson::reader::{JsonReader, JsonStreamReader};
 
-mod error;
+pub mod error;
 
 type StrompyResult<T> = core::result::Result<T, StrompyError>;
 
@@ -16,6 +16,13 @@ pub type MatrixView<'buf> = na::Matrix<
     na::Dyn,
     na::Dyn,
     na::ViewStorage<'buf, f64, na::Dyn, na::Dyn, na::Const<1>, na::Dyn>,
+>;
+
+pub type ConstMatrixView<'buf, const R: usize, const C: usize> = na::Matrix<
+    f64,
+    na::Const<R>,
+    na::Const<C>,
+    na::ViewStorage<'buf, f64, na::Const<R>, na::Const<C>, na::Const<1>, na::Const<R>>,
 >;
 
 /// A buffer into which matrix data can be stored
@@ -34,6 +41,18 @@ impl MatrixBuf {
         let rows = self.d.len() / self.n;
         let cols = self.n;
         MatrixView::from_slice_generic(&self.d, na::Dyn(rows), na::Dyn(cols))
+    }
+
+    pub fn try_const_view<'buf, const R: usize, const C: usize>(
+        &'buf self,
+    ) -> Result<ConstMatrixView<'buf, R, C>, StrompyError> {
+        let rows = self.d.len() / self.n;
+        let cols = self.n;
+        if (rows, cols) != (R, C) {
+            return Err(StrompyError::InvalidDimensions);
+        }
+
+        Ok(ConstMatrixView::from_slice(&self.d))
     }
 
     pub async fn deserialize<R: AsyncRead + Unpin>(
@@ -73,20 +92,28 @@ impl MatrixBuf {
 #[serde(tag = "code", rename_all = "lowercase")]
 enum Operation {
     /// Perform the dot product of some matrix with `rhs`
-    Dot { rhs: MatrixBuf },
+    Dot {
+        rhs: MatrixBuf,
+    },
+    Add {
+        rhs: MatrixBuf,
+    },
     // TODO for part C: support other operations
 }
 
 impl Operation {
     /// Evaluate the operation, given a [MatrixBuf]
-    fn eval(self, lhs: MatrixBuf) -> MatrixBuf {
+    fn eval(self, lhs: MatrixBuf) -> Result<MatrixBuf, StrompyError> {
         match self {
             Operation::Dot { rhs } => {
                 let dot = lhs.view().dot(&rhs.view());
-                MatrixBuf {
+                Ok(MatrixBuf {
                     d: HeaplessVec::from_slice(&[dot]).unwrap(),
                     n: 1,
-                }
+                })
+            }
+            Operation::Add { rhs } => {
+                todo!()
             }
         }
     }
@@ -142,11 +169,11 @@ pub struct PieceOfWork {
 impl PieceOfWork {
     /// Execute a single [PieceOfWork] that
     /// has already been read fully into memory.
-    pub fn exec(self) -> MatrixBuf {
+    pub fn exec(self) -> Result<MatrixBuf, StrompyError> {
         let res = self
             .op
             .into_iter()
-            .fold(self.lhs, |rhs: MatrixBuf, op| op.eval(rhs));
+            .try_fold(self.lhs, |rhs: MatrixBuf, op| op.eval(rhs));
 
         res
     }
@@ -178,7 +205,7 @@ impl PieceOfWork {
         let mut res = lhs;
         while reader.has_next().await? {
             let op: Operation = Operation::deserialize(reader).await?;
-            res = op.eval(res);
+            res = op.eval(res)?;
         }
 
         reader.end_array().await?;
@@ -332,8 +359,8 @@ mod test {
     fn it_works() {
         let json = include_str!("../op.json");
         let [work]: [PieceOfWork; 1] = serde_json::from_str(json).unwrap();
-        let res = work.exec();
-        assert_eq!(res.view(), nalgebra::matrix![1586.0]);
+        let res = work.exec().unwrap();
+        assert_eq!(res.view(), nalgebra::matrix![1587.0]);
     }
 
     #[tokio::test]
@@ -353,4 +380,74 @@ mod test {
 
         json_reader.end_array().await.unwrap();
     }
+}
+
+/// Perform some operation on two MatrixBufs that have the same dimensions.
+///
+/// Usage:
+///
+/// ```
+/// # use strompy::error::StrompyError;
+/// # use strompy::{ConstMatrixView, MatrixBuf};
+/// # use strompy::matrix_op;
+/// #
+/// fn add_matrices(lhs: &MatrixBuf, rhs: &MatrixBuf) -> Result<MatrixBuf, StrompyError> {
+///     let (rows, cols) = lhs.view().shape();
+///     if (rows, cols) != rhs.view().shape() {
+///         return Err(StrompyError::InvalidDimensions);
+///     };
+///     let result = matrix_op!(&lhs, &rhs, R, C, |lhs: &MatrixBuf, rhs: &MatrixBuf| {
+///         let lhs: ConstMatrixView<R, C> = lhs.try_const_view().unwrap();
+///         let rhs: ConstMatrixView<R, C> = rhs.try_const_view().unwrap();
+///         lhs + rhs
+///     });
+///
+///     result
+/// }
+/// ```
+#[macro_export]
+macro_rules! matrix_op {
+    ($lhs:expr, $rhs:expr, $R:ident, $C:ident, $f:expr) => {{
+        fn do_perform_op<const R: usize>(
+            cols: usize,
+            lhs: &MatrixBuf,
+            rhs: &MatrixBuf,
+        ) -> Result<MatrixBuf, StrompyError> {
+            fn do_perform_op_inner<const $R: usize, const $C: usize>(
+                lhs: &MatrixBuf,
+                rhs: &MatrixBuf,
+            ) -> Result<MatrixBuf, StrompyError> {
+                let res = ($f)(lhs, rhs);
+                Ok(MatrixBuf::with_data(
+                    ::heapless::Vec::from_slice(res.as_slice()).unwrap(),
+                    R * C,
+                ))
+            }
+
+            match cols {
+                1 => do_perform_op_inner::<R, 1>(lhs, rhs),
+                2 => do_perform_op_inner::<R, 2>(lhs, rhs),
+                3 => do_perform_op_inner::<R, 3>(lhs, rhs),
+                4 => do_perform_op_inner::<R, 4>(lhs, rhs),
+                5 => do_perform_op_inner::<R, 5>(lhs, rhs),
+                6 => do_perform_op_inner::<R, 6>(lhs, rhs),
+                _ => unreachable!("MatrixBufs can have at most 6 cols"),
+            }
+        }
+
+        let (rows, cols) = $lhs.view().shape();
+        if (rows, cols) != $rhs.view().shape() {
+            return Err(StrompyError::InvalidDimensions);
+        };
+
+        match rows {
+            1 => do_perform_op::<1>(cols, $lhs, $rhs),
+            2 => do_perform_op::<2>(cols, $lhs, $rhs),
+            3 => do_perform_op::<3>(cols, $lhs, $rhs),
+            4 => do_perform_op::<4>(cols, $lhs, $rhs),
+            5 => do_perform_op::<5>(cols, $lhs, $rhs),
+            6 => do_perform_op::<6>(cols, $lhs, $rhs),
+            _ => unreachable!("MatrixBufs can have at most 6 rows"),
+        }
+    }};
 }
