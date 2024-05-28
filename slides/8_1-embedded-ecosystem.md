@@ -143,7 +143,7 @@ layout: with-footer
 
 <table class="emb-overview">
 <tr class="hide">
-    <td colspan="7"><center>Driver</center></td>
+    <td colspan="7"><center><br/>Driver</center></td>
 </tr>
 <tr class="hide">
     <td colspan="7"><center><br/><pre>embedded-hal</pre></center></td>
@@ -220,7 +220,7 @@ layout: with-footer
 
 <table class="emb-overview">
 <tr class="hide">
-    <td colspan="7"><center>Driver</center></td>
+    <td colspan="7"><center><br/>Driver</center></td>
 </tr>
 <tr class="hide">
     <td colspan="7"><center><br/><pre>embedded-hal</pre></center></td>
@@ -275,7 +275,7 @@ layout: with-footer
 
 <table class="emb-overview">
 <tr class="hide">
-    <td colspan="7"><center>Driver</center></td>
+    <td colspan="7"><center><br/>Driver</center></td>
 </tr>
 <tr>
     <td colspan="7"><center><br/><pre>embedded-hal</pre></center></td>
