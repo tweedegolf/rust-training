@@ -29,5 +29,6 @@
 
 - [Rust for Embedded]()
 	- [Ecosystem](embedded-ecosystem.md)
+	- [Portable Drivers](portable-drivers.md)
 
 [Wrap-up](./wrap-up.md)

@@ -28,6 +28,7 @@
         "exercises/7-rust-for-data-science/1-rust-from-python/1-hello-world/Cargo.toml",
         "exercises/7-rust-for-data-science/1-rust-from-python/2-strompy/Cargo.toml",
         "exercises/8-embedded/1-embedded-ecosystem/1-lis3dh-id/Cargo.toml",
+        "exercises/8-embedded/2-portable-drivers/1-lis3dh-driver/Cargo.toml",
     ],
     "rust-analyzer.check.allTargets": false,
 }
