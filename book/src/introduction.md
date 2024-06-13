@@ -120,3 +120,100 @@ If Rust-Analyzer is set up correctly, you can also click the '▶️ Run'-button
 With CodeLLDB installed correctly, you can also start a debug session by clicking 'Debug', right next to the '▶️ Run'-button.
 Play a little with setting breakpoints by clicking on a line number, making a red circle appear and stepping over/into/out of functions using the controls.
 You can view variable values by hovering over them while execution is paused, or by expanding the 'Local' view under 'Variables' in the left panel during a debug session.
+
+# Instructions for embedded
+This part is relevant only if you're partaking in one of the workshops on embedded Rust.
+
+## Hardware
+You should have received the following parts:
+
+- nRF52840-DK
+- Breadboard
+- LIS3DH Breakout board
+- Male-to-male breadboard wires
+
+You'll also need a Micro-USB cable, but we're sure you've got one to spare.
+
+Please check that everything is complete. If not, please contact us.
+
+## Software
+
+Then, we'll install some tools needed to flash the mcu and inspect the code.
+
+Install the `thumbv7em-none-eabihf` toolchain with the following command:
+```bash
+rustup target add thumbv7em-none-eabihf
+```
+
+On `linux` you need to install the "dev" libraries for udev, usb, and ftdi libudev-dev. If you're on Ubuntu:
+```bash
+# ubuntu
+sudo apt install -y libusb-1.0-0-dev libftdi1-dev libudev-dev
+```
+
+On `all platforms`:
+```bash
+rustup component add llvm-tools rustfmt clippy
+cargo install probe-rs --features cli
+```
+
+If you're on `linux`, you'll need to update your udev rules.
+On ubuntu, run the following inside the workshop folder you just cloned;
+
+```bash
+sudo cp 99-jlink-nrf.rules /etc/udev/rules.d
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
+If you're on `windows`, we need to install a generic WinUSB driver. You can use [Zadig](https://zadig.akeo.ie/) to select the usb device that uses the jlink driver and install WinUSB on it. 
+*This will uninstall the official driver, which means that the official Segger tools will not work anymore after this.* To revert, go to `device manager` and uninstall the usb device. The jlink driver will then be used again for that usb connection.
+
+Then, switch the DK off and on or remove the cable and plug it in again.
+
+## Trying it out
+Before we begin, we need to test our hardware. We'll be testing the LIS3DH accelerometer, as well as the nRF52840-DK board. Make sure you have checked out the latest version of the workshop source.
+
+### LIS3DH accelerometer connection
+First, let's wire up the LIS3DH accelerometer for I2C.
+**Please turn off your DK**. Then, wire up the accelerometer, referring to the table below.
+
+| LIS3DH Pin | nRF52 pin 	  |
+|------------|----------------|
+| VIN (+)    | VDD            |
+| 3vo        | -              |
+| GND (-)    | GND            |
+| SCL        | P0.27          |
+| SDA        | P0.26          |
+| SDO        | -              |
+| CS'        | -              |
+| INT        | -              |
+| A1         | -              |
+| A2         | -              |
+| A3         | -              |
+
+*We'll be using other pins later on, but they're not needed to test the hardware*
+
+### Running the test
+To test the hardware, please connect the nRF52840-DK to your pc, switch it on, and run
+```bash
+cd ./exercises/1-course-introduction/1-introduction/2-embedded
+cargo run --release --bin test
+```
+
+If everything works correctly, you should now see the accelerometer samples being printed on the display. If not, don't worry and contact us.
+
+If not, you may have an accelerometer that uses the alternate i2c address. If so, run this instead:
+```bash
+cargo run --release --bin test --features alternate-addr
+```
+
+## Docs
+Datasheets, manuals, and schematics of the parts we are using in the embedded workshops.
+### nRF52840
+- [nRF52840DK documentation](https://infocenter.nordicsemi.com/topic/ug_nrf52840_dk/UG/dk/intro.html)
+- [nRF52840 product specification](https://infocenter.nordicsemi.com/pdf/nRF52840_PS_v1.2.pdf)
+### LIS3DH
+- [Datsheet](https://www.st.com/resource/en/datasheet/lis3dh.pdf)
+- [Schematic (Adafruit)](https://cdn-learn.adafruit.com/assets/assets/000/028/587/original/sensors_sch.png?1447888851)
+- [Schematic (SparkFun)](https://cdn.sparkfun.com/datasheets/Sensors/Accelerometers/SparkFun_LIS3DH-Breakout.pdf)
