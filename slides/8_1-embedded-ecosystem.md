@@ -257,13 +257,16 @@ The glue of the entire ecosytem
 
 ### SPI example trait:
 ```rust
-pub trait Transfer<W> {
-    type Error;
+pub trait SpiDevice<Word: Copy + 'static = u8>: ErrorType {
+    fn transaction(&mut self, operations: &mut [Operation<'_, Word>]) -> Result<(), Self::Error>;
+}
 
-    fn transfer<'w>(
-        &mut self,
-        words: &'w mut [W]              // ◄─┐
-    ) -> Result<&'w [W], Self::Error>;  // ◄─┴─ 'w: returned slice lives as long as `words`
+pub enum Operation<'a, Word: 'static> {
+    Read(&'a mut [Word]),
+    Write(&'a [Word]),
+    Transfer(&'a mut [Word], &'a [Word]),
+    TransferInPlace(&'a mut [Word]),
+    DelayNs(u32),
 }
 ```
 
