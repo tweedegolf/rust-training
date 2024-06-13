@@ -104,9 +104,10 @@ char example() {
 ```
 
 ---
-layout: image
-image: ./images/8_2-c-fill-in-light.png
+layout: full
 ---
+
+<img src="/images/8_2-c-fill-in-light.png">
 
 ---
 layout: two-cols
@@ -149,9 +150,10 @@ char example() {
 ```
 
 ---
-layout: image
-image: ./images/8_2-c-function-pointers-light.png
+layout: full
 ---
+
+<img src="/images/8_2-c-function-pointers-light.png"/>
 
 ---
 layout: two-cols
@@ -183,9 +185,10 @@ char example() {
 ```
 
 ---
-layout: image
-image: ./images/8_2-c-link-binding-light.png
+layout: full
 ---
+
+<img src="/images/8_2-c-link-binding-light.png"/>
 
 ---
 layout: two-cols
@@ -257,9 +260,10 @@ impl SpiDevice for SpiPeripheral {
 ```
 
 ---
-layout: image
-image: ./images/8_2-rust-light.png
+layout: full
 ---
+
+<img src="/images/8_2-rust-light.png"/>
 
 ---
 layout: with-footer
@@ -346,9 +350,10 @@ static char read_register(enum Reg address)
 ```
 
 ---
-layout: image
-image: ./images/8_2-low-level-c-driver-light.png
+layout: full
 ---
+
+<img src="/images/8_2-low-level-c-driver-light.png"/>
 
 ---
 layout: two-cols
@@ -387,9 +392,10 @@ use embedded_hal::spi::SpiDevice;
 ```
 
 ---
-layout: image
-image: ./images/8_2-low-level-rust-driver-light.png
+layout: full
 ---
+
+<img src="/images/8_2-low-level-rust-driver-light.png"/>
 
 ---
 layout: with-footer
