@@ -27,4 +27,8 @@
 - [Rust for Data Science]()
 	- [Rust from Python](rust-from-python.md)
 
+- [Rust for Embedded]()
+	- [Ecosystem](embedded-ecosystem.md)
+	- [Portable Drivers](portable-drivers.md)
+
 [Wrap-up](./wrap-up.md)
