@@ -287,7 +287,7 @@ layout: with-footer
 </tr>
 
 <tr>
-    <td><center>⬇️<br/>PAC<br/><pre>nRF52840</pre></center></td>
+    <td><center>⬇️<br/>PAC<br/><pre>nRF52833</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>nRF9160</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>STM32H743</pre></center></td>

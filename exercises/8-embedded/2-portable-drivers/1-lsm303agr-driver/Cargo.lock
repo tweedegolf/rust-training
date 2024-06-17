@@ -171,13 +171,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "lis3dh-driver"
+name = "lsm303agr-driver"
 version = "0.1.0"
 dependencies = [
  "cortex-m",
  "cortex-m-rt",
  "embedded-hal 1.0.0",
- "nrf52840-hal",
+ "nrf52833-hal",
  "rtt-target",
 ]
 
@@ -213,7 +213,7 @@ dependencies = [
  "fixed",
  "nb 1.1.0",
  "nrf-usbd",
- "nrf52840-pac",
+ "nrf52833-pac",
  "rand_core",
  "void",
 ]
@@ -231,20 +231,20 @@ dependencies = [
 ]
 
 [[package]]
-name = "nrf52840-hal"
+name = "nrf52833-hal"
 version = "0.18.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "433cfd866da18dfc58376880bdebd092c130444837debc513f44edcd0d6a6558"
+checksum = "12fab00e54c93792dddaf623a021feaa84933bbad12c3b76f08ea201df91f36c"
 dependencies = [
  "nrf-hal-common",
- "nrf52840-pac",
+ "nrf52833-pac",
 ]
 
 [[package]]
-name = "nrf52840-pac"
+name = "nrf52833-pac"
 version = "0.12.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "30713f36f1be02e5bc9abefa30eae4a1f943d810f199d4923d3ad062d1be1b3d"
+checksum = "10e1358255b360cdc816dd7b6ef81be8c8499c0998277e5249bed222bd0f5241"
 dependencies = [
  "cortex-m",
  "cortex-m-rt",
