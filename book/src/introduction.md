@@ -27,8 +27,8 @@ rustc -V && cargo -V
 The output should be something like this:
 
 ```bash
-rustc 1.77.1 (7cf61ebde 2024-03-27)
-cargo 1.77.1 (e52e36006 2024-03-26)
+rustc 1.79.0 (129f3b996 2024-06-10)
+cargo 1.79.0 (ffa9cf99a 2024-06-03)
 ```
 
 Using Rustup, you can install Rust toolchains and components. More info: 
@@ -38,7 +38,7 @@ Using Rustup, you can install Rust toolchains and components. More info:
 ## Rustfmt and Clippy
 To avoid discussions, Rust provides its own formatting tool, Rustfmt.
 We'll also be using Clippy, a collection of lints to analyze your code, that catches common mistakes for you.
-You'll notice that Rusts Clippy can be a very helpful companion.
+You'll find that Rusts Clippy can be a very helpful companion.
 Both Rustfmt and Clippy are installed by Rustup by default.
 
 To run Rustfmt on your project, execute:
@@ -60,7 +60,7 @@ More info:
 ## Visual Studio Code
 During the course, we will use Visual Studio Code (vscode) to write code in.
 Of course, you're free to use your favorite editor, but if you encounter problems, you can't rely on support from us.
-Also, we'll use vscode to allow for remote collaboration and mentoring during tutorial sessions.
+Also, we'll use VSCode to allow for remote collaboration and mentoring during remote training sessions.
 
 You can find the installation instructions here: <https://code.visualstudio.com/>.
 
@@ -69,31 +69,28 @@ The first one is Rust-Analyzer.
 Installation instructions can be found here <https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer>.
 Rust-Analyzer provides a lot of help during development and in indispensable when getting started with Rust.
 
-Another plugin we'll install is Live Share.
-We will use the plugin to share screens and provide help during remote tutorial sessions.
-The extension pack also contains the Live Share Audio plugin, which allows for audio communication during share sessions.
-Installation instructions can be found here: <https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare>
-
-The last plugin we'll use is CodeLLDB.
+Another plugin we'll use is CodeLLDB.
 This plugin enables debugging Rust code from within vscode.
 You can find instructions here: <https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb>.
 
+If you're following the training remotely, install the Live Share plugin as well.
+We will use the plugin to share code and provide help during remote tutorial sessions.
+Installation instructions can be found here: <https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare>
 
 More info:
 - <https://rust-analyzer.github.io/>
 - <https://code.visualstudio.com/learn/collaboration/live-share>
 
 ## Git
-We will use Git as version control tool.
+During the trainings, you'll need the Git version control tool.
 If you haven't installed Git already, you can find instructions here: <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>.
 If you're new to Git, you'll also appreciate GitHubs intro to Git <https://docs.github.com/en/get-started/using-git/about-git> and the Git intro with vscode, which you can find here: <https://www.youtube.com/watch?v=i_23KUAEtUM>.
 
 More info: <https://www.youtube.com/playlist?list=PLg7s6cbtAD15G8lNyoaYDuKZSKyJrgwB->
 
 ## Course code
-Now that everything is installed, you can clone the source code repository.
+Now that everything is installed, you can clone the source code repository using Git.
 The repository can be found here: <https://github.com/tweedegolf/rust-training>.
-
 
 Instructions on cloning the repository can be found here: <https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories#cloning-with-https-urls>
 
@@ -110,11 +107,12 @@ It will compile and run the `intro` package, which you can find in `exercises/1-
 If everything goes well, you should see some output:
 
 ```
-   Compiling intro v0.1.0 ([REDACTED]/exercises/1-course-introduction/1-introduction/1-setup-your-installation)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.11s
+   Compiling intro v0.1.0 ([/path/to/rust-workshop]/exercises/1-course-introduction/1-introduction/1-setup-your-installation)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.15s
      Running `target/debug/intro`
 🦀 Hello, world! 🦀
 You've successfully compiled and run your first Rust project!
+X: 2; Y: 2
 ```
 If Rust-Analyzer is set up correctly, you can also click the '▶️ Run'-button that is shown in `exercises/1-course-introduction/1-introduction/1-setup-your-installation/src/main.rs`.
 With CodeLLDB installed correctly, you can also start a debug session by clicking 'Debug', right next to the '▶️ Run'-button.
@@ -122,7 +120,7 @@ Play a little with setting breakpoints by clicking on a line number, making a re
 You can view variable values by hovering over them while execution is paused, or by expanding the 'Local' view under 'Variables' in the left panel during a debug session.
 
 # Instructions for embedded
-This part is relevant only if you're partaking in one of the workshops on embedded Rust.
+*This part is relevant only if you're partaking in one of the workshops on embedded Rust.*
 
 ## Hardware
 You should have a [BBC micro:bit](https://microbit.org/buy/bbc-microbit-single/ V2) available.
@@ -140,20 +138,17 @@ Install the `thumbv7em-none-eabihf` toolchain with the following command:
 rustup target add thumbv7em-none-eabihf
 ```
 
-On `linux` you need to install the "dev" libraries for udev, usb, and ftdi libudev-dev. If you're on Ubuntu:
+We'll also install a couple of tools that let us inspect our binaries:
+
 ```bash
-# ubuntu
-sudo apt install -y libusb-1.0-0-dev libftdi1-dev libudev-dev
+rustup component add llvm-tools
+cargo install cargo-binutils
 ```
 
-On `all platforms`:
-```bash
-rustup component add llvm-tools rustfmt clippy
-cargo install probe-rs --features cli
-```
+Now, let's install [probe-rs](https://probe.rs). Follow the [installation instructions](https://probe.rs/docs/getting-started/installation/). Probe-rs talks with the debug interface on the micro:bit, to flash your application, log messages, or even set breakpoints and read out device memory.
 
 If you're on `linux`, you'll need to update your udev rules.
-On ubuntu, run the following inside the workshop folder you just cloned;
+On ubuntu or fedora, run the following inside the workshop folder you just cloned;
 
 ```bash
 sudo cp 99-microbit-v2.rules /etc/udev/rules.d
@@ -167,7 +162,7 @@ If you're on `windows`, we need to install a generic WinUSB driver. You can use 
 Then, unplug the USB cable and plug it in again.
 
 ## Trying it out
-Before we begin, we need to test our hardware. We'll be testing the nRF52833 microcontroller and the LSM303AGR accelerometer, that are present on the micro:bit V2. Make sure you have checked out the latest version of the workshop source.
+Before we begin, we need to test our hardware. We'll be testing the nRF52833 microcontroller and the LSM303AGR motion sensor, that are present on the micro:bit V2. Make sure you have checked out the latest version of the workshop source.
 
 ### Running the test
 To test the hardware, please connect the micro:bit V2 to your pc, switch it on, and run
