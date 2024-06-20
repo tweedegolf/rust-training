@@ -273,27 +273,26 @@ layout: with-footer
 
 <table class="emb-overview">
 <tr>
-    <td colspan="7"><center>Driver<br/>⬇️</center></td>
+    <td colspan="6"><center>Driver<br/>⬇️</center></td>
 </tr>
 <tr>
-    <td colspan="7"><center><pre>embedded-hal</pre></center></td>
-</tr>
-
-<tr>
-    <td colspan="1"><center>⬆️<br/>HAL<br/><pre>atsamd</pre></center></td>
-    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>nrf-hal</pre></center></td>
-    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>stm32h7xx-hal</pre></center></td>
-    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>stm32l4xx-hal</pre></center></td>
+    <td colspan="6"><center><pre>embedded-hal</pre></center></td>
 </tr>
 
 <tr>
+    <td colspan="1"><center>⬆️<br/>HAL<br/><pre>atsamd-hal</pre></center></td>
+    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>embassy-nrf</pre></center></td>
+    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>embassy-stm32</pre></center></td>
+    <td colspan="1"><center>⬆️<br/>HAL<br/><pre>rp-hal</pre></center></td>
+</tr>
+
+<tr>
+    <td><center>⬇️<br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>nRF52833</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>nRF9160</pre></center></td>
-    <td><center>⬇️<br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>STM32H743</pre></center></td>
-    <td><center>⬇️<br/>PAC<br/><pre>STM32H753</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>STM32L476</pre></center></td>
-    <td><center>⬇️<br/>PAC<br/><pre>STM32L496</pre></center></td>
+    <td><center>⬇️<br/>PAC<br/><pre>RP2040</pre></center></td>
 </tr>
 
 </table>
@@ -370,25 +369,25 @@ layout: two-cols
 ```rust
 use embedded_hal::spi::SpiDevice;
 
-    #[repr(u8)]
-    pub enum Register {
-        Id = 0x01,
-        Ier = 0x02,
-        Idr = 0x03,
-        Isr = 0x04,
-        Pin = 0x05,
-        Port = 0x06,
-    }
+#[repr(u8)]
+pub enum Register {
+    Id = 0x01,
+    Ier = 0x02,
+    Idr = 0x03,
+    Isr = 0x04,
+    Pin = 0x05,
+    Port = 0x06,
+}
 
-    pub struct Device<SPI: SpiDevice> {
-        spi: SPI,
-    }
+pub struct Device<SPI: SpiDevice> {
+    spi: SPI,
+}
 
-    impl<SPI: SpiDevice> Device<SPI> {
-        pub fn new(spi: SPI) -> Self {
-            Self { spi }
-        }
+impl<SPI: SpiDevice> Device<SPI> {
+    pub fn new(spi: SPI) -> Self {
+        Self { spi }
     }
+}
 ```
 
 ---
