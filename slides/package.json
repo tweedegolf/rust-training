@@ -48,6 +48,8 @@
     "build-8_2": "slidev build --download --out dist/8_2 --base /slides/8_2/ 8_2-portable-drivers.md",
     "dev-8_3": "slidev 8_3-async-on-embedded.md",
     "build-8_3": "slidev build --download --out dist/8_3 --base /slides/8_3/ 8_3-async-on-embedded.md",
+    "dev-8_4": "slidev 8_4-embassy-framework.md",
+    "build-8_4": "slidev build --download --out dist/8_4 --base /slides/8_4/ 8_4-embassy-framework.md",
     "build-Y": "slidev build --download --out dist/Y --base /slides/Y/ Y-ecosystem-and-tooling.md",
     "dev-Y": "slidev Y-ecosystem-and-tooling.md",
     "build-Z": "slidev build --download --out dist/Z --base /slides/Z/ Z-wrap-up.md",

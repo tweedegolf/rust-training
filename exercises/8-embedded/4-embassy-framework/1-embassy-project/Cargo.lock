@@ -54,25 +54,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
-name = "compass"
-version = "0.1.0"
-dependencies = [
- "cortex-m",
- "cortex-m-rt",
- "embassy-executor",
- "embassy-futures",
- "embassy-nrf",
- "embassy-sync 0.6.0",
- "embassy-time",
- "embedded-hal-async",
- "futures",
- "libm",
- "lsm303agr",
- "panic-rtt-target",
- "rtt-target",
-]
-
-[[package]]
 name = "cortex-m"
 version = "0.7.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -548,6 +529,25 @@ name = "memchr"
 version = "2.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
+
+[[package]]
+name = "my-embassy-project"
+version = "0.1.0"
+dependencies = [
+ "cortex-m",
+ "cortex-m-rt",
+ "embassy-executor",
+ "embassy-futures",
+ "embassy-nrf",
+ "embassy-sync 0.6.0",
+ "embassy-time",
+ "embedded-hal-async",
+ "futures",
+ "libm",
+ "lsm303agr",
+ "panic-rtt-target",
+ "rtt-target",
+]
 
 [[package]]
 name = "nb"

@@ -31,5 +31,6 @@
 	- [Ecosystem](embedded-ecosystem.md)
 	- [Portable Drivers](portable-drivers.md)
 	- [Async on Embedded](async-on-embedded.md)
+	- [The Embassy Framework](embassy-framework.md)
 
 [Wrap-up](./wrap-up.md)
