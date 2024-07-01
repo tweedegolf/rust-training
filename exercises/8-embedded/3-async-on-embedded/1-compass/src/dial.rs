@@ -47,29 +47,7 @@ impl Direction {
     }
 
     fn from_xy(x: f32, y: f32) -> Self {
-        let alpha = libm::atan2f(-y, x);
-        let part =
-            libm::roundf((alpha + core::f32::consts::PI) * 8.0 / core::f32::consts::PI) as u32;
-
-        match (part + 4) % 16 {
-            0 => Self::North,
-            1 => Self::NorthNorthEast,
-            2 => Self::NorthEast,
-            3 => Self::EastNorthEast,
-            4 => Self::East,
-            5 => Self::EastSouthEast,
-            6 => Self::SouthEast,
-            7 => Self::SouthSouthEast,
-            8 => Self::South,
-            9 => Self::SouthSouthWest,
-            10 => Self::SouthWest,
-            11 => Self::WestSouthWest,
-            12 => Self::West,
-            13 => Self::WestNorthWest,
-            14 => Self::NorthWest,
-            15 => Self::NorthNorthWest,
-            x => unreachable!("{x}"),
-        }
+        todo!("Determine Direction based on x and y. Use libm::atan2f to convert the vector to an angle");
     }
 }
 
@@ -150,6 +128,8 @@ impl Dial {
         self.cols[col].set_low();
     }
 
+    /// Operate the dial. This function is useful for running
+    /// in a separate task.
     pub async fn run(
         mut self,
         receiver: embassy_sync::channel::Receiver<'_, NoopRawMutex, Direction, 4>,
@@ -194,22 +174,17 @@ impl Dial {
     }
 }
 
-static DIR_CHANNEL: embassy_sync::once_lock::OnceLock<
-    embassy_sync::channel::Channel<NoopRawMutex, Direction, 4>,
-> = OnceLock::new();
 
+/// Sets up a channel over which [Direction]s can be sent and received.
+/// Useful for exercise 8.1.2
 pub fn dir_channel() -> (
     embassy_sync::channel::Receiver<'static, NoopRawMutex, Direction, 4>,
     embassy_sync::channel::Sender<'static, NoopRawMutex, Direction, 4>,
 ) {
+    static DIR_CHANNEL: embassy_sync::once_lock::OnceLock<
+        embassy_sync::channel::Channel<NoopRawMutex, Direction, 4>,
+    > = OnceLock::new();
+
     let chan = DIR_CHANNEL.get_or_init(|| embassy_sync::channel::Channel::new());
     (chan.receiver(), chan.sender())
-}
-
-#[embassy_executor::task]
-pub async fn run_dial(
-    dial: Dial,
-    receiver: embassy_sync::channel::Receiver<'static, NoopRawMutex, Direction, 4>,
-) {
-    dial.run(receiver).await
 }

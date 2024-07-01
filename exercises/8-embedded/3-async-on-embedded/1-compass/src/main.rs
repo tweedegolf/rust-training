@@ -1,12 +1,12 @@
 #![no_main]
 #![no_std]
 
-use dial::{dir_channel, run_dial, Dial, Direction};
-use embassy_nrf::{self as hal, twim::Twim};
+use dial::{dir_channel, Dial, Direction};
+use embassy_nrf::{self as hal, peripherals::TWISPI0, twim::Twim};
 use embassy_time::Delay;
 use embedded_hal_async::delay::DelayNs;
 use hal::twim;
-use lsm303agr::Lsm303agr;
+use lsm303agr::{interface::I2cInterface, mode::MagOneShot, Lsm303agr, MagnetometerId};
 use rtt_target::{rprintln, rtt_init_print};
 
 use panic_rtt_target as _; // Panic handler
@@ -32,51 +32,20 @@ async fn main(s: embassy_executor::Spawner) -> ! {
     let config = twim::Config::default();
     let twim0 = Twim::new(dp.TWISPI0, Irqs, dp.P0_16, dp.P0_08, config);
 
-    let dial = Dial::new(
-        dp.P0_21, dp.P0_22, dp.P0_15, dp.P0_24, dp.P0_19, dp.P0_28, dp.P0_11, dp.P0_31, dp.P1_05,
-        dp.P0_30,
-    );
+    let dial: Dial = todo!("Initialize Dial");
 
-    // dial.light_only(Direction::North);
-    let (rx, tx) = dir_channel();
-    s.spawn(run_dial(dial, rx)).unwrap();
-
-    let mut sensor = Lsm303agr::new_with_i2c(twim0);
-    let id = sensor.magnetometer_id().await.unwrap();
+    let mut sensor: Lsm303agr<I2cInterface<Twim<TWISPI0>>, MagOneShot> = todo!("Initialize LSM303AGR driver given the twim0 peripheral");
+    let id: MagnetometerId = todo!("Read the magnetometer ID using the driver");
     rprintln!("{:#02x?}", id);
 
-    sensor.init().await.unwrap();
-    sensor
-        .set_mag_mode_and_odr(
-            &mut Delay,
-            lsm303agr::MagMode::HighResolution,
-            lsm303agr::MagOutputDataRate::Hz100,
-        )
-        .await
-        .unwrap();
-    let Ok(mut sensor) = sensor.into_mag_continuous().await else {
-        panic!()
-    };
-    
-    sensor.enable_mag_offset_cancellation().await.unwrap();
+    todo!("Initialize the driver");
+    todo!("Set magnetometer mode to high resolution and output data rate to 100Hz");
+
+
+    todo!("Change the magnetometer to continuous mode");
+    todo!("Enable magnetometer offset cancellation");
+
     loop {
-        if sensor.mag_status().await.unwrap().xyz_new_data() {
-            let data = sensor.magnetic_field().await.unwrap();
-            let dir = Direction::from(data);
-            rprintln!(
-                "Magnetic field: x {} y {} z {}; Dir: {:?}",
-                data.x_unscaled(),
-                data.y_unscaled(),
-                data.z_unscaled(),
-                dir
-            );
-            tx.send(dir).await;
-            // dial.light_only(dir);
-        } else {
-            // dial.light_only(Direction::None);
-            tx.send(Direction::None).await;
-            rprintln!("No data")
-        }
-        Delay.delay_ms(10).await;
+        todo!("Read data and update the dial accordingly");
     }
 }
