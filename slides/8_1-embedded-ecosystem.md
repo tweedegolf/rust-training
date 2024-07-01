@@ -157,7 +157,7 @@ layout: with-footer
 </tr>
 
 <tr>
-    <td><center><br/>PAC<br/><pre>nRF52840</pre></center></td>
+    <td><center><br/>PAC<br/><pre>nRF52833</pre></center></td>
     <td><center><br/>PAC<br/><pre>nRF9160</pre></center></td>
     <td><center><br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center><br/>PAC<br/><pre>STM32H743</pre></center></td>
@@ -234,7 +234,7 @@ layout: with-footer
 </tr>
 
 <tr>
-    <td><center>⬇️<br/>PAC<br/><pre>nRF52840</pre></center></td>
+    <td><center>⬇️<br/>PAC<br/><pre>nRF52833</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>nRF9160</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>STM32H743</pre></center></td>
@@ -292,7 +292,7 @@ layout: with-footer
 </tr>
 
 <tr>
-    <td><center>⬇️<br/>PAC<br/><pre>nRF52840</pre></center></td>
+    <td><center>⬇️<br/>PAC<br/><pre>nRF52833</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>nRF9160</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>STM32H743</pre></center></td>
@@ -312,7 +312,7 @@ layout: with-footer
 State encoded in the *type* of the variable
 
 ```rust
-use nrf52840_hal::gpio::{Pin, p0::P0_04, Input, PullDown, Output, PushPull};
+use nrf52833_hal::gpio::{Pin, p0::P0_04, Input, PullDown, Output, PushPull};
 
 /// Take an nRF pin.
 /// It must be:
