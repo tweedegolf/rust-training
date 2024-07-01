@@ -1,9 +1,11 @@
 #![no_main]
 #![no_std]
 
-use nrf52833_hal as hal;
+use embassy_nrf as hal;
+use hal::twim;
 use rtt_target::{rprintln, rtt_init_print};
 
+// STEP 1: Bind the interrupt of peripheral 0 to the TWIM ISR
 #[cortex_m_rt::entry]
 fn main() -> ! {
     rtt_init_print!();
@@ -11,17 +13,17 @@ fn main() -> ! {
     // turn off warnings about it not being used.
     let _cp = cortex_m::Peripherals::take().unwrap();
     // Use `dp` to get a handle to the TWIM peripheral
-    let dp = hal::pac::Peripherals::take().unwrap();
+    let dp = hal::init(Default::default());
 
     rprintln!("Starting");
 
-    // Set up the I2C pins
 
-    // Set up the TWIM peripheral (that supports I2C)
+    // STEP 2 Set up the TWIM0 peripheral (that supports I2C), so that it uses
+    // P0.16 for SDA and P0.08 for SCL
+    
+    // STEP 3 Read the ID register of the LSM303AGR's accelerometer
 
-    // Read the ID register of the LSM303AGR's accelerometer
-
-    // Print or assert the ID
+    // STEP 4 Print or assert the ID
 
     exit();
 }

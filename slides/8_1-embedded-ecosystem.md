@@ -143,27 +143,26 @@ layout: with-footer
 
 <table class="emb-overview">
 <tr class="hide">
-    <td colspan="7"><center><br/>Driver</center></td>
+    <td colspan="6"><center><br/>Driver</center></td>
 </tr>
 <tr class="hide">
-    <td colspan="7"><center><br/><pre>embedded-hal</pre></center></td>
+    <td colspan="6"><center><br/><pre>embedded-hal</pre></center></td>
 </tr>
 
 <tr class="hide">
-    <td colspan="1"><center><br/>HAL<br/><pre>atsamd</pre></center></td>
-    <td colspan="2"><center><br/>HAL<br/><pre>nrf-hal</pre></center></td>
-    <td colspan="2"><center><br/>HAL<br/><pre>stm32h7xx-hal</pre></center></td>
-    <td colspan="2"><center><br/>HAL<br/><pre>stm32l4xx-hal</pre></center></td>
+    <td colspan="1"><center><br/>HAL<br/><pre>atsamd-hal</pre></center></td>
+    <td colspan="2"><center><br/>HAL<br/><pre>embassy-nrf</pre></center></td>
+    <td colspan="2"><center><br/>HAL<br/><pre>embassy-stm32</pre></center></td>
+    <td colspan="1"><center><br/>HAL<br/><pre>rp-hal</pre></center></td>
 </tr>
 
 <tr>
+    <td><center><br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center><br/>PAC<br/><pre>nRF52833</pre></center></td>
     <td><center><br/>PAC<br/><pre>nRF9160</pre></center></td>
-    <td><center><br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center><br/>PAC<br/><pre>STM32H743</pre></center></td>
-    <td><center><br/>PAC<br/><pre>STM32H753</pre></center></td>
     <td><center><br/>PAC<br/><pre>STM32L476</pre></center></td>
-    <td><center><br/>PAC<br/><pre>STM32L496</pre></center></td>
+    <td><center><br/>PAC<br/><pre>RP2040</pre></center></td>
 </tr>
 
 </table>
@@ -183,32 +182,31 @@ layout: full
 ---
 
 ```rust
-#[entry]
+hal::bind_interrupts!(struct Irqs {
+    SPIM0_SPIS0_TWIM0_TWIS0_SPI0_TWI0 => twim::InterruptHandler<hal::peripherals::TWISPI0>;
+});
+
+#[cortex_m_rt::entry]
 fn main() -> ! {
-    // Take the device's peripherals
-    let dp = Peripherals::take().unwrap();
+    // Init RTT control block
+    rtt_init_print!();
 
-    // Create the timer and give it access to the peripheral
-    let mut timer = Timer::periodic(db.TIMER0);
-    timer.enable_interrupt();
-    timer.start(1_000_000u32); // Timer runs at 1MHz, so it will interrupt every second
-    drop(timer); // Explicitly drop the timer
+    let _cp = cortex_m::Peripherals::take().unwrap();
+    // Use ``dp` to get a handle to the peripherals
+    let dp = hal::init(Default::default());
 
-    // Unmask the timer interrupt in the NVIC. To convince the compiler this is actually
-    // safe to do in this case, we do this inside an `unsafe` block
-    unsafe { NVIC::unmask(Interrupt::TIMER0); }
+    rprintln!("Starting");
 
-    loop {}
-} 
+    let config = twim::Config::default();
+    let mut twim0 = Twim::new(dp.TWISPI0, Irqs, dp.P0_03, dp.P0_04, config);
 
-#[interrupt]
-fn TIMER0 {
-    // Get a reference to the peripheral
-    // This is unsafe because only one instance may exist at a time or we'll trigger UB.
-    // This is OK here, as we explicitly dropped the tiemr in main.
-    // However, there are better ways to share state between contexts
-    let timer = unsafe { &*TIMER0::ptr() };
-    timer.events_compare[0].write(|w| w); // Clear the interrupt flag
+    rprintln!("Reading...");
+
+    let mut buf = [0u8; 16];
+    twim0.blocking_write_read(0xAB, &mut [0x00], &mut buf).unwrap();
+
+    rprintln!("Read: {:02x?}", buf);
+    exit();
 }
 ```
 
@@ -220,27 +218,26 @@ layout: with-footer
 
 <table class="emb-overview">
 <tr class="hide">
-    <td colspan="7"><center><br/>Driver</center></td>
+    <td colspan="6"><center><br/>Driver</center></td>
 </tr>
 <tr class="hide">
-    <td colspan="7"><center><br/><pre>embedded-hal</pre></center></td>
+    <td colspan="6"><center><br/><pre>embedded-hal</pre></center></td>
 </tr>
 
 <tr>
-    <td colspan="1"><center><br/>HAL<br/><pre>atsamd</pre></center></td>
-    <td colspan="2"><center><br/>HAL<br/><pre>nrf-hal</pre></center></td>
-    <td colspan="2"><center><br/>HAL<br/><pre>stm32h7xx-hal</pre></center></td>
-    <td colspan="2"><center><br/>HAL<br/><pre>stm32l4xx-hal</pre></center></td>
+    <td colspan="1"><center><br/>HAL<br/><pre>atsamd-hal</pre></center></td>
+    <td colspan="2"><center><br/>HAL<br/><pre>embassy-nrf</pre></center></td>
+    <td colspan="2"><center><br/>HAL<br/><pre>embassy-stm32</pre></center></td>
+    <td colspan="1"><center><br/>HAL<br/><pre>rp-hal</pre></center></td>
 </tr>
 
 <tr>
+    <td><center>⬇️<br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>nRF52833</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>nRF9160</pre></center></td>
-    <td><center>⬇️<br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>STM32H743</pre></center></td>
-    <td><center>⬇️<br/>PAC<br/><pre>STM32H753</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>STM32L476</pre></center></td>
-    <td><center>⬇️<br/>PAC<br/><pre>STM32L496</pre></center></td>
+    <td><center>⬇️<br/>PAC<br/><pre>RP2040</pre></center></td>
 </tr>
 
 </table>
@@ -278,27 +275,26 @@ layout: with-footer
 
 <table class="emb-overview">
 <tr class="hide">
-    <td colspan="7"><center><br/>Driver</center></td>
+    <td colspan="6"><center><br/>Driver</center></td>
 </tr>
 <tr>
-    <td colspan="7"><center><br/><pre>embedded-hal</pre></center></td>
-</tr>
-
-<tr>
-    <td colspan="1"><center>⬆️<br/>HAL<br/><pre>atsamd</pre></center></td>
-    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>nrf-hal</pre></center></td>
-    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>stm32h7xx-hal</pre></center></td>
-    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>stm32l4xx-hal</pre></center></td>
+    <td colspan="6"><center><br/><pre>embedded-hal</pre></center></td>
 </tr>
 
 <tr>
+    <td colspan="1"><center>⬆️<br/>HAL<br/><pre>atsamd-hal</pre></center></td>
+    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>embassy-nrf</pre></center></td>
+    <td colspan="2"><center>⬆️<br/>HAL<br/><pre>embassy-stm32</pre></center></td>
+    <td colspan="1"><center>⬆️<br/>HAL<br/><pre>rp-hal</pre></center></td>
+</tr>
+
+<tr>
+    <td><center>⬇️<br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>nRF52833</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>nRF9160</pre></center></td>
-    <td><center>⬇️<br/>PAC<br/><pre>SAMD21E</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>STM32H743</pre></center></td>
-    <td><center>⬇️<br/>PAC<br/><pre>STM32H753</pre></center></td>
     <td><center>⬇️<br/>PAC<br/><pre>STM32L476</pre></center></td>
-    <td><center>⬇️<br/>PAC<br/><pre>STM32L496</pre></center></td>
+    <td><center>⬇️<br/>PAC<br/><pre>RP2040</pre></center></td>
 </tr>
 
 </table>
@@ -312,21 +308,21 @@ layout: with-footer
 State encoded in the *type* of the variable
 
 ```rust
+// https://github.com/embassy-rs/embassy/blob/main/examples/nrf52840/src/bin/blinky.rs
+
 use nrf52833_hal::gpio::{Pin, p0::P0_04, Input, PullDown, Output, PushPull};
 
 /// Take an nRF pin.
 /// It must be:
 /// - Port 0 pin 4 (Compile time constant)
 /// - Configured as input
-/// - Pulldown enabled
-fn do_something_1(pin: P0_04<Input<PullDown>>) {}
+fn read_status(pin: Input<'_, P0_04>) -> bool {}
 
 /// Take an nRF pin.
 /// It must be:
 /// - Any port and pin (Runtime variable)
 /// - Configured as output
-/// - Configured as push-pull
-fn do_something_2(pin: Pin<Output<PushPull>>) {}
+fn set_led_level(pin: Output<'_, AnyPin>, enabled: bool) {}
 ```
 
 ---

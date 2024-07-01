@@ -30,6 +30,8 @@
         "exercises/7-rust-for-data-science/1-rust-from-python/2-strompy/Cargo.toml",
         "exercises/8-embedded/1-embedded-ecosystem/1-lsm303agr-id/Cargo.toml",
         "exercises/8-embedded/2-portable-drivers/1-lsm303agr-driver/Cargo.toml",
+        "exercises/8-embedded/3-async-on-embedded/1-compass/Cargo.toml",
+        "exercises/8-embedded/4-embassy-framework/1-embassy-framework/Cargo.toml",
     ],
     "rust-analyzer.check.allTargets": false,
 }

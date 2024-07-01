@@ -1,7 +1,7 @@
 #![no_main]
 #![no_std]
 
-use nrf52833_hal as hal;
+use embassy_nrf as hal;
 use rtt_target::{rprintln, rtt_init_print};
 
 mod lsm303agr;
@@ -13,7 +13,7 @@ fn main() -> ! {
     // turn off warnings about it not being used.
     let _cp = cortex_m::Peripherals::take().unwrap();
     // Use `dp` to get a handle to the TWIM peripheral
-    let dp = hal::pac::Peripherals::take().unwrap();
+    let dp = hal::init(Default::default());
 
     rprintln!("Starting");
 
