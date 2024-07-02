@@ -7,7 +7,7 @@ Use our newly gained knowledge to get our first application running and read out
 We can communicate with the LSM303AGR using the I2C that is present on the micro:bit board. Note that the nRF52833 supports I2C with its TWIM (Two-Wire Interface Master) peripheral.
 
 To get started we'll setup the i2c peripheral on our development kit and read out the ID register of the LSM303AGR accelerometer.
-The starting point can be found in the file at `exercises/8-embedded/1-embedded-ecosystem/1-lis3dh-id/src/main.rs` in the [repository](https:://github.com/tweedegolf/rust-training).
+The starting point can be found in the file at `exercises/8-embedded/1-embedded-ecosystem/src/main.rs` in the [repository](https://github.com/tweedegolf/rust-training).
 
 Try to run the existing project and then fill in the functionality as instructed by the comments.
 
