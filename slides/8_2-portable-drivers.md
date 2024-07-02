@@ -408,7 +408,7 @@ Much more is possible:
 pub fn example() {
     let mut device = Device::new(Spi);
 
-    let manufacturer = device.id().read().manufacturere();
+    let manufacturer = device.id().read().manufacturer();
 
     if manufacturer != 0 {
         device.port().modify(|_, w| w.enable_7(true));
