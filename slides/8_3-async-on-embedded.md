@@ -160,6 +160,24 @@ Let rustc do the job!
 </center>
 
 ---
+layout: cover
+---
+
+<center>
+
+# `async fn() -> T`
+
+⬇️
+
+# 🪄
+
+⬇️
+
+## `fn() -> impl Future<Output = T>`
+
+</center>
+
+---
 layout: with-footer
 ---
 
