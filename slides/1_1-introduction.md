@@ -107,13 +107,19 @@ layout: with-footer
 - **Working on Rust projects** Like Rust implementations of PTP, NTP, sudo and su
 - **Active community member** Organizing RustNL 2023 and active in various Rust meetups
 
-<br/><br/>
+<p></p>
 
 <center>
-  <img class="logo-small" src="https://tweedegolf.nl/assets/client-ferrous-Ykf5Lz41.png" alt="Ferrous">
-  <img class="logo-small" src="https://tweedegolf.nl/assets/client-dutch-iot-0SWpC6-d.jpg" alt="DIS">
-  <img class="logo-small" src="https://tweedegolf.nl/assets/client-nlnetlabs-gnLA7KUl.png" alt="NLNet">
-  <img class="logo-small" src="https://tweedegolf.nl/assets/client-technolution-s3BzJUDL.png" alt="Technolution">
+  <img class="logo"       src="https://tweedegolf.nl/images/client-bluebird-v2.png" alt="Bluebird">
+  <img class="logo-smaller" src="https://tweedegolf.nl/images/kelvin-logo.png" alt="Kelvin">
+  <img class="logo-small" src="https://tweedegolf.nl/images/client-dutch-iot.jpg" alt="DIS">
+  <img class="logo-small" src="https://tweedegolf.nl/images/client-technolution.png" alt="Technolution">
+  <img class="logo-small" src="https://www.nxp.com/assets/images/en/logos-internal/NXP_logo_RGB_web.jpg" alt="NXP">
+  <br>
+  <img class="logo-small" src="https://tweedegolf.nl/assets/client-ferrous-BiR_kvPj.png" alt="Ferrous">
+  <img class="logo-small" src="https://tweedegolf.nl/images/client-isrg.jpg" alt="ISRG">
+  <img class="logo-small" src="https://tweedegolf.nl/assets/client-nlnetlabs-CCcsDspS.png" alt="NLNet">
+  <img class="logo-small" src="https://tweedegolf.nl/images/gama-logo2.png" alt="GAMA">
 </center>
 
 ---
