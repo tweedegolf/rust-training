@@ -15,6 +15,18 @@ div[layout="two-cols"] div.col-right {
   padding-top: 53px;
 }
 
+img.logo {
+  width: 175px;
+  margin: 20px 10px;
+  display: inline-block;
+}
+
+img.logo-smaller {
+  width: 100px;
+  margin: 20px 5px;
+  display: inline-block;
+}
+
 img.logo-small {
   width: 125px;
   margin: 20px 5px;
