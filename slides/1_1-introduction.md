@@ -24,17 +24,17 @@ layout: two-cols
 
 # Who are we?
  
-## Henk Oordt
+## Tamme Dittrich
 <br/>
 
-- Embedded software engineer & Rust trainer
-- 5 year Rust experience
-- Work on IoT devices using Rust
-- Maintainer of teach-rs
+- Embedded software engineer & Rust-lang trainer
+- Joined Tweede golf in 2023
+- ...
+- ...
 
 ::right::
 <center>
-  <img class="face" src="https://tweedegolf.nl/images/screenshot-from-2024-03-01-15-47-57.png" alt="Photo Henk"/>
+  <img class="face" src="https://tweedegolf.nl/images/tamme400x400.jpg" alt="Photo Tamme"/>
 </center>
 ---
 layout: two-cols
@@ -86,7 +86,7 @@ layout: two-cols
 ##  Marc Schoolderman
 <br/>
 
-- Software engineer & former CS teacher
+- Software engineer & Rust-lang trainer
 - Joined Tweede golf in 2022
 - Worked on Sudo-rs
 - Taught and did CS research at Radboud University’s Security Group
