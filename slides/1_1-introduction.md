@@ -50,8 +50,9 @@ layout: two-cols
 - Embedded tech lead & Rust-lang trainer
 - Joined Tweede golf in 2021
 - Full-time Rust since 2019
-- Worked with LoRaWAN, UWB, LTE
-- Created stackdump, nrf-modem & device-driver crates
+- Worked with LoRaWAN, UWB, LTE, PTP
+- Created sequential-storage, device-driver & nrf-modem crates
+- Contributor to the Rust compiler and Embassy
 
 ::right::
 <center>
@@ -72,7 +73,6 @@ layout: two-cols
 - Joined Tweede golf in 2021
 - Worked on NTP, PTP, P2000
 - Contributor Roc programming language
-- Created stackdump, nrf-modem & device-driver crates
 - Talk to me about compilers, linkers, functional & systems programming
 
 ::right::
