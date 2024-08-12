@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 2.2: Ownership and References"
+routerMode: hash
 ---
 
 # Rust programming

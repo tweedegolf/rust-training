@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 2.3: Advanced Syntax"
+routerMode: hash
 ---
 
 # Rust programming

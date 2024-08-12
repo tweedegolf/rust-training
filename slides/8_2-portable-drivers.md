@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 8.2: Portable Rust drivers"
+routerMode: hash
 ---
 
 <style type="text/css" rel="stylesheet">

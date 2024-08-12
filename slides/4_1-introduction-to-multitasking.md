@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 4.1: Introduction to Multitasking"
+routerMode: hash
 ---
 
 # Rust programming

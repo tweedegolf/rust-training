@@ -1,6 +1,6 @@
 # Unit 6.1 - Foreign Function Interface
 
-<a href="/slides/6_1/" target="_blank">Slides</a>
+<a href="/rust-training/slides/6_1-foreign-function-interface/" target="_blank">Slides</a>
 
 ## Exercise 6.1.1: CRC in C
 

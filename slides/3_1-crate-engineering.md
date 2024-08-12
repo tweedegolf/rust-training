@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 3.1: Crate Engineering"
+routerMode: hash
 ---
 
 # Rust programming

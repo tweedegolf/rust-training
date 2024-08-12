@@ -7,6 +7,7 @@ fonts:
 drawings:
   persist: false
 layout: cover
+routerMode: hash
 ---
 
 

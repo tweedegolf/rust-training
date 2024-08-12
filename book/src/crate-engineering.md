@@ -1,6 +1,6 @@
 # Unit 3.1 - Crate Engineering
 
-<a href="/slides/3_1/" target="_blank">Slides</a>
+<a href="/rust-training/slides/3_1-crate-engineering/" target="_blank">Slides</a>
 
 ## Exercise 3.1.1: My Serde App
 

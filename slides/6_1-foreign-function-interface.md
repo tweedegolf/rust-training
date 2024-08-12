@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 6.1: Foreign Function Interface"
+routerMode: hash
 ---
 
 # Rust programming

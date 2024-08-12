@@ -1,6 +1,6 @@
 # Unit 5.1 - Rust for Web
 
-<a href="/slides/5_1/" target="_blank">Slides</a>
+<a href="/rust-training/slides/5_1-rust-for-web/" target="_blank">Slides</a>
 
 ## Exercise 5.1.1: Pastebin
 

@@ -1,6 +1,6 @@
 # Unit 4.3 - Asynchronous Multitasking
 
-<a href="/slides/4_3/" target="_blank">Slides</a>
+<a href="/rust-training/slides/4_3-asynchronous-multitasking/" target="_blank">Slides</a>
 
 ## Exercise 4.3.1: Async Channels
 

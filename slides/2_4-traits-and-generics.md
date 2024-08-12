@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 2.4: Traits and Generics"
+routerMode: hash
 ---
 
 # Rust programming
