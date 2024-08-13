@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 2.5: Closures and Dynamic dispatch"
+routerMode: hash
 ---
 
 # Rust programming

@@ -1,0 +1,61 @@
+version: 2
+updates:
+  - package-ecosystem: "cargo"
+    directories:
+      - "/exercises/1-course-introduction/1-introduction/1-setup-your-installation"
+      - "/exercises/1-course-introduction/1-introduction/2-embedded"
+      - "/exercises/2-foundations-of-rust/1-basic-syntax/1-basic-syntax"
+      - "/exercises/2-foundations-of-rust/2-ownership-and-references/1-move-semantics"
+      - "/exercises/2-foundations-of-rust/2-ownership-and-references/2-borrowing"
+      - "/exercises/2-foundations-of-rust/3-advanced-syntax/1-error-propagation"
+      - "/exercises/2-foundations-of-rust/3-advanced-syntax/2-error-handling"
+      - "/exercises/2-foundations-of-rust/3-advanced-syntax/3-slices"
+      - "/exercises/2-foundations-of-rust/3-advanced-syntax/4-ring-buffer"
+      - "/exercises/2-foundations-of-rust/3-advanced-syntax/5-boxed-data"
+      - "/exercises/2-foundations-of-rust/4-traits-and-generics/1-local-storage-vec"
+      - "/exercises/2-foundations-of-rust/5-closures-and-dynamic-dispatch/1-config-reader"
+      - "/exercises/3-crate-engineering/1-crate-engineering/1-my-serde-app"
+      - "/exercises/3-crate-engineering/1-crate-engineering/3-bsn"
+      - "/exercises/3-crate-engineering/1-crate-engineering/4-3d-printer"
+      - "/exercises/3-crate-engineering/1-crate-engineering/5-fizzbuzz"
+      - "/exercises/4-multitasking/2-parallel-multitasking/1-tf-idf"
+      - "/exercises/4-multitasking/2-parallel-multitasking/2-mutex"
+      - "/exercises/4-multitasking/3-asynchronous-multitasking/0-sync-to-async"
+      - "/exercises/4-multitasking/3-asynchronous-multitasking/1-async-channels"
+      - "/exercises/4-multitasking/3-asynchronous-multitasking/2-async-chat"
+      - "/exercises/4-multitasking/3-asynchronous-multitasking/3-measurement-data-sink"
+      - "/exercises/4-multitasking/3-asynchronous-multitasking/3-measurement-data-sink/node-simulator"
+      - "/exercises/6-rust-for-systems-programming/1-foreign-function-interface/1-crc-in-c"
+      - "/exercises/6-rust-for-systems-programming/1-foreign-function-interface/2-crc-in-rust"
+      - "/exercises/6-rust-for-systems-programming/1-foreign-function-interface/3-tweetnacl-bindgen"
+      - "/exercises/7-rust-for-data-science/1-rust-from-python/1-hello-world"
+      - "/exercises/7-rust-for-data-science/1-rust-from-python/2-strompy"
+      - "/exercises/8-embedded/1-embedded-ecosystem/1-lsm303agr-id"
+      - "/exercises/8-embedded/2-portable-drivers/1-lsm303agr-driver"
+      - "/exercises/8-embedded/3-async-on-embedded/1-compass"
+      - "/exercises/8-embedded/4-embassy-framework/1-embassy-project"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+    groups:
+      exercises-dependencies:
+        patterns:
+          - "*"
+  - package-ecosystem: "npm"
+    directory: "/slides/"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+    groups:
+      npm-dependencies:
+        patterns:
+          - "*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
+    groups:
+      ci-dependencies:
+        patterns:
+          - "*"

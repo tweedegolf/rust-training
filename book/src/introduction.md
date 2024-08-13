@@ -1,6 +1,6 @@
 # Unit 1.1 - Introduction
 
-<a href="/slides/1_1/" target="_blank">Slides</a>
+<a href="/rust-training/slides/1_1-introduction/" target="_blank">Slides</a>
 
 ## Exercise 1.1.1: Setup Your Installation
 

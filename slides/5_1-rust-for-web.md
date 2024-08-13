@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 5.1: Rust for Web"
+routerMode: hash
 ---
 
 # Rust programming

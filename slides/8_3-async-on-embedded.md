@@ -10,6 +10,7 @@ fonts:
   mono: Fira Mono
 layout: cover
 title: "Rust - 8.3: Async on Embedded"
+routerMode: hash
 ---
 
 <style type="text/css" rel="stylesheet">

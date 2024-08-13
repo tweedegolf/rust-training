@@ -1,6 +1,6 @@
 # Unit 4.2 - Parallel Multitasking
 
-<a href="/slides/4_2/" target="_blank">Slides</a>
+<a href="/rust-training/slides/4_2-parallel-multitasking/" target="_blank">Slides</a>
 
 ## Exercise 4.2.1: TF-IDF
 

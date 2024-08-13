@@ -4,6 +4,7 @@ lineNumbers: true
 drawings:
   persist: false
 layout: cover
+routerMode: hash
 ---
 # Rust programming
 

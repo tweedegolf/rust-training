@@ -4,3 +4,7 @@ multilingual = false
 
 [build]
 build-dir = "./target"
+
+[output.html]
+git-repository-url = "https://github.com/tweedegolf/rust-training/"
+site-url = "/rust-training/"

@@ -1,6 +1,6 @@
 # Unit 2.3 - Advanced Syntax
 
-<a href="/slides/2_3/" target="_blank">Slides</a>
+<a href="/rust-training/slides/2_3-advanced-syntax/" target="_blank">Slides</a>
 
 ## Exercise 2.3.1: Error propagation
 

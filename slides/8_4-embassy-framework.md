@@ -10,6 +10,7 @@ fonts:
   mono: Fira Mono
 layout: cover
 title: "Rust - 8.4 the Embassy framework"
+routerMode: hash
 ---
 
 # Rust programming

@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 7.1: Calling Rust from Python"
+routerMode: hash
 ---
 
 # Rust programming

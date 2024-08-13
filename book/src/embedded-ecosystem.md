@@ -1,6 +1,6 @@
 # Unit 8.1 - The Rust embedded ecosystem
 
-<a href="/slides/8_1/" target="_blank">Slides</a>
+<a href="/rust-training/slides/8_1-embedded-ecosystem/" target="_blank">Slides</a>
 
 ## Exercise 8.1.1: LSM303AGR ID
 Use our newly gained knowledge to get our first application running and read out the ID of the LSM303AGR accelerometer.

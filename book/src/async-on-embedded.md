@@ -1,6 +1,6 @@
 # Unit 8.3 - Async on Embedded
 
-<a href="/slides/8_3/" target="_blank">Slides</a>
+<a href="/rust-training/slides/8_3-async-on-embedded/" target="_blank">Slides</a>
 
 ## Exercise 8.3.1: Compass
 In this exercise, we'll use the [`lsm303agr`](https://docs.rs/lsm303agr) driver. Although the documentation doesn't show it, it supports async if you enable its `async` [feature](https://doc.rust-lang.org/cargo/reference/features.html)

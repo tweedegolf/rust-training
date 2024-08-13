@@ -10,6 +10,7 @@ fonts:
     mono: Fira Mono
 layout: cover
 title: "Rust - 4.2: Parallel Multitasking"
+routerMode: hash
 ---
 
 # Rust programming
