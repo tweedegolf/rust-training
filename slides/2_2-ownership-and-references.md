@@ -651,9 +651,6 @@ fn change(some_string: &mut String) {
 <div class="no-line-numbers">
 
 ```text
-   Compiling playground v0.0.1 (/playground)
-    Finished dev [unoptimized + debuginfo] target(s) in 2.55s
-     Running `target/debug/playground`
 hello, world
 ```
 
