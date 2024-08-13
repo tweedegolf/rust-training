@@ -24,19 +24,19 @@ layout: two-cols
 ---
 
 # Who are we?
-
-## Henk Oordt
-
+ 
+## Tamme Dittrich
 <br/>
 
-- Embedded software engineer & Rust trainer
-- 5 year Rust experience
-- Work on IoT devices using Rust
-- Maintainer of teach-rs
+- Embedded software engineer & Rust-lang trainer
+- Joined Tweede golf in 2023
+- Worked on ntpd-rs, statime, and [drive-rs](https://github.com/tweedegolf/drive-rs)
+- Contributor to the Rust compiler
+- Worked in applied research in machine vision systems
 
 ::right::
 <center>
-  <img class="face" src="https://tweedegolf.nl/images/screenshot-from-2024-03-01-15-47-57.png" alt="Photo Henk"/>
+  <img class="face" src="https://tweedegolf.nl/images/tamme400x400.jpg" alt="Photo Tamme"/>
 </center>
 ---
 layout: two-cols
@@ -51,8 +51,9 @@ layout: two-cols
 - Embedded tech lead & Rust-lang trainer
 - Joined Tweede golf in 2021
 - Full-time Rust since 2019
-- Worked with LoRaWAN, UWB, LTE
-- Created stackdump, nrf-modem & device-driver crates
+- Worked with LoRaWAN, UWB, LTE, PTP
+- Created sequential-storage, device-driver & nrf-modem crates
+- Contributor to the Rust compiler and Embassy
 
 ::right::
 <center>
@@ -73,7 +74,6 @@ layout: two-cols
 - Joined Tweede golf in 2021
 - Worked on NTP, PTP, P2000
 - Contributor Roc programming language
-- Created stackdump, nrf-modem & device-driver crates
 - Talk to me about compilers, linkers, functional & systems programming
 
 ::right::
@@ -91,9 +91,9 @@ layout: two-cols
 
 <br/>
 
-- Software engineer & former CS teacher
+- Software engineer & Rust-lang trainer
 - Joined Tweede golf in 2022
-- Worked on Sudo-rs
+- Worked on Sudo-rs, and ntpd-rs
 - Taught and did CS research at Radboud University’s Security Group
 
 ::right::
