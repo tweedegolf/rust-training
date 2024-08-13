@@ -30,8 +30,9 @@ layout: two-cols
 
 - Embedded software engineer & Rust-lang trainer
 - Joined Tweede golf in 2023
-- ...
-- ...
+- Worked on ntpd-rs, statime, and [drive-rs](https://github.com/tweedegolf/drive-rs)
+- Contributor to the Rust compiler
+- Worked in applied research in machine vision systems
 
 ::right::
 <center>
@@ -92,7 +93,7 @@ layout: two-cols
 
 - Software engineer & Rust-lang trainer
 - Joined Tweede golf in 2022
-- Worked on Sudo-rs
+- Worked on Sudo-rs, and ntpd-rs
 - Taught and did CS research at Radboud University’s Security Group
 
 ::right::
