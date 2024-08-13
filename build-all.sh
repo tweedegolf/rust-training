@@ -17,7 +17,7 @@ mv book/target/* ./public/
 pushd slides
   npm install
   for f in *.md; do
-    npm run build -- --out "dist/${f%.md}" --base "/rust-training/slides/$f{%.md}/" "$f"
+    npm run build -- --out "dist/${f%.md}" --base "/rust-training/slides/${f%.md}/" "$f"
   done
 popd
 mv slides/dist ./public/slides
