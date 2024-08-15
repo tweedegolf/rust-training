@@ -259,12 +259,12 @@ dependencies = [
 
 [[package]]
 name = "panic-probe"
-version = "0.3.1"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aa6fa5645ef5a760cd340eaa92af9c1ce131c8c09e7f8926d8a24b59d26652b9"
+checksum = "4047d9235d1423d66cc97da7d07eddb54d4f154d6c13805c6d0793956f4f25b0"
 dependencies = [
  "cortex-m",
- "rtt-target 0.4.0",
+ "rtt-target",
 ]
 
 [[package]]
@@ -296,16 +296,6 @@ name = "rand_core"
 version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
-
-[[package]]
-name = "rtt-target"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3afa12c77ba1b9bf560e4039a9b9a08bb9cde0e9e6923955eeb917dd8d5cf303"
-dependencies = [
- "critical-section",
- "ufmt-write",
-]
 
 [[package]]
 name = "rtt-target"
@@ -417,5 +407,5 @@ dependencies = [
  "lsm303agr",
  "nrf52833-hal",
  "panic-probe",
- "rtt-target 0.5.0",
+ "rtt-target",
 ]
