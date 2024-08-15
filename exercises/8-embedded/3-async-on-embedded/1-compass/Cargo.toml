@@ -8,11 +8,11 @@ edition = "2021"
 [dependencies]
 cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7.3"
-embassy-nrf = { version = "0.1.0", features = ["nrf52833", "time-driver-rtc1", "time", "gpiote"] }
+embassy-nrf = { version = "0.2.0", features = ["nrf52833", "time-driver-rtc1", "time", "gpiote"] }
 rtt-target = "0.5.0"
 embedded-hal-async = "1.0.0"
 lsm303agr = { version = "1.1.0", features = ["async"] }
-embassy-executor = { version = "0.5.0", features = ["arch-cortex-m", "executor-thread", "integrated-timers"] }
+embassy-executor = { version = "0.6.0", features = ["arch-cortex-m", "executor-thread", "integrated-timers"] }
 embassy-time = "0.3.1"
 libm = "0.2.8"
 panic-rtt-target = "0.1.3"
