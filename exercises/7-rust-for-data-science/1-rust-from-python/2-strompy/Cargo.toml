@@ -12,7 +12,7 @@ crate-type = ["cdylib", "lib"]
 [dependencies]
 heapless = { version = "0.8.0", features = ["serde"] }
 nalgebra = { version = "0.32.4", default-features = false }
-serde = { version = "1.0.197", features = ["derive"] }
+serde = { version = "1.0.207", features = ["derive"] }
 serde_json = "1.0.125"
 futures = "0.3.30"
 crossbeam-queue = "0.3.11"
