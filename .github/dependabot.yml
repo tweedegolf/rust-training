@@ -37,10 +37,6 @@ updates:
     schedule:
       interval: "weekly"
       day: "thursday"
-    groups:
-      exercises-dependencies:
-        patterns:
-          - "*"
   - package-ecosystem: "npm"
     directory: "/slides/"
     schedule:
