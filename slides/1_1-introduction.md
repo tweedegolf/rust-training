@@ -166,14 +166,14 @@ layout: with-footer
 
 ```rust
 let t = thread::spawn(| | loop {
-let question = Question::read_from_crowd();
-question.answer();
+    let question = Question::read_from_crowd();
+    question.answer();
 })
 
 
 for part in training.parts() {
-part.slides();
-part.exercises();
+    part.slides();
+    part.exercises();
 }
 
 t.join();
