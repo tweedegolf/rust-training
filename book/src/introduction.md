@@ -18,3 +18,7 @@ Going through this material on your own is good, but what's even better: our exp
 exercise during an interactive, tailor-made multi-day program!
 
 To learn more, visit [our professional training page](https://tweedegolf.nl/en/expertise/rust/workshops).
+
+<p><br><p>
+
+![Tweede golf logo](tweedegolf-logo.png)
