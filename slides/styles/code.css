@@ -10,9 +10,13 @@ p, li {
   display: none;
 }
 
-div[layout="two-cols"] div.col-right {
+div.two-columns div.col-right {
   padding-left: 10px;
   padding-top: 53px;
+}
+
+div.trainer-intro div.col-left {
+  width: 150%;
 }
 
 img.logo {
