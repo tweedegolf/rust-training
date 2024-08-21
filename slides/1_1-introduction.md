@@ -108,7 +108,7 @@ layout: with-footer
 - **Leading Rust experts** Running Rust in production since 2017
 - **Engineers** Web, systems, embedded software development
 - **Open source** Impactful implementations of Network Time Protocol, sudo
-- **Adoption** Through both teach-rs and in-company trainings
+- **Adoption** Through both teach-rs and in-company training
 - **Community** Organizing RustNL and active in Rust meetups
 
 <p></p>
