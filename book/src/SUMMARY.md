@@ -2,6 +2,7 @@
 
 - [Course Introduction]()
 	- [Introduction](introduction.md)
+	- [Setup Instructions](instructions.md)
 
 - [Foundations of Rust]()
 	- [Basic Syntax](basic-syntax.md)

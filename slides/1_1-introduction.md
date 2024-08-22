@@ -20,7 +20,7 @@ to build reliable and efficient software.
 <img src="https://raw.githubusercontent.com/tweedegolf/slidev-theme-tweedegolf/1bc81d09e326fcecb531108a5a3bcd9e1856dd84/images/shield-large.png" class=bg-image>
 
 ---
-layout: two-cols
+layout: trainer-intro
 ---
 
 # Who are we?
@@ -29,17 +29,16 @@ layout: two-cols
 <br/>
 
 - Embedded software engineer & Rust-lang trainer
-- Joined Tweede golf in 2023
 - Worked on ntpd-rs, statime, and [drive-rs](https://github.com/tweedegolf/drive-rs)
-- Contributor to the Rust compiler
 - Worked in applied research in machine vision systems
+- Taught the Embedded Rust Advanced class at EW24
 
 ::right::
 <center>
   <img class="face" src="https://tweedegolf.nl/images/tamme400x400.jpg" alt="Photo Tamme"/>
 </center>
 ---
-layout: two-cols
+layout: trainer-intro
 ---
 
 # Who are we?
@@ -49,7 +48,6 @@ layout: two-cols
 <br/>
 
 - Embedded tech lead & Rust-lang trainer
-- Joined Tweede golf in 2021
 - Full-time Rust since 2019
 - Worked with LoRaWAN, UWB, LTE, PTP
 - Created sequential-storage, device-driver & nrf-modem crates
@@ -61,7 +59,7 @@ layout: two-cols
 </center>
 
 ---
-layout: two-cols
+layout: trainer-intro
 ---
 
 # Who are we?
@@ -71,7 +69,6 @@ layout: two-cols
 <br/>
 
 - Software engineer & Rust-lang trainer
-- Joined Tweede golf in 2021
 - Worked on NTP, PTP, P2000
 - Contributor Roc programming language
 - Talk to me about compilers, linkers, functional & systems programming
@@ -82,7 +79,7 @@ layout: two-cols
 </center>
 
 ---
-layout: two-cols
+layout: trainer-intro
 ---
 
 # Who are we?
@@ -92,9 +89,10 @@ layout: two-cols
 <br/>
 
 - Software engineer & Rust-lang trainer
-- Joined Tweede golf in 2022
 - Worked on Sudo-rs, and ntpd-rs
-- Taught and did CS research at Radboud University’s Security Group
+- Formerly part of Radboud University’s Security Group
+- Security officer worried about supply chain risks
+- Talk to me about programming languages and formal verification
 
 ::right::
 <center>
@@ -107,10 +105,11 @@ layout: with-footer
 
 # A quick note about Tweede golf
 
-- **Leading Rust agency in NL** Running Rust in production since 2017
-- **Working on Rust adoption** Through both teach-rs and in-company trainings
-- **Working on Rust projects** Like Rust implementations of PTP, NTP, sudo and su
-- **Active community member** Organizing RustNL 2023 and active in various Rust meetups
+- **Leading Rust experts** Running Rust in production since 2017
+- **Engineers** Web, systems, embedded software development
+- **Open source** Impactful implementations of Network Time Protocol, sudo
+- **Adoption** Through both teach-rs and in-company training
+- **Community** Organizing RustNL and active in Rust meetups
 
 <p></p>
 
@@ -166,14 +165,14 @@ layout: with-footer
 
 ```rust
 let t = thread::spawn(| | loop {
-let question = Question::read_from_crowd();
-question.answer();
+    let question = Question::read_from_crowd();
+    question.answer();
 })
 
 
 for part in training.parts() {
-part.slides();
-part.exercises();
+    part.slides();
+    part.exercises();
 }
 
 t.join();
