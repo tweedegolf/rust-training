@@ -21,4 +21,4 @@ To learn more, visit [our professional training page](https://tweedegolf.nl/en/e
 
 <p><br><p>
 
-![Tweede golf logo](tweedegolf-logo.png)
+![Tweede golf logo](tweedegolf-logo.svg)
