@@ -1,6 +1,6 @@
 # Unit 2.1 - Basic Syntax
 
-<a href="/rust-training/slides/2_1-basic-syntax/" target="_blank">Slides</a>
+<a href="/slides/2_1-basic-syntax/" target="_blank">Slides</a>
 
 ## Exercise 2.1.1: Basic Syntax
 

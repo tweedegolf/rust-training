@@ -1,6 +1,6 @@
 # Unit 8.2 - Portable Rust drivers
 
-<a href="/rust-training/slides/8_2-portable-drivers/" target="_blank">Slides</a>
+<a href="/slides/8_2-portable-drivers/" target="_blank">Slides</a>
 
 ## Exercise 8.2.1: LSM303AGR Driver
 

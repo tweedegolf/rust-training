@@ -1,6 +1,6 @@
 # Unit 2.4 - Traits and Generics
 
-<a href="/rust-training/slides/2_4-traits-and-generics/" target="_blank">Slides</a>
+<a href="/slides/2_4-traits-and-generics/" target="_blank">Slides</a>
 
 ## Exercise 2.4.1: Local Storage Vec
 

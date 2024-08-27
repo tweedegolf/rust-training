@@ -1,6 +1,6 @@
 # Unit 1.1 - Introduction
 
-<a href="/rust-training/slides/1_1-introduction/" target="_blank">Slides</a>
+<a href="/slides/1_1-introduction/" target="_blank">Slides</a>
 
 On these pages you will find open source Rust training material designed and maintained by the Rust experts working at Tweede golf.
 It comprises several modules that we use in our multi-day (embedded) training courses.
