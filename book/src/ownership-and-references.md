@@ -1,6 +1,6 @@
 # Unit 2.2 - Ownership and References
 
-<a href="/rust-training/slides/2_2-ownership-and-references/" target="_blank">Slides</a>
+<a href="/slides/2_2-ownership-and-references/" target="_blank">Slides</a>
 
 ## Exercise 2.2.1: Move Semantics
 

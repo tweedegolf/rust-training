@@ -1,6 +1,6 @@
 # Unit 2.5 - Closures and Dynamic dispatch
 
-<a href="/rust-training/slides/2_5-closures-and-dynamic-dispatch/" target="_blank">Slides</a>
+<a href="/slides/2_5-closures-and-dynamic-dispatch/" target="_blank">Slides</a>
 
 ## Exercise 2.5.1: Config Reader
 

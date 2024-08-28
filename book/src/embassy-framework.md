@@ -1,6 +1,6 @@
 # Unit 8.4 - The Embassy Framework
 
-<a href="/rust-training/slides/8_4-embassy-framework/" target="_blank">Slides</a>
+<a href="/slides/8_4-embassy-framework/" target="_blank">Slides</a>
 
 ## Exercise 8.4.1: Embassy project
 
