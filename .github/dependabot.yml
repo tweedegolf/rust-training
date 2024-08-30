@@ -40,7 +40,7 @@ updates:
       frequent-updaters:
         patterns:
           - "serde*"
-          - "anyhow"pikken
+          - "anyhow"
   - package-ecosystem: "npm"
     directory: "/slides/"
     schedule:
