@@ -35,13 +35,16 @@ updates:
       - "/exercises/8-embedded/3-async-on-embedded/1-compass"
       - "/exercises/8-embedded/4-embassy-framework/1-embassy-project"
     schedule:
-      interval: "weekly"
-      day: "thursday"
+      interval: "monthly"
+    groups:
+      frequent-updaters:
+        patterns:
+          - "serde*"
+          - "anyhow"pikken
   - package-ecosystem: "npm"
     directory: "/slides/"
     schedule:
-      interval: "weekly"
-      day: "thursday"
+      interval: "monthly"
     groups:
       npm-dependencies:
         patterns:
@@ -49,8 +52,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "thursday"
+      interval: "monthly"
     groups:
       ci-dependencies:
         patterns:
