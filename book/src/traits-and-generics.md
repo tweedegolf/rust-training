@@ -67,7 +67,17 @@ impl<T, const N: usize> From<Vec<T>> for LocalStorageVec<T, N> {
 
 Run `cargo test` to validate your implementation.
 
-### 2.4.1.C `impl LocalStorageVec` ⭐⭐
+### 2.4.1.C `AsRef` and `AsMut` ⭐⭐
+[`AsRef`](https://doc.rust-lang.org/std/convert/trait.AsRef.html) and [`AsMut`](https://doc.rust-lang.org/std/convert/trait.AsMut.html) are used to implement *cheap* reference-to-reference coercion. For instance, our `LocalStorageVec<T, N>` is somewhat similar to a slice `&[T]`, as both represent a contiguous series of `T` values. This is true whether the `LocalStorageVec` buffer resides on the stack or on the heap. 
+
+Uncomment the `it_as_refs` test case and implement `AsRef<[T]>` and `AsMut<[T]>`.
+
+<details>
+    <summary><b>Hint</b></summary>
+    Make sure to take into account the value of `len` for the `Stack` variant of `LocalStorageVec` when creating a slice.
+</details>
+
+### 2.4.1.D `impl LocalStorageVec` ⭐⭐
 To make the `LocalStorageVec` more useful, we'll add more methods to it.
 Create an `impl`-block for `LocalStorageVec`.
 Don't forget to declare and provide the generic parameters.
