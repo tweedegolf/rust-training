@@ -12,7 +12,7 @@ Follow the instructions in the comments of `exercises/2-foundations-of-rust/3-ad
 
 Follow the instructions in the comments of `exercises/2-foundations-of-rust/3-advanced-syntax/3-slices/src/main.rs`!
 Don't take too much time on the extra assignment, instead come back later once
-you've done the rest of the excercises.
+you've done the rest of the exercises.
 ## Exercise 2.3.4: Ring Buffer
 
 This is a bonus exercise! Follow the instructions in the comments of
