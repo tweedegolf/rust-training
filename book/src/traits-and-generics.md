@@ -4,24 +4,27 @@
 
 ## Exercise 2.4.1: Vector math
 
-In this exercise we'll implement some basic vector math operations for our 2-dimensional vector type `Vec2D`.
+In this exercise, we'll implement some basic vector math operations for our 2-dimensional vector type `Vec2D`.
 
 ### 2.4.1.A Vector addition
-Let's start by implementing addition from Rust's `std::ops::Add`. Replace the `todo!();` such that it returns a new `Vec2D` of which the `x` component is equal to the sum of the `x` components of the two input vectors, and similarly for the `y` component. If this addition has been implemented correctly, the `integer_addition` test should now pass!
+Let's start by implementing vector addition for `Vec2D` as Rust's `std::ops::Add` trait. Replace the `todo!()` such that it returns a new `Vec2D` of which the `x` component is the sum of the `x` components of the two input vectors, and similarly for the `y` component. If implemented correctly, the `integer_addition` test should now pass!
 
 ### 2.4.1.B Dot product
-Now, let's implement the [dot product](https://en.wikipedia.org/wiki/Dot_product) for our vector type.
-Multiplying two vectors together with a dot product should return a singular value, which is the sum of the products of the components. For example, `[1, 2] * [3, 4] = 1 * 3 + 2 * 4 = 11`. Implement this by adding a new `impl` block that implements the `std::ops::Mul` trait for `Vec2D`. Uncomment the `integer_dot_product` test to test your code!
+Now, let's implement the [dot product](https://en.wikipedia.org/wiki/Dot_product) for our vector type. Multiplying two vectors with a dot product should return a singular value, which is the sum of the products of the components. For example, `[1, 2] * [3, 4] = 1 * 3 + 2 * 4 = 11`. Implement this by adding a new `impl` block that implements the `std::ops::Mul` trait for `Vec2D`. Uncomment the `integer_dot_product` test to test your code!
 
 ### 2.4.1.C Making `Vec2D` generic
-Currently, the `x` and `y` components of our `Vec2D` can only be 32-bit integers. What if we want to be able to use other number types, such as floating-point numbers? Let's make `Vec2D` generic over a type `T` by changing the definition of the `struct` such that the `x` and `y` are of type `T`.
+Currently, the `x` and `y` components of our `Vec2D` can only be 32-bit integers. What if we want to use other number types, such as floating-point numbers? Let's make `Vec2D` generic over a type `T` by changing the definition of `Vec2D` such that the `x` and `y` are generic.
 
-We will also need to update our addition and dot product implementations to support this generic type `T`. 
-Instead of implementing the `add` and `mul` functions for every type of number separately, we can leave the implementations generic by implementing them for any `T` which can be added/multiplied (i.e. any type `T` that has the `Add` and/or `Mul` trait). This means we will only need to change the `impl` lines in our code, without needing to change the actual implementations!
+We will also need to update our addition and dot product implementations to support this generic type `T`. Instead of implementing the `add` and `mul` functions for every type of number separately, we can leave the implementations generic by implementing them for any `T` that can be added/multiplied (i.e. any type `T` that has the `Add` and/or `Mul` trait). This means we can just change the start of the `impl` block, without needing to change the actual function implementations!
 
 <details>
-    <summary><b>Hint (generic implementations with trait bounds)</b></summary>
-    You can add a generic type to an `impl` block by writing e.g. `impl<T>`. This generic type can be bound to a trait by writing e.g. `impl<T: Display>` to specify that type `T` must have the `Display` trait (which can also be written as `impl<T> ... where T: Display`). You can bound a type to multiple traits by writing e.g. `impl<T: Clone + Display>`.
+    <summary><b>Hint 1 (generic implementations with trait bounds)</b></summary>
+    You can add a generic type to an `impl` block by writing `impl<T>`. This generic type can be bound to a trait by writing e.g. `impl<T: Display>` to specify that type `T` must have the `Display` trait (which you can also write as `impl<T> ... where T: Display`). You can add multiple trait bounds to a type by writing e.g. `impl<T: Clone + Display>`.
+</details>
+
+<details>
+    <summary><b>Hint 2 (the `Add` and `Mul` traits)</b></summary>
+    The `Add` and `Mul` traits have a generic `Output` type. This allowed us to implement the dot product as the `Mul` trait of `Vec2D` by setting the output to be a number. For our generic implementation, we want the generic type `T` to be something we can add and/or multiply. To specify this, we add `Add` and/or `Mul` trait bounds to `T`, but we also need to specify what output we expect from adding or multiplying two `T` values by writing e.g. `T: Add<Output = T>`.
 </details>
 
 Uncomment the `float_addition` and `float_dot_product` tests to check if our `Vec2D` now works with floating-point values!
