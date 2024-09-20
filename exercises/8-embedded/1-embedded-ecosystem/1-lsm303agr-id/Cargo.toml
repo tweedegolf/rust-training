@@ -10,7 +10,7 @@ cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7.3"
 rtt-target = "0.5.0"
 embedded-hal = "1.0.0"
-embassy-nrf = { version = "0.1.0", features = ["nrf52833", "unstable-pac"] }
+embassy-nrf = { version = "0.2.0", features = ["nrf52833", "unstable-pac"] }
 
 [profile.release]
 debug = true

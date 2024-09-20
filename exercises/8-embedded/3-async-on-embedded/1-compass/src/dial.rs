@@ -75,8 +75,8 @@ type Col4Pin = embassy_nrf::peripherals::P1_05;
 type Col5Pin = embassy_nrf::peripherals::P0_30;
 
 pub struct Dial {
-    rows: [gpio::Output<'static, AnyPin>; 5],
-    cols: [gpio::Output<'static, AnyPin>; 5],
+    rows: [gpio::Output<'static>; 5],
+    cols: [gpio::Output<'static>; 5],
     // For exercise 2
     direction: Direction,
 }
