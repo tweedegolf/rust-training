@@ -1,5 +1,7 @@
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
-runner = "probe-rs run --chip nRF52833_xxAA --catch-reset --catch-hardfault --allow-erase-all"
+# runner = "probe-rs run --chip nRF52833_xxAA --catch-reset --catch-hardfault --allow-erase-all"
+runner = "probe-rs run --chip nRF52833_xxAA --catch-reset --catch-hardfault --allow-erase-all --probe 0d28:0204:990636020005282085E7C008F3731B68000000006E052820"
+
 rustflags = [
   "-C", "link-arg=-Tlink.x",
   # This is needed if your flash or ram addresses are not aligned to 0x10000 in memory.x

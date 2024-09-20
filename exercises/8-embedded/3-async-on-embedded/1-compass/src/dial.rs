@@ -1,4 +1,6 @@
-use embassy_nrf::gpio::{self, AnyPin, Output, Pin};
+#![allow(dead_code)]
+
+use embassy_nrf::gpio::{self, AnyPin, Pin};
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, once_lock::OnceLock};
 use lsm303agr::MagneticField;
 
