@@ -1,4 +1,6 @@
-use embassy_nrf::gpio::{self, AnyPin, Output, Pin};
+#![allow(dead_code)]
+
+use embassy_nrf::gpio::{self, AnyPin, Pin};
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, once_lock::OnceLock};
 use lsm303agr::MagneticField;
 
@@ -73,8 +75,8 @@ type Col4Pin = embassy_nrf::peripherals::P1_05;
 type Col5Pin = embassy_nrf::peripherals::P0_30;
 
 pub struct Dial {
-    rows: [gpio::Output<'static, AnyPin>; 5],
-    cols: [gpio::Output<'static, AnyPin>; 5],
+    rows: [gpio::Output<'static>; 5],
+    cols: [gpio::Output<'static>; 5],
     // For exercise 2
     direction: Direction,
 }

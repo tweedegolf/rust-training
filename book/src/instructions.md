@@ -79,6 +79,12 @@ More info:
 - <https://rust-analyzer.github.io/>
 - <https://code.visualstudio.com/learn/collaboration/live-share>
 
+### Tip
+
+This repo contains quite a lot of rust projects and due to the complicated setup of the repo Rust Analyzer can't autodiscover them well.
+
+To fix this we've specified the projects manually in the `.vscode/settings.json` file. To reduce the burden on your computer, you can comment out any of the projects that we're not using in our training.
+
 ## Git
 During the trainings, you'll need the Git version control tool.
 If you haven't installed Git already, you can find instructions here: <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>.
@@ -121,7 +127,7 @@ You can view variable values by hovering over them while execution is paused, or
 *This part is relevant only if you're partaking in one of the workshops on embedded Rust.*
 
 ## Hardware
-You should have a [BBC micro:bit](https://microbit.org/buy/bbc-microbit-single/ V2) available.
+We will use the [BBC micro:bit](https://microbit.org/buy/bbc-microbit-single/ V2) and either you've already got it or we will bring it with us.
 
 You'll also need a Micro-USB cable, but we're sure you've got one to spare.
 
@@ -154,10 +160,10 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
 
-If you're on `windows`, we need to install a generic WinUSB driver. You can use [Zadig](https://zadig.akeo.ie/) to select the usb device that uses the jlink driver and install WinUSB on it. 
-*This will uninstall the official driver, which means that the official Segger tools will not work anymore after this.* To revert, go to `device manager` and uninstall the usb device. The jlink driver will then be used again for that usb connection.
-
-Then, unplug the USB cable and plug it in again.
+It's possible that probe-rs detects two debugging interfaces. This is known to happen on Windows.
+In that case, go to the `.cargo/config.toml` and change the runner to the one that specifies the exact probe
+it needs to use. Make sure the values are the same as what probe-rs reports is one of the interfaces.
+Unsure? You can run `probe-rs list` to get a list of all connected probes.
 
 ## Trying it out
 Before we begin, we need to test our hardware. We'll be testing the nRF52833 microcontroller and the LSM303AGR motion sensor, that are present on the micro:bit V2. Make sure you have checked out the latest version of the workshop source.
