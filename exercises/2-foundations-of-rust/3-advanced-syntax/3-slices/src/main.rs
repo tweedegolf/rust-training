@@ -73,10 +73,13 @@ mod test {
 
     #[test]
     fn test_sort() {
-	assert_eq!(merge_sort(&[]), vec![]);
-	assert_eq!(merge_sort(&[5]), vec![5]);
-	assert_eq!(merge_sort(&[1,2,3]), vec![1,2,3]);
-	assert_eq!(merge_sort(&[47,42,5,1]), vec![1,5,42,47]);
-	assert_eq!(merge_sort(&[6,47,42,5,1,123]), vec![1,5,6,42,47,123]);
+        assert_eq!(merge_sort(&[]), vec![]);
+        assert_eq!(merge_sort(&[5]), vec![5]);
+        assert_eq!(merge_sort(&[1, 2, 3]), vec![1, 2, 3]);
+        assert_eq!(merge_sort(&[47, 42, 5, 1]), vec![1, 5, 42, 47]);
+        assert_eq!(
+            merge_sort(&[6, 47, 42, 5, 1, 123]),
+            vec![1, 5, 6, 42, 47, 123]
+        );
     }
 }

@@ -30,299 +30,137 @@ layout: section
 ---
 layout: default
 ---
-# The problem
+
+# Generic code for generic types
+
+Functions and methods can make use of generics
 
 ```rust
-fn add_u32(l: u32, r: u32) -> u32 { /* -snip- */ }
-
-fn add_i32(l: i32, r: i32) -> i32 { /* -snip- */ }
-
-fn add_f32(l: f32, r: f32) -> f32 { /* -snip- */ }
-
-/* ... */
-```
-
-No-one likes repeating themselves
-
-<v-click>
-<div>
-<strong>We need generic code!</strong>
-</div>
-</v-click>
-
-<!--
-Let's have a look at this Rust module. We'd like to provide functionality for finding the maximum of two numbers, for several distict types. One way to go about it, is to define many similar functions that perform the operation. But there's a number of problems with that:
-- What happens if we want to compare other types?
-- What happens if we want to compare separate types?
--->
-
----
-layout: default
----
-# Generic code
-
-An example
-```rust
-fn add<T>(lhs: T, rhs: T) -> T { /* - snip - */}
-```
-
-<v-click>
-<div>
-<br/>
-Or, in plain English:
-
-- `<T>` = "let `T` be a type"
-- `lhs: T` "let `lhs` be of type `T`"
-- `-> T` "let `T` be the return type of this function"
-</div>
-</v-click>
-<v-click>
-<div>
-<br/>
-Some open points:
-
-- What can we do with a `T`?
-- What should the body be?
-</div>
-</v-click>
-
----
-layout: default
----
-# Bounds on generic code
-&nbsp;
-
-We need to provide information to the compiler:
-- Tell Rust what `T` can do
-- Tell Rust what `T` is accepted
-- Tell Rust how `T` implements functionality
-
----
-layout: default
----
-
-# `trait`
-&nbsp;
-
-Describe what the type can do
-```rust
-trait MyAdd {
-    fn my_add(&self, other: &Self) -> Self;
-}
-```
-
----
-layout: default
----
-# `impl trait`
-&nbsp;
-
-Describe how the type does it
-
-```rust{all|1|2-8}
-impl MyAdd for u32 {
-    fn my_add(&self, other: &Self) -> Self {
-      *self + *other
+fn reverse_slice<T>(slice: &mut [T]) {
+    let n = slice.len();
+    for i in 0..n / 2 {
+        slice.swap(i, n - i - 1);
     }
 }
 ```
 
+This code gets instantiated for each concrete type
+
+```rust
+reverse_slice(&mut [1,2,3]);
+reverse_slice(&mut ["foo", "bar", "baz"]);
+```
+
 ---
 layout: default
 ---
-# Using a `trait`
 
-```rust{all|1-2|5-6|7-9|10-12}
-// Import the trait
-use my_mod::MyAdd
+# checking membership
 
-fn main() {
-  let left: u32 = 6;
-  let right: u32 = 8;
-  // Call trait method
-  let result = left.my_add(&right);
-  assert_eq!(result, 14);
-  // Explicit call
-  let result = MyAdd::my_add(&left, &right);
-  assert_eq!(result, 14);
+```rust
+fn slice_contains<T>(haystack: &[T], needle: &T) -> bool {
+    for e in haystack {
+        if e == needle {
+            return true;
+        }
+    }
+
+    false
 }
 ```
 
-- Trait needs to be in scope
-- Call just like a method
-- Or by using the explicit associated function syntax
+does this work?
 
 ---
 layout: default
 ---
-# Trait bounds
 
-```rust{all|1-3,5|5,7-11}
-fn add_values<T: MyAdd>(this: &T, other: &T) -> T {
-  this.my_add(other)
+# Generic functions must be valid on their own
+
+independent of for which concrete types they are used in practice
+
+```
+error[E0369]: binary operation `==` cannot be applied to type `&T`
+ --> src/lib.rs:3:14
+  |
+3 |         if e == needle {
+  |            - ^^ ------ &T
+  |            |
+  |            &T
+  |
+help: consider restricting type parameter `T`
+  |
+1 | fn slice_contains<T: std::cmp::PartialEq>(haystack: &[T], needle: &T) -> bool {
+  |                    +++++++++++++++++++++
+```
+
+---
+layout: default
+---
+
+# restrict a generic by a trait
+
+```rust
+fn slice_contains<T: PartialEq>(haystack: &[T], needle: &T) -> bool {
+    for e in haystack {
+        if e == needle {
+            return true;
+        }
+    }
+
+    false
 }
 
-// Or, equivalently
+// or
 
-fn add_values<T>(this: &T, other: &T) -> T 
-  where T: MyAdd
+fn slice_contains<T>(haystack: &[T], needle: &T) -> bool
+where
+    T: PartialEq
 {
-  this.my_add(other)
+    // ...
 }
 ```
 
-Now we've got a *useful* generic function!
-
-English: *"For all types `T` that implement the `MyAdd` `trait`, we define..."*
-
----
-layout: default
----
-# Limitations of `MyAdd`
-What happens if...
-
-- We want to add two values of different types?
-- Addition yields a different type?
-
 ---
 layout: default
 ---
 
-# Making `MyAdd` itself generic
-&nbsp;
+# The `PartialEq` trait
 
-Add an 'Input type' `O`:
+```rust
+// simplified
+pub trait PartialEq {
+    // Required method
+    fn eq(&self, other: &Self) -> bool;
 
-```rust{all|1-3|5-9}
-trait MyAdd<O> {
-    fn my_add(&self, other: &O) -> Self;
+    // Provided method
+    fn ne(&self, other: &Self) -> bool { ... }
 }
 
-impl MyAdd<u16> for u32 {
-    fn my_add(&self, other: &u16) -> Self {
-      *self + (*other as u32)
+// Eq is a supertrait of PartialEq
+pub trait Eq: PartialEq { }
+```
+
+Why `PartialEq`: floats! `NaN` behavior break the laws of `Eq`
+
+---
+layout: default
+---
+
+# Custom trait `impl`s
+
+```rust
+enum BookFormat { Paperback, Hardback, Ebook }
+struct Book {
+    isbn: i32,
+    format: BookFormat,
+}
+impl PartialEq for Book {
+    fn eq(&self, other: &Self) -> bool {
+        self.isbn == other.isbn
     }
 }
-```
-
-We can now add a `u16` to a `u32`.
-
----
-layout: default
----
-
-# Defining output of `MyAdd`
-
-- Addition of two given types always yields in one specific type of output
-- Add *associated type* for addition output
-
-```rust{all|2-3|7-9|6-20}
-trait MyAdd<O> {
-    type Output;
-    fn my_add(&self, other: &O) -> Self::Output;
-}
-
-impl MyAdd<u16> for u32 {
-    type Output = u64;
-
-    fn my_add(&self, other: &u16) -> Self::Output {
-      *self as u64 + (*other as u64)
-    }
-}
-
-impl MyAdd<u32> for u32 {
-    type Output = u32;
-
-    fn my_add(&self, other: &u32) -> Self::Output {
-      *self + *other
-    }
-}
-```
-
----
-layout: default
----
-# `std::ops::Add`
-The way `std` does it
-
-```rust{all|1|2-4}
-pub trait Add<Rhs = Self> {
-    type Output;
-
-    fn add(self, rhs: Rhs) -> Self::Output;
-}
-```
-
-- Default type of `Self` for `Rhs`
-
----
-layout: default
----
-# `impl std::ops::Add`
-
-```rust
-use std::ops::Add;
-pub struct BigNumber(u64);
-
-impl Add for BigNumber {
-  type Output = Self;
-
-  fn add(self, rhs: Self) -> Self::Output {
-      BigNumber(self.0 + rhs.0)
-  }
-}
-
-fn main() {
-  // Call `Add::add`
-  let res = BigNumber(1).add(BigNumber(2));
-}
-```
-
-What's the type of `res`?
-
----
-layout: default
----
-# `impl std::ops::Add` (2)
-
-```rust
-pub struct BigNumber(u64);
-
-impl std::ops::Add<u32> for BigNumber {
-  type Output = u128;
-  
-  fn add(self, rhs: u32) -> Self::Output {
-      (self.0 as u128) + (rhs as u128)
-  }
-}
-
-fn main() {
-  let res = BigNumber(1) + 3u32;
-}
-```
-
-What's the type of `res`?
-
----
-layout: default
----
-# Traits: Type Parameter vs. Associated Type
-
-### Type parameter (input type)
-*if trait can be implemented for many combinations of types*
-```rust
-// We can add both a u32 value and a u32 reference to a u32
-impl Add<u32> for u32 {/* */}
-impl Add<&u32> for u32 {/* */}
-```
-
-### Associated type (output type)
-*to define a type for a single implementation*
-```rust
-impl Add<u32> for u32 {
-  // Addition of two u32's is always u32
-  type Output = u32;
-}
+impl Eq for Book {}
 ```
 
 ---
@@ -332,21 +170,132 @@ layout: default
 # `#[derive]` a `trait`
 
 ```rust
-#[derive(Clone)]
-struct Dolly {
-  num_legs: u32,
-}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum BookFormat { Paperback, Hardback, Ebook }
 
 fn main() {
-  let dolly = Dolly { num_legs: 4 };
-  let second_dolly = dolly.clone();
-  assert_eq!(dolly.num_legs, second_dolly.num_legs);
+  assert_ne!(BookFormat::Paperback, BookFormat::Ebook);
 }
 ```
 
 - Some traits are trivial to implement
 - Derive to quickly implement a trait
-- For `Clone`: derived `impl` calls `clone` on each field 
+
+---
+layout: default
+---
+
+# The `PartialEq` trait (for real this time)
+
+```rust
+pub trait PartialEq<Rhs = Self>
+where
+    Rhs: ?Sized,
+{
+    // Required method
+    fn eq(&self, other: &Rhs) -> bool;
+
+    // Provided method
+    fn ne(&self, other: &Rhs) -> bool { ... }
+}
+```
+
+This allows comparisons between different types, e.g.
+
+```rust
+impl<'a> PartialEq<String> for &'a str {
+    fn eq(&self, other: String) -> bool {
+        *self == other.as_str()
+    }
+}
+```
+
+---
+layout: default
+---
+
+# Associated types
+
+```rust
+pub trait Iterator {
+    type Item;
+
+    fn next(&mut self) -> Option<Self::Item>;
+
+    // 75 provided methods
+}
+```
+
+https://doc.rust-lang.org/std/iter/trait.Iterator.html
+
+---
+layout: default
+---
+
+Iterator make `for`-loops work
+
+
+```rust
+for i in [1,2,3] {
+    body(i);
+}
+
+// is desugared into
+
+let mut it = [1,2,3].iter();
+loop {
+    match it.next() {
+        None => break,
+        Some(i) => body(i),
+    }
+}
+```
+
+---
+layout: default
+---
+
+# Custom iterators
+
+```rust
+struct Range {
+    start: usize,
+    end: usize,
+}
+
+impl Iterator for Range {
+    type Item = usize;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.start < self.end {
+            let current = self.start;
+            self.start += 1;
+            Some(current);
+        } else {
+            None
+        }
+    }
+}
+```
+
+---
+layout: default
+---
+
+# How are these different?
+
+```rust
+// std version
+trait Iterator {
+    type Item;
+}
+
+// but why not this?
+trait Iterator<Item> {
+    ...
+}
+
+```
 
 ---
 layout: default
@@ -362,36 +311,58 @@ Trait can be implemented for a type **iff**:
 Or both, of course
 
 ---
+layout: section
+---
+
+# Common traits from `std`
+
+
+---
 layout: default
 ---
 
-# Compiling generic functions
+# Duplication: `std::clone::Clone` & `std::marker::Copy`
+```rust{all|9|4-6}
+pub trait Clone: Sized {
+    fn clone(&self) -> Self;
 
-```rust
-impl MyAdd for i32 {/* - snip - */}
-impl MyAdd for f32 {/* - snip - */}
-
-fn add_values<T: MyAdd>(left: &T, right: &T) -> T
-{
-  left.my_add(right)
+    fn clone_from(&mut self, source: &Self) {
+      *self = source.clone()
+    }
 }
 
-fn main() {
-  let sum_one = add_values(&6, &8);
-  assert_eq!(sum_one, 14);
-  let sum_two = add_values(&6.5, &7.5);
-  println!("Sum two: {}", sum_two); // 14
-}
+pub trait Copy: Clone { } // That's it!
 ```
 
-Code is <em>monomorphized</em>:
- - Two versions of `add_values` end up in binary
- - Optimized separately and very fast to run (static dispatch)
- - Slow to compile and larger binary
+- Both `Copy` and `Clone` can be `#[derive]`d
+- `Copy` is a marker trait
+- `trait A: B` == "Implementor of `A` must also implement `B`"
+- `clone_from` has default implementation, can be overridden
+
 ---
-layout: section
+layout: default
 ---
-# Common traits from `std`
+# Default values: `std::default::Default`
+
+```rust{all|5|10-17}
+pub trait Default: Sized {
+    fn default() -> Self;
+}
+
+#[derive(Default)] // Derive the trait
+struct MyCounter {
+  count: u32,
+}
+
+// Or, implement it
+impl Default for MyCounter {
+  fn default() -> Self {
+    MyCounter {
+      count: 1, // If you feel so inclined
+    }
+  }
+}
+```
 
 ---
 layout: default
@@ -423,76 +394,6 @@ fn main() {
 ---
 layout: default
 ---
-# Markers: `std::marker::Sized`
-
-- Marker traits
-
-```rust
-/// Types with a constant size known at compile time.
-/// [...]
-pub trait Sized { }
-```
-
-*`u32` is `Sized`*
-
-*Slice `[T]`, `str` is **not** `Sized`*
-
-*Slice reference `&[T]`, `&str` is `Sized`*
-
-Others:
-- `Sync`: Types of which references can be shared between threads
-- `Send`: Types that can be transferred across thread boundaries
-
----
-layout: default
----
-# Default values: `std::default::Default`
-
-```rust{all|5|10-17}
-pub trait Default: Sized {
-    fn default() -> Self;
-}
-
-#[derive(Default)] // Derive the trait
-struct MyCounter {
-  count: u32,
-}
-
-// Or, implement it
-impl Default for MyCounter {
-  fn default() -> Self {
-    MyCounter {
-      count: 1, // If you feel so inclined
-    }
-  }
-}
-```
-
----
-layout: default
----
-
-# Duplication: `std::clone::Clone` & `std::marker::Copy`
-```rust{all|9|4-6}
-pub trait Clone: Sized {
-    fn clone(&self) -> Self;
-
-    fn clone_from(&mut self, source: &Self) {
-      *self = source.clone()
-    }
-}
-
-pub trait Copy: Clone { } // That's it!
-```
-
-- Both `Copy` and `Clone` can be `#[derive]`d
-- `Copy` is a marker trait
-- `trait A: B` == "Implementor of `A` must also implement `B`"
-- `clone_from` has default implementation, can be overridden
-
----
-layout: default
----
 
 # Conversion: `Into<T>` & `From<T>`
 ```rust{all|1-3|5-7|9-15}
@@ -508,7 +409,7 @@ impl <T, U> Into<U> for T
   where U: From<T>
 {
     fn into(self) -> U {
-      U::from(self)
+        U::from(self)
     }
 }
 ```
@@ -561,6 +462,31 @@ fn main() {
 ```
 
 *Have user of `print_bytes` choose between stack local `[u8; N]` and heap-allocated `Vec<u8>`*
+
+---
+layout: default
+---
+# Markers: `std::marker::Sized`
+
+- Marker traits
+
+```rust
+/// Types with a constant size known at compile time.
+/// [...]
+pub trait Sized { }
+```
+
+*`u32` is `Sized`*
+
+*Slice `[T]`, `str` is **not** `Sized`*
+
+*Slice reference `&[T]`, `&str` is `Sized`*
+
+Others:
+- `Sync`: Types of which references can be shared between threads
+- `Send`: Types that can be transferred across thread boundaries
+
+
 
 ---
 layout: default
@@ -710,7 +636,7 @@ fn longer<'a>(left: &'a str, right: &'a str) -> &'a str {
 }
 ```
 
-English: 
+English:
 
 - Given a lifetime called `'a`,
 - `longer` takes two references `left` and `right`
@@ -720,6 +646,28 @@ English:
 *Note: Annotations do NOT change the lifetime of variables! Their scopes do!*
 
 They just provide information for the borrow checker
+
+---
+layout: default
+---
+
+# Notation variations
+
+- the `'_` lifetime can be used to let the compiler infer the lifetime
+- two `'_` lifetimes in the same type represent **different** lifetimes
+
+```rust
+fn foo(b: &'_ str: , b: &'_ str) {
+    // a and b have different lifetimes now!
+}
+```
+
+- the static lifetime lives forever
+- string literals and constants have a static lifetime
+
+```rust
+let s: &'static str = "hello world";
+```
 
 ---
 layout: default
