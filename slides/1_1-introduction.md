@@ -24,7 +24,7 @@ layout: trainer-intro
 ---
 
 # Who are we?
- 
+
 ## Tamme Dittrich
 <br/>
 
@@ -69,7 +69,7 @@ layout: trainer-intro
 <br/>
 
 - Software engineer & Rust-lang trainer
-- Worked on NTP, PTP, P2000
+- Worked on NTP, PTP, P2000, zlib-rs
 - Contributor Roc programming language
 - Talk to me about compilers, linkers, functional & systems programming
 
@@ -99,6 +99,25 @@ layout: trainer-intro
   <img class="face" src="https://tweedegolf.nl/images/marcvoortgwebsite.jpg" alt="Photo Marc"/>
 </center>
 
+---
+layout: trainer-intro
+---
+
+# Who are we?
+
+## Ruben Nijveld
+
+<br/>
+
+- Software engineer & Rust-lang trainer
+- Worked with Rust since 2014 (before 1.0)
+- Worked on sudo-rs, ntpd-rs, PTP and P2000
+- Talk to me about Rust on the web
+
+::right::
+<center>
+  <img class="face" src="https://tweedegolf.nl/images/ruben.jpg" alt="Photo Ruben"/>
+</center>
 ---
 layout: with-footer
 ---

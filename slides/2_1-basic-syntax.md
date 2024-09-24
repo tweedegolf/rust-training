@@ -373,7 +373,7 @@ fn main() {
 ```
 
 - A `char` is a 32-bit unicode scalar value
-- Very much unlike C/C++ where `char is 8 bits
+- Very much unlike C/C++ where `char` is 8 bits
 
 <!--
 - The final scalar type is the character, but it isn't often seen.
@@ -387,7 +387,7 @@ instead.
 
 # `String`s
 ```rust
-    
+
     let s1 = String::from("Hello, 🌍!");
     //       ^^^^^^ Owned, heap-allocated string
 ```
