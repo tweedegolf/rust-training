@@ -17,7 +17,7 @@ fn main() -> ! {
 
     rprintln!("Starting");
 
-    // Initialize your driver and read out the ID register with it
+    // Initialize your driver, read out the acceleration values and print them
 
     exit();
 }
