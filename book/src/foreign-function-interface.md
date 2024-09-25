@@ -13,12 +13,12 @@ Use a CRC checksum function written in C in a Rust program
 
 ## Steps
 
-1. Add the `cc` build dependency, by adding to `Crate.toml` the lines:
+1. Add the `cc` build dependency, by adding to `Cargo.toml` the lines:
     ```toml
     [build-dependencies]
     cc = "1.0"
     ```
-2. Create `build.rs` with contents
+2. Create `build.rs` (in the same directory as `Cargo.toml`) with contents
     ```rust
     extern crate cc;
 
@@ -29,7 +29,8 @@ Use a CRC checksum function written in C in a Rust program
     }
     ```
 
-    This will find your c code, compile it, and link it into the executable rust produces
+    `build.rs` is a build script that cargo runs before it compiles your crate.
+    This will find your c code, compile it, and link it into the executable rust produces.
 3. In `main.rs`, define an extern (fill in the argument and return types)
     ```rust
     extern "C" {
