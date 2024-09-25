@@ -13,7 +13,7 @@ Use a CRC checksum function written in C in a Rust program
 
 ## Steps
 
-1. Add the `cc` build dependency, by adding to `Crate.toml` the lines:
+1. Add the `cc` build dependency, by adding to `Cargo.toml` the lines:
     ```toml
     [build-dependencies]
     cc = "1.0"
