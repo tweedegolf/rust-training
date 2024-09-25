@@ -18,7 +18,7 @@ Use a CRC checksum function written in C in a Rust program
     [build-dependencies]
     cc = "1.0"
     ```
-2. Create `build.rs` with contents
+2. Create `build.rs` (in the same directory as `Cargo.toml`) with contents
     ```rust
     extern crate cc;
 
