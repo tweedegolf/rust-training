@@ -29,7 +29,8 @@ Use a CRC checksum function written in C in a Rust program
     }
     ```
 
-    This will find your c code, compile it, and link it into the executable rust produces
+    `build.rs` is a build script that cargo runs before it compiles your crate.
+    This will find your c code, compile it, and link it into the executable rust produces.
 3. In `main.rs`, define an extern (fill in the argument and return types)
     ```rust
     extern "C" {
