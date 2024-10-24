@@ -1,6 +1,6 @@
 # Unit 7.1 - Rust from Python
 
-<a href="/slides/7_1-rust-from-python.md/" target="_blank">Slides</a>
+<a href="/slides/7_1-rust-from-python/" target="_blank">Slides</a>
 
 ## Exercise 7.1.1: Test your environment
 
