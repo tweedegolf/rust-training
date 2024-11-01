@@ -12,5 +12,5 @@ futures-lite = "2.3.0"
 num = "0.4.1"
 
 [dependencies.pyo3]
-version = "0.21.2"
+version = "0.22.5"
 features = ["extension-module", "num-bigint", "experimental-async"]
