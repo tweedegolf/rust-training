@@ -127,7 +127,7 @@ You can view variable values by hovering over them while execution is paused, or
 *This part is relevant only if you're partaking in one of the workshops on embedded Rust.*
 
 ## Hardware
-We will use the [BBC micro:bit](https://microbit.org/buy/bbc-microbit-single/ V2) and either you've already got it or we will bring it with us.
+We will use the [BBC micro:bit](https://microbit.org/buy/bbc-microbit-single) V2 and either you've already got it or we will bring it with us.
 
 You'll also need a Micro-USB cable, but we're sure you've got one to spare.
 
