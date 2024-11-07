@@ -78,7 +78,7 @@ Use a CRC checksum function written in Rust in a C program
     [dependencies]
     ```
 
-2. Expose an extern rust function 
+2. Expose an extern rust function in the `lib.rs`
 
     ```rust
     #[no_mangle]
@@ -93,16 +93,16 @@ Use a CRC checksum function written in Rust in a C program
 3. Create a C header file `crc_in_rust.h`
 
     ```c
-    #include <inttypes.h> // uint32_t, uint8_t
+    #include <stdint.h> // uint32_t, uint8_t
     #include <stddef.h> // size_t
 
     uint32_t crc32(const uint8_t data[], size_t data_length);
     ```
 
-4. Use the rust `crc32` function in C
+4. Create `main.c` and use the rust `crc32` function
 
     ```c
-    #include <inttypes.h> // uint32_t, uint8_t
+    #include <stdint.h> // uint32_t, uint8_t
     #include <stddef.h> // size_t
     #include <stdio.h> // printf
     #include "crc_in_rust.h"
@@ -113,19 +113,35 @@ Use a CRC checksum function written in Rust in a C program
 
         uint32_t hash = crc32(data, data_length);
 
-        printf("Hash: 0x%d\n", hash);
+        printf("Hash: %d\n", hash);
 
         return 0;
     }
     ```
+5. Give the rust function the same signature as the one defined in the header file
 
-5. compile and run
+6. Compile the rust crate and then run
 
+    Linux & MacOS:
     ```sh
+    # Build main.c, link it to the dynamic library and output the executable called main
     $ clang main.c target/debug/libcrc_in_rust.so -omain
+    # Run the executable
     $ ./main
     Hash: -1386739207
     ```
+
+    Windows:
+    ```ps
+    # Build main.c, link it to the import library of the DLL and output the executable called main.exe
+    ❯ clang main.c .\target\debug\crc_in_rust.dll.lib -o "main.exe"
+    # Move the dll to the same folder as the exe so it can find it
+    ❯ cp .\target\debug\crc_in_rust.dll crc_in_rust.dll
+    # Run the executable
+    ❯ .\main.exe
+    Hash: -1386739207
+    ```
+
 ## Exercise 6.1.3: TweetNaCl Bindgen
 
 Use `cargo bindgen` to generate the FFI bindings. Bindgen will look at a C header file, and generate rust functions, types and constants based on the C definitions.
