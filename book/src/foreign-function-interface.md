@@ -191,10 +191,10 @@ In the generated `bindings.rs` file we find this signature for the `crypto_hash_
 ```rust
 extern "C" {
     pub fn crypto_hash_sha512_tweet(
-        arg1: *mut ::std::os::raw::c_uchar,
-        arg2: *const ::std::os::raw::c_uchar,
-        arg3: ::std::os::raw::c_ulonglong,
-    ) -> ::std::os::raw::c_int;
+        arg1: *mut ::std::ffi::c_uchar,
+        arg2: *const ::std::ffi::c_uchar,
+        arg3: ::std::ffi::c_ulonglong,
+    ) -> ::std::ffi::c_int;
 }
 ```
 

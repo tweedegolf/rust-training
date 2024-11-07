@@ -239,24 +239,24 @@ Generates rust API bindings based on C header files
 ```rust
 extern "C" {
     pub fn crypto_stream_salsa20_tweet_xor(
-        arg1: *mut ::std::os::raw::c_uchar,
-        arg2: *const ::std::os::raw::c_uchar,
-        arg3: ::std::os::raw::c_ulonglong,
-        arg4: *const ::std::os::raw::c_uchar,
-        arg5: *const ::std::os::raw::c_uchar,
-    ) -> ::std::os::raw::c_int;
+        arg1: *mut ::std::ffi::c_uchar,
+        arg2: *const ::std::ffi::c_uchar,
+        arg3: ::std::ffi::c_ulonglong,
+        arg4: *const ::std::ffi::c_uchar,
+        arg5: *const ::std::ffi::c_uchar,
+    ) -> ::std::ffi::c_int;
 }
 extern "C" {
     pub fn crypto_verify_16_tweet(
-        arg1: *const ::std::os::raw::c_uchar,
-        arg2: *const ::std::os::raw::c_uchar,
-    ) -> ::std::os::raw::c_int;
+        arg1: *const ::std::ffi::c_uchar,
+        arg2: *const ::std::ffi::c_uchar,
+    ) -> ::std::ffi::c_int;
 }
 extern "C" {
     pub fn crypto_verify_32_tweet(
-        arg1: *const ::std::os::raw::c_uchar,
-        arg2: *const ::std::os::raw::c_uchar,
-    ) -> ::std::os::raw::c_int;
+        arg1: *const ::std::ffi::c_uchar,
+        arg2: *const ::std::ffi::c_uchar,
+    ) -> ::std::ffi::c_int;
 }
 ```
 
