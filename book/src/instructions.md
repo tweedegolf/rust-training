@@ -180,7 +180,6 @@ Then also add to path, e.g.:
 ```bash
 echo 'export PATH="$(brew --prefix llvm)/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
-
 ```
 
 # Instructions for embedded
