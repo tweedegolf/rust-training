@@ -12,7 +12,7 @@ fn main() -> ! {
     // We prefix a variable name with an underscore to
     // turn off warnings about it not being used.
     let _cp = cortex_m::Peripherals::take().unwrap();
-    // Use `dp` to get a handle to the TWIM peripheral
+    // Use `dp` to get a handle to the TWISPI0 peripheral
     let dp = hal::init(Default::default());
 
     rprintln!("Starting");
