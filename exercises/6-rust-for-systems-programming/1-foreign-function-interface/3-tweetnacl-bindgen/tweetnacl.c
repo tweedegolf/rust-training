@@ -447,12 +447,6 @@ int crypto_scalarmult_base(u8 *q,const u8 *n)
   return crypto_scalarmult(q,n,_9);
 }
 
-int crypto_box_keypair(u8 *y,u8 *x)
-{
-  randombytes(x,32);
-  return crypto_scalarmult_base(y,x);
-}
-
 int crypto_box_beforenm(u8 *k,const u8 *y,const u8 *x)
 {
   u8 s[32];
@@ -651,25 +645,6 @@ sv scalarbase(gf p[4],const u8 *s)
   set25519(q[2],gf1);
   M(q[3],X,Y);
   scalarmult(p,q,s);
-}
-
-int crypto_sign_keypair(u8 *pk, u8 *sk)
-{
-  u8 d[64];
-  gf p[4];
-  int i;
-
-  randombytes(sk, 32);
-  crypto_hash(d, sk, 32);
-  d[0] &= 248;
-  d[31] &= 127;
-  d[31] |= 64;
-
-  scalarbase(p,d);
-  pack(pk,p);
-
-  FOR(i,32) sk[32 + i] = pk[i];
-  return 0;
 }
 
 static const u64 L[32] = {0xed, 0xd3, 0xf5, 0x5c, 0x1a, 0x63, 0x12, 0x58, 0xd6, 0x9c, 0xf7, 0xa2, 0xde, 0xf9, 0xde, 0x14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x10};
