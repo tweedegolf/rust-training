@@ -9,7 +9,7 @@ It comprises several modules based on the material of the [teach-rs](https://tri
 Published under the [CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/), you
 are free to use and share this material as long as you give us appropriate credit and share any modifications you make under that same license.
 
-If you spot any mistake or have a suggestion, please open an issue or pull request on [the GitHub repository](https://github.com/tweedegolf/rust-training).
+If you spot any mistakes or have a suggestion, please open an issue or pull request on [the GitHub repository](https://github.com/tweedegolf/rust-training).
 
 ## Let us train you!
 
