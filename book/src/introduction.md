@@ -13,7 +13,7 @@ If you spot any mistakes or have a suggestion, please open an issue or pull requ
 
 ## Let us train you!
 
-Studying on your own is good, but being guided with your team through an interactive tailor-made program is... well, better! (And a lot more fun as well!)
+Studying on your own is good, but being guided through an interactive tailor-made program with your team is more productive, and more fun!
 
 For testimonials, an introduction of our expert trainers, and more information about the programs we offer, please refer to [our professional training page](https://tweedegolf.nl/en/expertise/rust/workshops).
 
