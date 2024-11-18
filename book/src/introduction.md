@@ -2,22 +2,20 @@
 
 <a href="/slides/1_1-introduction/" target="_blank">Slides</a>
 
-On these pages you will find open source Rust training material designed and maintained by the Rust experts working at Tweede golf.
-It comprises several modules that we use in our multi-day (embedded) training courses.
+This is the open-source Rust training material we use for our professional multi-day (embedded) Rust training programs.
 
-It is made available to you under the [CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/), which means you
-are free to use and share it as long as you give us appropriate credit and share any modifications you make
-with others under that same license (which also means that we can use it to improve our training material!).
+It comprises several modules based on the material of the [teach-rs](https://trifectatech.org/initiatives/education/) project (now part of [Trifecta Tech Foundation](https://trifectatech.org)) that we previously co-developed and that we contribute back to when improvements are made.
 
-The source for it can be found on our [GitHub repository](https://github.com/tweedegolf/rust-training).
-If you see any mistake, we welcome issues and pull requests!
+Published under the [CC-BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/), you
+are free to use and share this material as long as you give us appropriate credit and share any modifications you make under that same license.
+
+If you spot any mistakes or have a suggestion, please open an issue or pull request on [the GitHub repository](https://github.com/tweedegolf/rust-training).
 
 ## Let us train you!
 
-Going through this material on your own is good, but what's even better: our experts guiding you through the material and associated
-exercises during an interactive, tailor-made multi-day program!
+Studying on your own is good, but being guided through an interactive tailor-made program with your team is more productive, and more fun!
 
-To learn more, visit [our professional training page](https://tweedegolf.nl/en/expertise/rust/workshops).
+For testimonials, an introduction of our expert trainers, and more information about the programs we offer, please refer to [our professional training page](https://tweedegolf.nl/en/expertise/rust/workshops).
 
 <p><br><p>
 
