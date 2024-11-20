@@ -74,30 +74,35 @@ Fill-in functions
 - ✅ Efficient
 - ❌ Inconvenient
 
-::right::
+</br></br>
 
 ```c
-#include <stddef.h>
-
-// TODO Change to your spi type
+// TODO: Change to your spi type
 #define SPI_TYPE void
 
-static SPI_TYPE* spi = NULL;
-void init(SPI_TYPE* spi_instance);
+void enable_cs(SPI_TYPE* spi) { /* TODO */ }
+void disable_cs(SPI_TYPE* spi) { /* TODO */ }
 
-static void enable_cs(SPI_TYPE* spi) {/* Todo */ }
-
-static void disable_cs(SPI_TYPE* spi){/* Todo */ }
-
-static char transfer(SPI_TYPE* spim, char value)
-{
-    // Todo: Transfer 'value' over the bus and return the response
+char transfer(SPI_TYPE* spi, char value) {
+    // TODO
 }
+
+```
+
+::right::
+
+`driver.h`
+
+```c
+// Hold spi context
+static SPI_TYPE* spi = NULL;
+// Init the driver
+void init(SPI_TYPE* spi_instance);
 
 char example() {
     enable_cs(spi);
-    transfer(spi, 0xDE);
-    char result = transfer(spi, 0xAD);
+    transfer(spi, 123);
+    char result = transfer(spi, 124);
     disable_cs(spi);
 
     return result;
@@ -105,10 +110,65 @@ char example() {
 ```
 
 ---
-layout: full
+layout: two-cols
 ---
 
-<img src="/images/8_2-c-fill-in-light.png">
+https://godbolt.org/z/E3d6MT413
+
+```c
+typedef struct Spi {
+    unsigned int cs;
+    unsigned int write;
+    unsigned int read;
+} Spi_t;
+
+#define SPI_TYPE Spi_t
+
+static void enable_cs(volatile SPI_TYPE* spi) {
+    spi->cs = 1;
+}
+static void disable_cs(volatile SPI_TYPE* spi) {
+    spi->cs = 0;
+}
+static char transfer(
+    volatile SPI_TYPE* spi,
+    char value
+) {
+    spi->write = value;
+    return spi->read;
+}
+```
+
+::right::
+
+```c
+char example() {
+    enable_cs(spi);
+    transfer(spi, 123);
+    char result = transfer(spi, 124);
+    disable_cs(spi);
+
+    return result;
+}
+```
+
+```asm
+example:
+  movs r0, #0
+  movs r1, #1
+  str r1, [r0]
+  movs r1, #4
+  movs r2, #123
+  str r2, [r1]
+  movs r2, #8
+  ldr r3, [r2]
+  movs r3, #124
+  str r3, [r1]
+  ldr r1, [r2]
+  str r0, [r0]
+  uxtb r0, r1
+  bx lr
+```
 
 ---
 layout: two-cols
@@ -120,42 +180,47 @@ Function pointers
 - ❌ Inefficient
 - ✅ Convenient
 
-::right::
-
 ```c
-#include <stddef.h>
-
 typedef void (*EnableCs)();
 typedef void (*DisableCs)();
 typedef char (*SpiTransfer)(char);
-static EnableCs enable_cs = NULL;
-static DisableCs disable_cs = NULL;
-static SpiTransfer spi_transfer = NULL;
 
-void init(
-    EnableCs init_enable,
-    DisableCs init_disable,
-    SpiTransfer init_transfer,
-) {
-    enable_cs = init_enable;
-    disable_cs = init_disable;
-    spi_transfer = init_transfer;
-}
-char example() {
-    enable_cs();
-    spi_transfer(0xDE);
-    char result = spi_transfer(0xAD);
-    disable_cs();
+typedef struct Spi {
+    EnableCs enable_cs;
+    DisableCs disable_cs;
+    SpiTransfer spi_transfer;
+} Spi_t;
+
+char example(Spi_t spi) {
+    spi.enable_cs();
+    spi.spi_transfer(123);
+    char result = spi.spi_transfer(124);
+    spi.disable_cs();
+    
     return result;
 }
 ```
 
----
-layout: full
----
+::right::
 
-<img src="/images/8_2-c-function-pointers-light.png"/>
+https://godbolt.org/z/d43Tad96j
 
+```asm
+example:
+  push {r4, r5, r7, lr}
+  add r7, sp, #8
+  mov r5, r2
+  mov r4, r1
+  blx r0          ; function call
+  movs r0, #123
+  blx r5
+  movs r0, #124
+  blx r5          ; function call
+  mov r5, r0
+  blx r4          ; function call
+  mov r0, r5
+  pop {r4, r5, r7, pc}
+```
 ---
 layout: two-cols
 ---
@@ -167,32 +232,46 @@ Link-time binding
 - 🟠 Somewhat convenient
 - ❌ Error-prone
 
-::right::
-
 ```c
-#include <stddef.h>
-
 extern void enable_cs();
 extern void disable_cs();
 extern char spi_transfer(char value);
 
 char example() {
     enable_cs();
-    spi_transfer(0xDE);
-    char result = spi_transfer(0xAD);
+    spi_transfer(123);
+    char result = spi_transfer(124);
     disable_cs();
+
     return result;
 }
 ```
 
+::right::
+
+https://godbolt.org/z/hjesx8qoW
+
+```asm
+example:
+  ldr r0, .LCPI0_0
+  movs r1, #1
+  str r1, [r0]
+  movs r1, #123
+  str r1, [r0, #4]
+  ldr r1, [r0, #8]
+  movs r1, #124
+  str r1, [r0, #4]
+  ldr r1, [r0, #8]
+  movs r2, #0
+  str r2, [r0]
+  uxtb r0, r1
+  bx lr
+.LCPI0_0:
+  .long 1000000
+```
+
 ---
 layout: full
----
-
-<img src="/images/8_2-c-link-binding-light.png"/>
-
----
-layout: two-cols
 ---
 
 # Abstraction in Rust
@@ -202,27 +281,18 @@ Traits & Generics
 - ✅ Efficient
 - ✅ Convenient
 
-::right::
-
+Reminder (simplified):
 ```rust
-/// My fictional SPI peripheral
-struct SpiPeripheral;
-
-impl SpiPeripheral {
-    #[inline]
-    fn enable_cs(&mut self) {
-        unsafe { ptr::write_volatile(0x2000000 as *mut u8, 0) }
-    }
-
-    #[inline]
-    fn disable_cs(&mut self) {
-        unsafe { ptr::write_volatile(0x2000000 as *mut u8, 1) }
-    }
+pub trait SpiDevice {
+    fn transaction(&mut self, operations: &mut [Operation<'_>]) -> Result<(), ()>;
 }
 
-impl spi::ErrorType for SpiPeripheral {
-    // SPI operations never fail on this peripheral
-    type Error = core::convert::Infallible;
+pub enum Operation<'a> {
+    Read(&'a mut [u8]),
+    Write(&'a [u8]),
+    Transfer(&'a mut [u8], &'a [u8]),
+    TransferInPlace(&'a mut [u8]),
+    DelayNs(u32),
 }
 ```
 
@@ -231,40 +301,35 @@ layout: full
 ---
 
 ```rust
-impl SpiDevice for SpiPeripheral {
-    #[inline]
-    fn transaction(&mut self, operations: &mut [spi::Operation<'_, u8>]) -> Result<(), Self::Error> {
-        self.enable_cs();
-        for op in operations.iter_mut() {
-            match op {
-                spi::Operation::Write(w) => unsafe {
-                    w.into_iter()
-                        .for_each(|word| ptr::write_volatile(0x2000001 as *mut u8, *word))
-                },
-                spi::Operation::Transfer(r, w) => unsafe {
-                    let len = w.len().max(r.len());
-                    let it = w.into_iter().chain(repeat(&0x00));
-                    let it = it
-                        .zip(r.into_iter().map(Some).chain(repeat_with(|| None))).take(len);
-                    it.for_each(|(w, r)| {
-                        ptr::write_volatile(0x2000001 as *mut u8, *w);
-                        r.map(|r| *r = ptr::read_volatile(0x2000001 as *mut u8));
-                    });
-                },
-                _ => todo!(),
-            }
-        }
-        self.disable_cs();
-        Ok(())
-    }
+pub fn example<Spi: SpiDevice>(spi: &mut Spi) -> u8 {
+    let mut buf = [0];
+
+    spi.transaction(&mut [
+        Operation::Write(&[123]),
+        Operation::Transfer(&mut buf, &[124]),
+    ]).unwrap();
+    buf[0]
 }
 ```
 
----
-layout: full
----
+https://godbolt.org/z/xv33T6e6c
 
-<img src="/images/8_2-rust-light.png"/>
+```asm
+example::example_instance::h0a336da11b699c51:
+  ldr r1, .LCPI1_0
+  movs r0, #1
+  strb r0, [r1]
+  movs r0, #123
+  strb r0, [r1, #4]
+  movs r0, #124
+  strb r0, [r1, #4]
+  ldrb r0, [r1, #8]
+  movs r2, #0
+  strb r2, [r1]
+  bx lr
+.LCPI1_0:
+  .long 1000000
+```
 
 ---
 layout: with-footer
@@ -298,6 +363,18 @@ layout: with-footer
 
 </table>
 
+---
+layout: with-footer
+---
+# Applied
+
+<img src="/images/8_2-embedded-hal.png">
+
+<!--
+Draw-io link:
+
+https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Untitled%20Diagram.drawio#R%3Cmxfile%3E%3Cdiagram%20name%3D%22Page-1%22%20id%3D%22ISt-d_c7fnAXG8RkIMt1%22%3E7VjbbuIwEP0aHluFmITwWKDdVmIlKlba7qOJJ4m3Jo4cU6Bfv3ZiE3Lp0qrAqtI%2BMT5zsX1m7HHooclq%2B03gLPnOCbCe65BtD017rtsfIEf9aGRXIkMflUAsKDFGFbCgr2BA4xevKYG8Zig5Z5JmdTDkaQqhrGFYCL6pm0Wc1WfNcAwtYBFi1kZ%2FUiKTEg08p8LvgcaJnbnvGM0Sh8%2Bx4OvUzJfyFErNCtswxjRPMOGbAwjd9tBEcC5LabWdANO0WsZKv7s3tPslC0jlexye4H70%2BDhyHwczmv64e96%2BMnllorxgtjZU3N%2FMzHrlztJTbBB0HKeHxpuESlhkONTajSoIhSVyxdSor0TMaJwqmUGk1jXOlSFNYwW42jmijE0446KIjAiGIAq1mRT8GQ40fhjAMlIas0IQErZvbr2%2FJ1TVKPAVSLFTJtbB5sCUpzs0402VbNemNDlMdGBAbAos3seumFaCIfsDxPst4uc3kwsSH0WRG3YST%2Fyl7%2FknIj5oEB%2B0ie%2BjLuL9cxHvtohfzB8%2BR3yzpj0IyKCL2sBdIt8%2FmqoTEO8OGsSPOoh3O4g%2FG%2B%2BoxfuD%2B8mC%2FwK8o46b5rK89wct4nuuz%2FT2CX1RYqxFWC2BKOKvEsysWk13YNHhJAWmUoVeZHQKL1RlydgsRdOrGauRdtUbMy0SLPFCclG06%2BPp34J9S3SUA%2FRVQQy7ymHkDxE%2B0Q2HnHcctMElE26r6yDhNjsOEVTt9jRtRpR7GTO8BDbnOZWUazxUzKk50FjzStUba9YwWFFC9Mx7gxsTca840rqCELpb1zLwBt6JTrLXfDN0tK7ON8PZngxu%2Bwr9f5JPd5IHzbfKvz%2FJ3tkT%2FuCGn051LkHnMwNB1b710S%2BgeTX%2BEvlv3uSdrfuy%2BfdbnANR361myIVMeMxTzG4rdFy%2FyyubGeeZofc3SLkzdOO15PVkwJbKJ%2BOu5V9avvbMaLo9UE13dpCq%2FRZO18FwZAHj6QwtUDkXo5r3QbkUYC6xkDf62173FIbznIYWvqPMrrYsCfvRjopoxLoVX%2BMFYjyq3qCJ%2FHuhKN75WoTwjhtZrSkGefQR1i49AQxL1ZJr036gjtSw%2BgOh0B38QYNu%2FwA%3D%3C%2Fdiagram%3E%3C%2Fmxfile%3E
+-->
 
 ---
 layout: with-footer
@@ -315,15 +392,13 @@ layout: with-footer
 - Common interface export
 
 ---
-layout: two-cols
+layout: full
 ---
 
 # Low level driver in C
 
 - Enum & `#define` for definitions
 - Functions for read/write
-
-::right::
 
 ```c
 enum Reg
@@ -332,8 +407,6 @@ enum Reg
     REG_IER = 0x02,
     REG_IDR = 0x03,
     REG_ISR = 0x04,
-    REG_PIN = 0x05,
-    REG_PORT = 0x06,
 };
 
 #define ID_MANUFACTURER_MASK 0xF0
@@ -353,19 +426,10 @@ static char read_register(enum Reg address)
 layout: full
 ---
 
-<img src="/images/8_2-low-level-c-driver-light.png"/>
-
----
-layout: two-cols
----
-
 # Low level driver in Rust
 
-- Enum for definitions
-- Device struct represents chip instance
-- Functions for read/write
-
-::right::
+- Enum & `const` for definitions
+- Functions for read/write based on shared trait
 
 ```rust
 use embedded_hal::spi::SpiDevice;
@@ -376,18 +440,15 @@ pub enum Register {
     Ier = 0x02,
     Idr = 0x03,
     Isr = 0x04,
-    Pin = 0x05,
-    Port = 0x06,
 }
 
-pub struct Device<SPI: SpiDevice> {
-    spi: SPI,
-}
+const ID_MANUFACTURER_MASK: u8 = 0xF0;
+const ID_MANUFACTURER_POS: u8 = 4;
 
-impl<SPI: SpiDevice> Device<SPI> {
-    pub fn new(spi: SPI) -> Self {
-        Self { spi }
-    }
+pub fn read_register<Spi: SpiDevice>(spi: &mut Spi, address: Register) -> u8 {
+    let mut buffer = [address as u8, 0];
+    spi.transfer_in_place(&mut buffer).unwrap();
+    buffer[1]
 }
 ```
 
@@ -395,37 +456,31 @@ impl<SPI: SpiDevice> Device<SPI> {
 layout: full
 ---
 
-<img src="/images/8_2-low-level-rust-driver-light.png"/>
+# Low level driver in Rust
 
----
-layout: with-footer
----
-
-# Possibilities in Rust
-
-Much more is possible:
+- Ideomatic: Device driver is a struct
 
 ```rust
-pub fn example() {
-    let mut device = Device::new(Spi);
+pub struct Device<SPI: SpiDevice> {
+    interface: SPI,
+}
 
-    let manufacturer = device.id().read().manufacturer();
+impl<SPI: SpiDevice> Device<SPI> {
+    pub fn new(interface: SPI) -> Self {
+        Self { interface }
+    }
 
-    if manufacturer != 0 {
-        device.port().modify(|_, w| w.enable_7(true));
+    pub fn read_register<Spi: SpiDevice>(&mut self, address: Register) -> u8 {
+        let mut buffer = [address as u8, 0];
+        self.interface.transfer_in_place(&mut buffer).unwrap();
+        buffer[1]
     }
 }
-```
 
-```c
-void example() {
-    char manufacturer = (read_register(REG_ID) & ID_MANUFACTURER_MASK) >> ID_MANUFACTURER_POS;
-
-    if (manufacturer != 0) {
-        char reg = read_register(REG_PORT);
-        reg |= 0x80;
-        write_register(REG_PORT, reg);
-    }
+fn foo() {
+    let interface = // Init interface
+    let mut my_device = Device::new(interface);
+    let value = my_device.read_register(Register::Id);
 }
 ```
 
@@ -439,6 +494,16 @@ Add typestate to high-level driver
 
 - Allows compiler to check valid use of driver
 
+Usage:
+```rust
+let mut device: Device<_, Idle> =
+    Device::new(/* spi interface */);
+
+device.wait_ready();
+//     ^^^^^^^^^^ Compile error
+// `wait_ready` not implemented for `Device<_, Idle>`
+```
+
 ::right::
 
 ```rust
@@ -450,7 +515,6 @@ pub struct Device<SPI, STATE> {
     _state: PhantomData<STATE>,
 }
 
-
 impl<SPI: SpiDevice> Device<SPI, Idle> {
     pub fn send(self, data: &[u8]) ->
         Device<SPI, Sending> 
@@ -460,7 +524,7 @@ impl<SPI: SpiDevice> Device<SPI, Idle> {
 }
 
 impl<SPI: SpiDevice> Device<SPI, Sending> {
-    pub async fn wait_ready(self) 
+    pub fn wait_ready(self) 
         -> Device<SPI, Ready> {
         todo!("Block until done, go to Idle state")
     }
@@ -475,12 +539,13 @@ layout: with-footer
 
 Much more is possible:
 - `embedded-hal`
-- `radio`
-- `embedded-nal`
-- `usb-device`
-- `embedded-graphics`
-- `accelerometer`
+- `embedded-io`
 - `embedded-storage`
+- `embedded-graphics`
+- `embedded-nal`
+- `accelerometer`
+- `usb-device`
+- `radio`
 
 ---
 layout: with-footer
