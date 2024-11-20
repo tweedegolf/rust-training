@@ -123,15 +123,17 @@ impl Dial {
         self.cols.iter_mut().for_each(|c| c.set_high());
     }
 
-    pub fn light_only(&mut self, dir: Direction) {
+    pub fn set_light_direction(&mut self, dir: Direction) {
         let (row, col) = dir.led_index();
         self.clear();
         self.rows[row].set_high();
         self.cols[col].set_low();
     }
 
-    /// Operate the dial. This function is useful for running
+    /// Operate the dial autonomously. This function is useful for running
     /// in a separate task.
+    /// 
+    /// Useful for exercise 8.1.2
     pub async fn run(
         mut self,
         receiver: embassy_sync::channel::Receiver<'_, NoopRawMutex, Direction, 4>,
