@@ -90,7 +90,6 @@ layout: three-slots
 - Similar to CMSIS register definitions
 
 ::right::
-
 ## `cortex-m-rt`
 <br/>
 
@@ -133,7 +132,7 @@ WDT->CONFIG.bit.PER = WDT_CONFIG_PER_16;
 let dp = atmsamd21e::Peripherals::take().unwrap();
 
 let is_8_cycles = dp.WDT.CONFIG.read().per().is_8();
-dp.WDT.CONFIG.modify(|_, w| w.per()._8());
+dp.WDT.CONFIG.modify(|_, w| w.per()._16());
 ```
 
 ---
@@ -183,31 +182,27 @@ layout: full
 ---
 
 ```rust
-hal::bind_interrupts!(struct Irqs {
-    SPIM0_SPIS0_TWIM0_TWIS0_SPI0_TWI0 => twim::InterruptHandler<hal::peripherals::TWISPI0>;
-});
+//! This example shows how to use UART (Universal asynchronous receiver-transmitter) in the RP2040 chip.
+
+#![no_std]
+#![no_main]
+
+use embassy_rp::uart;
+use {defmt_rtt as _, panic_probe as _};
 
 #[cortex_m_rt::entry]
 fn main() -> ! {
-    // Init RTT control block
-    rtt_init_print!();
+    // Init the hal
+    let p = embassy_rp::init(Default::default());
 
-    let _cp = cortex_m::Peripherals::take().unwrap();
-    // Use ``dp` to get a handle to the peripherals
-    let dp = hal::init(Default::default());
+    // Init the uart
+    let config = uart::Config::default();
+    let mut uart = uart::Uart::new_with_rtscts_blocking(p.UART0, p.PIN_0, p.PIN_1, p.PIN_3, p.PIN_2, config);
 
-    rprintln!("Starting");
-
-    let config = twim::Config::default();
-    let mut twim0 = Twim::new(dp.TWISPI0, Irqs, dp.P0_03, dp.P0_04, config);
-
-    rprintln!("Reading...");
-
-    let mut buf = [0u8; 16];
-    twim0.blocking_write_read(0xAB, &mut [0x00], &mut buf).unwrap();
-
-    rprintln!("Read: {:02x?}", buf);
-    exit();
+    loop {
+        uart.blocking_write("hello there!\r\n".as_bytes()).unwrap();
+        cortex_m::asm::delay(1_000_000);
+    }
 }
 ```
 
@@ -246,6 +241,7 @@ layout: with-footer
 ---
 layout: with-footer
 ---
+
 # `embedded-hal`
 
 The glue of the entire ecosytem
@@ -253,7 +249,7 @@ The glue of the entire ecosytem
 
 <br/>
 
-### SPI example trait:
+### SPI trait:
 ```rust
 pub trait SpiDevice<Word: Copy + 'static = u8>: ErrorType {
     fn transaction(&mut self, operations: &mut [Operation<'_, Word>]) -> Result<(), Self::Error>;
@@ -300,37 +296,14 @@ layout: with-footer
 
 </table>
 
----
-layout: with-footer
----
-
-# Typestate
-
-State encoded in the *type* of the variable
-
-```rust
-// https://github.com/embassy-rs/embassy/blob/main/examples/nrf52840/src/bin/blinky.rs
-
-use nrf52833_hal::gpio::{Pin, p0::P0_04, Input, PullDown, Output, PushPull};
-
-/// Take an nRF pin.
-/// It must be:
-/// - Port 0 pin 4 (Compile time constant)
-/// - Configured as input
-fn read_status(pin: Input<'_, P0_04>) -> bool {}
-
-/// Take an nRF pin.
-/// It must be:
-/// - Any port and pin (Runtime variable)
-/// - Configured as output
-fn set_led_level(pin: Output<'_, AnyPin>, enabled: bool) {}
-```
 
 ---
 layout: with-footer
 ---
 
 # Runtimes
+
+<br/><br/><br/>
 
 <table class="horizontal">
 <tr>
