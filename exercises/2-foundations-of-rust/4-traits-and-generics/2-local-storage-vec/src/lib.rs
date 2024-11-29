@@ -58,7 +58,7 @@ mod test {
     fn it_compiles() {
         // Here's a trick to 'initialize' a type while not actually
         // creating a value: an infinite `loop` expression diverges
-        // and evaluates to the 'never type' `!`, which, as is can never
+        // and evaluates to the 'never type' `!`, which, as it can never
         // actually be instantiated, coerces to any other type.
         // Some other ways of diverging are by calling the `panic!` or the `todo!`
         // macros.
@@ -191,7 +191,6 @@ mod test {
     // fn it_removes() {
     //     let mut vec: LocalStorageVec<_, 4> = LocalStorageVec::from([0, 1, 2]);
     //     let elem = vec.remove(1);
-    //     dbg!(&vec);
     //     assert!(matches!(
     //         vec,
     //         LocalStorageVec::Stack {
