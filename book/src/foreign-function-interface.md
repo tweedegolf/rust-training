@@ -6,12 +6,11 @@
 
 Use a CRC checksum function written in C in a Rust program
 
-## prerequisites
+### Prerequisites
 
 - A C compiler
 
-
-## Steps
+### Steps
 
 1. Add the `cc` build dependency, by adding to `Cargo.toml` the lines:
     ```toml
@@ -51,15 +50,16 @@ Use a CRC checksum function written in C in a Rust program
     }
     ```
     In the above example, the correct output is `0x9ae0daaf`
+
 ## Exercise 6.1.2: CRC in Rust
 
 Use a CRC checksum function written in Rust in a C program
 
-## Requirements
+### Requirements
 
 - A C compiler
 
-## Steps
+### Steps
 
 1. Change Cargo.toml to
 
@@ -126,6 +126,7 @@ Use a CRC checksum function written in Rust in a C program
     $ ./main
     Hash: -1386739207
     ```
+
 ## Exercise 6.1.3: TweetNaCl Bindgen
 
 Use `cargo bindgen` to generate the FFI bindings. Bindgen will look at a C header file, and generate rust functions, types and constants based on the C definitions.
@@ -136,11 +137,11 @@ But the generated code is ugly and non-idiomatic. To wrap a C library properly, 
 
 Making rust bindings for the [tweetnacl](https://tweetnacl.cr.yp.to/) C library
 
-## Exercise: implement `crypto_hash_sha256_tweet`
+### Exercise: implement `crypto_hash_sha256_tweet`
 
 Below you find instructions for using bindgen and wrapping `crypto_hash_sha512_tweet`. Follow the instructions, then repeat the steps for `crypto_hash_sha256_tweet`
 
-## Instructions
+### Instructions
 
 Prerequisites:
 
@@ -184,7 +185,7 @@ Steps
     #![allow(non_upper_case_globals)]
     ```
 
-## Inspecting our bindings
+### Inspecting our bindings
 
 In the generated `bindings.rs` file we find this signature for the `crypto_hash_sha512_tweet` C function from tweetNaCl:
 
@@ -219,7 +220,7 @@ pub fn crypto_hash_sha512_tweet(out: &mut [u8], data: &[u8]) -> i32 {
 }
 ```
 
-## Modelling with types
+### Modelling with types
 
 But by looking at the tweetNaCl source code we can see that the contract is a bit stronger:
 
@@ -274,7 +275,7 @@ The compiler will turn this signature into the one we had before under the hood.
 
 > In detail: The C ABI mandates that any return value larger than those that fit in a register (typically 128 bits nowadays) are allocated on the caller's stack. The first argument to the function is the pointer to write the result into. LLVM, the backend used by the rust compiler has specific optimizations to make sure the function result is written directly into this pointer.
 
-## Writing our implementation
+### Writing our implementation
 
 Allright, with the signature worked out, we can write the actual implementation.
 
@@ -341,7 +342,7 @@ pub fn crypto_hash_sha512_tweet(data: &[u8]) -> [u8; 64] {
 
 And we're done: an idiomatic rust wrapper around the `crypto_hash_sha512_tweet`!
 
-## Uninitialized memory
+### Uninitialized memory
 
 There is one more trick: our current function initializes and zeroes out the memory for `result`. That is wasteful because the extern function will overwrite these zeroes. Because the extern function is linked in, the compiler likely does not have enough information to optimize the zeroing out away.
 
