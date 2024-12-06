@@ -78,7 +78,7 @@ layout: default
 
 ```rust
 /// A very long type name warrants a type alias
-type AppState = State<Arc<Mutex<Vec<String>>>>;
+type AppState = Arc<Mutex<Vec<String>>>;
 
 async fn handler(
     Path(name): Path<String>,
