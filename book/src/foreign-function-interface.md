@@ -243,7 +243,7 @@ fn main() {
     image.save("image.png").unwrap();
 }
 ```
-If implemented correctly, this should produce a beautiful **[TODO: what image should we use?]**!
+If implemented correctly, this should produce a nice picture!
 
 ### Freeing the pixel data
 When working with data from C, we are responsible for deallocating the memory once we are done using it ourselves. Some C libraries might provide a separate function to clean up data structures. For QOI, we instead have to call `libc::free` to free the memory, as indicated by the documentation of the `qoi_read` function:
