@@ -25,7 +25,7 @@
         "exercises/4-multitasking/3-asynchronous-multitasking/2-async-chat/Cargo.toml",
         "exercises/6-rust-for-systems-programming/1-foreign-function-interface/1-crc-in-c/Cargo.toml",
         "exercises/6-rust-for-systems-programming/1-foreign-function-interface/2-crc-in-rust/Cargo.toml",
-        "exercises/6-rust-for-systems-programming/1-foreign-function-interface/3-tweetnacl-bindgen/Cargo.toml",
+        "exercises/6-rust-for-systems-programming/1-foreign-function-interface/3-qoi-bindgen/Cargo.toml",
         "exercises/7-rust-for-data-science/1-rust-from-python/1-hello-world/Cargo.toml",
         "exercises/7-rust-for-data-science/1-rust-from-python/2-strompy/Cargo.toml",
         "exercises/8-embedded/1-embedded-ecosystem/1-lsm303agr-id/Cargo.toml",
