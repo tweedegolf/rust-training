@@ -123,8 +123,67 @@ With CodeLLDB installed correctly, you can also start a debug session by clickin
 Play a little with setting breakpoints by clicking on a line number, making a red circle appear and stepping over/into/out of functions using the controls.
 You can view variable values by hovering over them while execution is paused, or by expanding the 'Local' view under 'Variables' in the left panel during a debug session.
 
+# Instructions for FFI module
+*This part is relevant only if you're partaking in one of the modules on Rust FFI.*
+
+For doing FFI we will need to compile some C code and for that we need a C compiler installed.
+We've chosen to use `clang` in our excercises.
+
+The prerequisite is that calling `clang` in your terminal should work. If it doesn't, follow the instructions for your platform below.
+
+## Linux
+
+For the bookworms using a Debian-like:
+```bash
+sudo apt update
+sudo apt install clang
+```
+
+If you're on Arch, btw:
+```bash
+sudo pacman -S clang
+```
+
+For those tipping their Fedora's:
+```bash
+sudo dnf install clang
+```
+
+## Windows
+
+Always make sure to select the option to add the install to `path`.
+
+Using winget:
+```ps
+winget install -i -e --id LLVM.LLVM
+```
+
+For the sweethearts using chocolatey:
+```ps
+choco install llvm
+```
+
+For the handsome people preferring manual installation:
+- Go to the releases page: https://github.com/llvm/llvm-project/releases
+- Go to a recent release
+- Search for LLVM-[VERSION]-win64.exe and download it
+- Run the exe
+
+## MacOS
+
+Using brew:
+```bash
+brew install llvm
+```
+
+Then also add to path, e.g.:
+```bash
+echo 'export PATH="$(brew --prefix llvm)/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
 # Instructions for embedded
-*This part is relevant only if you're partaking in one of the workshops on embedded Rust.*
+*This part is relevant only if you're partaking in one of the modules on embedded Rust.*
 
 ## Hardware
 We will use the [BBC micro:bit](https://microbit.org/buy/bbc-microbit-single) V2 and either you've already got it or we will bring it with us.
