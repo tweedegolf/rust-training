@@ -152,7 +152,8 @@ In this exercise, we will use `cargo bindgen` to generate the FFI bindings for a
 However, the generated code will likely be ugly and non-idiomatic. To wrap a C library properly, good API design and documentation is needed. 
 
 ### Background
-For this exercise, we will use the [QOI C library](https://github.com/phoboslab/qoi). QOI is a "Quite OK Image format", which aims for fast encoding and decoding of images, while providing a file size similar to PNGs.
+The [image crate](https://crates.io/crates/image) provides functionality for encoding, decoding and editing images in Rust. It supports many image formats, like JPEG, PNG and GIF, but also QOI. QOI is a "Quite OK Image format", which aims for fast encoding and decoding of images, while providing a file size similar to PNGs.
+In this exercise, we test if the image crate produces the same results when decoding QOI images as the [QOI reference C library](https://github.com/phoboslab/qoi). 
 
 The QOI C library is a header-only library, which means the function implementations are included within the header file instead of in a separate C file. We've added a separate C file which includes the header to make it easier to compile and include the library in our Rust program.
 
@@ -245,8 +246,34 @@ fn main() {
 ```
 If implemented correctly, this should produce a nice picture!
 
+Now that we can decode images using the QOI reference C library, we can test if the image crate produces the same results with the following unit test:
+```rust
+#[cfg(test)]
+mod tests {
+    use crate::read_qoi_image;
+    use std::path::Path;
+
+    #[test]
+    fn test_qoi_read() {
+        let filename = "image.qoi";
+        let image = image::open(filename).unwrap().into_rgba8();
+        let my_image = read_qoi_image(Path::new(filename));
+
+        assert_eq!(image.width(), my_image.width());
+        assert_eq!(image.height(), my_image.height());
+
+        assert!(image.pixels().eq(my_image.pixels()));
+    }
+}
+```
+If you add this test to `main.rs` and run it with `cargo test` we should see:
+```
+running 1 test
+test tests::test_qoi_read ... ok
+```
+
 ### Freeing the pixel data
-When working with data from C, we are responsible for deallocating the memory once we are done using it ourselves. Some C libraries might provide a separate function to clean up data structures. For QOI, we instead have to call `libc::free` to free the memory, as indicated by the documentation of the `qoi_read` function:
+When working with data from C, we are responsible for deallocating the memory once we are done using it. Some C libraries might provide a separate function to clean up data structures. For QOI, we instead have to call `libc::free` to free the memory, as indicated by the documentation of the `qoi_read` function:
 > The returned pixel data should be free()d after use.
 
 To make sure someone using our wrapper does not forget to free the memory, we can implement the `Drop` trait to automatically call `libc::free` when the variable goes out of scope.
@@ -297,5 +324,3 @@ The `MaybeUninit` type is an abstraction for uninitialized memory. The `.uninit(
 
 ### Conclusion
 In this exercise we saw how we can generate bindings to a C library with bindgen. The generated bindings are a bit difficult to work with, as they are unsafe and rely on C types. We've discussed how we can create nice wrappers around the generated bindings to deal with all these C types and to make them safer to work with.
-
-We should also note that the image crate has native support for QOI images, so in reality reading a QOI file could be as simple as `image::open("image.qoi")` without needing to load an external C library 😉.
