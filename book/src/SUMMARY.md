@@ -22,7 +22,7 @@
 	- [Asynchronous Multitasking](asynchronous-multitasking.md)
 
 - [Rust for Web]()
-	- [Rust for Web](rust-for-web.md)
+	- [Rust for Web Servers](rust-for-web-servers.md)
 
 - [Rust for Systems Programming]()
 	- [Foreign Function Interface](foreign-function-interface.md)
