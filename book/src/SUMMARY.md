@@ -21,6 +21,7 @@
 
 - [Rust for Web]()
 	- [Rust for Web Servers](rust-for-web-servers.md)
+	- [Rust in the Cloud](rust-in-the-cloud.md)
 
 - [Rust for Systems Programming]()
 	- [Foreign Function Interface](foreign-function-interface.md)
