@@ -6,9 +6,11 @@
 In this exercise, we will build a simple web server with [`axum`](https://lib.rs/crates/axum) which allows users to upload images to crop them. You will learn how to serve static HTML pages along with their associated style sheets and images, and you will learn how to handle POST requests with multipart form data to receive the uploaded images.
 
 ### 3.1.1.A Hello axum
-In `exercises/5-rust-for-web/1-rust-for-web/1-lettuce-crop` we have set up the start of our web server. It currently only serves "Hello, world!" for GET requests on the main page. Run the program and go to [http://0.0.0.0:7000/](http://0.0.0.0:7000/) in your browser to see if it works.
+In `exercises/5-rust-for-web/1-rust-for-web/1-lettuce-crop` we have set up the start of our web server. It currently only serves "Hello, world!" for GET requests on the main page. Run the program and go to [http://[::]:7000/](http://[::]:7000/) in your browser to see if it works.
 
-When defining the router, we can chain multiple routes to serve multiple end-points. Try adding a second route which serves GET requests on another page (e.g. `/hello`).
+Note that [http://[::]:7000/](http://[::]:7000/) is the default address for [IPv6](https://en.wikipedia.org/wiki/IPv6). If you do not want to use IPv6, you can use [http://0.0.0.0:7000/](http://0.0.0.0:7000/) instead. The website will also be available on local host, see for example [http://localhost:7000/](http://localhost:7000/), [http://127.0.0.1:7000/](http://127.0.0.1:7000/), or [http://[::1]:7000/](http://[::1]:7000/) (IPv6).
+
+In `main.rs` you can see the `Router` that is used to serve "Hello, world!". We can chain multiple routes to serve multiple end-points. Try adding a second route which serves GET requests on another page (e.g. `/hello`).
 
 ### 3.1.1.B Serving static files
 Currently, our web server only serves static strings. To serve static HTML documents, CSS style sheets, images and other files, we will use the [`ServeDir`](https://docs.rs/tower-http/latest/tower_http/services/struct.ServeDir.html) file server from `tower_http`. We can add this file server to our router as a fallback service to resolve any request which does not match any other defined route with our file server.
