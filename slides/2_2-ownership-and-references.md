@@ -405,35 +405,34 @@ variable and removes it from the first variable, instead of aliasing it
 
 ---
 
+# Example
+
 ```rust
 fn main() {
-    let s1 = String::from("hello");
-    let len = calculate_length(s1);
-    println!("The length of '{}' is {}.", s1, len);
+    let s1 = String::from("Dave");
+    display_length(s1);
+    println!("Hello {}!", s1);
 }
 
-fn calculate_length(s: String) -> usize {
-    s.len()
+fn display_length(name: String) {
+    println!("Length = {}", name.len());
 }
 ```
 
 <v-click>
 
 <div class="no-line-numbers">
-
 ```text
 Compiling playground v0.0.1 (/playground)
-error[E0382]: borrow of moved value: `s1`
---> src/main.rs:4:43
+ --> src/main.rs:4:29
   |
-2 | let s1 = String::from("hello");
-  |     -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
-3 | let len = calculate_length(s1);
-  |                            -- value moved here
-4 | println!("The length of '{}' is {}.", s1, len);
-  |                                       ^^ value borrowed here after move
+2 |     let s1 = String::from("Dave");
+  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+3 |     display_length(s1);
+  |                    -- value moved here
+4 |     println!("Hello {}!", s1);
+  |                           ^^ value borrowed here after move
 ```
-
 </div>
 
 </v-click>
@@ -449,44 +448,29 @@ string and the length of the string after the function call.
 
 ---
 
-# Moving out of a function
-
-We can return a value to move it out of the function
-
-```rust
-fn main() {
-    let s1 = String::from("hello");
-    let (len, s1) = calculate_length(s1);
-    println!("The length of '{}' is {}.", s1, len);
-}
-
-fn calculate_length(s: String) -> (usize, String) {
-    (s.len(), s)
-}
-```
-
-<v-click>
+# The compiler has a solution!
 
 <div class="no-line-numbers">
-
 ```text
-Compiling playground v0.0.1 (/playground)
-Finished dev [unoptimized + debuginfo] target(s) in 5.42s
-Running `target/debug/playground`
-The length of 'hello' is 5.
-```
+note: consider changing this parameter type in function `say_hello` to borrow instead
+ --> src/main.rs:7:20
+  |
+7 | fn display_length(name: String) {
+  |    --------------       ^^^^^^ this parameter takes ownership of the value
+  |    |
+  |    in this function
 
+help: consider cloning the value if the performance cost is acceptable
+  |
+3 |     display_length(s1.clone());
+  |                    ++++++++
+```
 </div>
 
-</v-click>
+So, there are two solutions:
 
-<!--
-* But what if we move a value into a function and we still want to use it
-afterwards, we could choose to move it back at the end of the function, but
-it really doesn't make for very nice code
-* Note that Rust allows us to return multiple values from a function with
-this syntax.
--->
+- Borrowing
+- Cloning
 
 ---
 
@@ -494,26 +478,30 @@ this syntax.
 
 <img src="/images/A1-clone.jpg" class="float-right w-40" />
 
-- Many types in Rust are `Clone`-able
-- Use can use clone to create an explicit clone (in contrast to `Copy` which
-  creates an implicit copy).
-- Creating a clone can be expensive and could take a long time, so be careful
-- Not very efficient if a clone is short-lived like in this example
+- Many (not all!) types in Rust are `Clone`-able
+- Only is done explicitly (in contrast to `Copy` is implicit)
+- Creating a clone can be expensive and wasteful
 
 ```rust
 fn main() {
-    let x = String::from("hellothisisaverylongstring...");
-    let len = get_length(x.clone());
-    println!("{}: {}", x, len);
+    let s1 = String::from("Dave");
+    display_length(s1.clone());
+    println!("Hello {}!", s1);
 }
 
-fn get_length(arg: String) -> usize {
-    arg.len()
+fn display_length(name: String) {
+    println!("Length = {}", name.len());
 }
 ```
 
+<v-click>
+
+Sometimes a `.clone()` is in order, but not in this case!
+
+</v-click>
+
 <!--
-* There is something else in Rust
+* We can solve this problem by "using Clone".
 * Many types implement a way to create an explicit copy, such types are
 clone-able. But note how we have to very explicitly say that we want a
 clone.
@@ -526,65 +514,21 @@ because it gets destroyed almost immediately after creation
 layout: section
 ---
 
-# Ownership and borrowing
-
----
-
-# Ownership
-We previously talked about ownership
-
-* In Rust there is always a single owner for each stack value
-* Once the owner goes out of scope any associated values should be cleaned up
-* Copy types creates copies, all other types are *moved*
-
-<!--
-- Note once more that the idea of moving is something that exists in the Rust
-  world, but not necesarrily every move actually copies bytes around, these are
-  all things where Rust's model is an abstraction over what the compiled code
-  actually does.
--->
-
----
-
-# Moving out of a function
-We have previously seen this example
-
-
-```rust
-fn main() {
-    let s1 = String::from("hello");
-    let len = calculate_length(s1);
-    println!("The length of '{}' is {}.", s1, len);
-}
-fn calculate_length(s: String) -> usize {
-    s.len()
-}
-```
-
-* This does not compile because ownership of `s1` is moved into
- `calculate_length`, meaning it is no longer available in `main` afterwards
-* We can use `Clone` to create an explicit copy
-* We can give ownership back by returning the value
-* What about other options?
-
----
-
 # Borrowing
-- We can make an analogy with real life: if somebody owns something you can
-  borrow it from them, but eventually you have to give it back
-- If a value is borrowed, it is not moved and the ownership stays with the
-  original owner
-- To borrow in Rust, we create a *reference*
+- We can make an analogy with real life: if somebody owns something you
+  can borrow it from them.
+- Borrowing: temporary rights to use the object, but ownership is unchanged.
+- Very similar to *call-by-reference* in other languages
 
 ```rust {all|3|7|all}
 fn main() {
-    let x = String::from("hello");
-    let len = get_length(&x);
-    println!("{}: {}", x, len);
+    let s1 = String::from("Dave");
+    display_length(&s1);
+    println!("Hello {}!", s1);
 }
 
-fn get_length(arg: &String) -> usize {
-    arg.len()
+fn display_length(name: &String) {
+    println!("Length = {}", name.len());
 }
 ```
 
@@ -594,13 +538,13 @@ fn get_length(arg: &String) -> usize {
 
 ```rust
 fn main() {
-    let s = String::from("hello");
-    change(&s);
-    println!("{}", s);
+    let s1 = String::from("Dave");
+    change(&s1);
+    println!("Hello {}!", s1);
 }
 
-fn change(some_string: &String) {
-    some_string.push_str(", world");
+fn change(name: &String) {
+    name.push_str(" Coder");
 }
 ```
 
@@ -612,14 +556,14 @@ fn change(some_string: &String) {
    Compiling playground v0.0.1 (/playground)
 error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&` reference
  --> src/main.rs:8:5
+8 |     name.push_str(" Coder");
+  |     ^^^^ `name` is a `&` reference, so the data it refers to cannot be borrowed as mutable
   |
-7 | fn change(some_string: &String) {
-  |                        ------- help: consider changing this to be a mutable reference: `&mut String`
-8 |     some_string.push_str(", world");
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `some_string` is a `&` reference, so the data it refers to cannot be borrowed as mutable
-
-For more information about this error, try `rustc --explain E0596`.
-error: could not compile `playground` due to previous error
+help: consider changing this to be a mutable reference
+  |
+7 | fn change(name: &mut String) {
+  |                  +++
+  |
 ```
 
 </div>
@@ -636,13 +580,13 @@ error: could not compile `playground` due to previous error
 
 ```rust
 fn main() {
-    let mut s = String::from("hello");
-    change(&mut s);
-    println!("{}", s);
+    let mut s1 = String::from("Dave");
+    change(&mut s1);
+    println!("Hello {}!", s1);
 }
 
-fn change(some_string: &mut String) {
-    some_string.push_str(", world");
+fn change(name: &mut String) {
+    name.push_str(" Coder");
 }
 ```
 
@@ -651,7 +595,7 @@ fn change(some_string: &mut String) {
 <div class="no-line-numbers">
 
 ```text
-hello, world
+Hello, Dave Coder
 ```
 
 </div>
@@ -664,7 +608,9 @@ hello, world
 - To do this, you can use the dereference operator (`*`) to modify the value:
 
 ```rust
-*some_string = String::from("Goodbye");
+fn change(name: &mut String) {
+    *name = String::from("Ellen");
+}
 ```
 
 </v-click>
