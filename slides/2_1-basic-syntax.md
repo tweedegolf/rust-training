@@ -72,7 +72,7 @@ Hello, world!
 
 # Hello, world!
 
-```rust {all|1-3|2|5-11|6-10|7,9|all}
+```rust
 fn main() {
     println!("Hello, world! fib(6) = {}", fib(6));
 }
@@ -201,18 +201,60 @@ that variable
 
 ---
 
-# Assigning a type to a variable
+# Type annotations
 
 ```rust
 fn main() {
-    let x: i32 = 20;
-    //   ^^^^^  Type annotation
+    let mut some_x: i32 = 5;
+    //            ^^^^^ Type annotation
+    println!("some_x = {}", some_x);
+    some_x = 6;
+    println!("some_x = {}", some_x);
 }
 ```
 
 - Rust is strongly and strictly typed
 - Variables use type inference, so no need to specify a type
 - We can be explicit in our types (and sometimes have to be)
+
+---
+
+# Control flow
+
+```rust {all|2-10|12-16|18-20|all}
+fn main() {
+    let mut x = 0;
+    loop {
+        if x < 6 {
+            println!("x: {}", x);
+            x += 1;
+        } else {
+            break;
+        }
+    }
+
+    let mut y = 0;
+    while y < 6 {
+        println!("y: {}", y);
+        y += 1;
+    }
+
+    for z in 0..6 {
+        println!("z: {}", z);
+    }
+}
+```
+
+<!--
+- A loop or if condition must always evaluate to a boolean type, so no `if 1`
+- Use break to break out of a loop, also works with for and while, continue
+to skip to the next iteration
+-->
+
+---
+layout: cover
+---
+# Basic Types
 
 ---
 layout: two-cols
@@ -484,86 +526,20 @@ written between brackets
 -->
 
 ---
-
-# Control flow
-
-```rust {all|3-10|4-9|8|13-16|18-20|all}
-fn main() {
-    let mut x = 0;
-    loop {
-        if x < 5 {
-            println!("x: {}", x);
-            x += 1;
-        } else {
-            break;
-        }
-    }
-
-    let mut y = 5;
-    while y > 0 {
-        y -= 1;
-        println!("y: {}", x);
-    }
-
-    for i in [1, 2, 3, 4, 5] {
-        println!("i: {}", i);
-    }
-}
-```
-
-<!--
-- A loop or if condition must always evaluate to a boolean type, so no `if 1`
-- Use break to break out of a loop, also works with for and while, continue
-to skip to the next iteration
--->
-
+layout: cover
 ---
-
-# Functions
-
-```rust
-fn add(a: i32, b: i32) -> i32 {
-    a + b
-}
-
-fn returns_nothing() -> () {
-    println!("Nothing to report");
-}
-
-fn also_returns_nothing() {
-    println!("Nothing to report");
-}
-```
-
-- The function boundary must always be explicitly annotated with types
-- Type inference may be used in function body
-- A function that returns nothing has the return type *unit* (`()`)
-- Function body contains a series of statements optionally ending with an
-expression
-
-<!--
-- Rust always uses snake case for variables and functions
-- We must annotate each function parameter with a type, using a colon
-- We must annotate the function return type using an arrow (`->`) followed by
-the return type
-- Unit may be omitted, note the syntax looks like an empty tuple: a tuple with
-no value members has no instances, just as with unit.
-- In Rust you must always specify your type signatures for function boundaries
--->
+# Putting it together
 
 ---
 
 # Statements
-- Statements are instructions that perform some action and do not return a value
-- A definition of any kind (function definition etc.)
-- The `let var = expr;` statement
-- Almost everything else is an expression
+- Statements either *declare* something, or *perform an action*
+- Most things Rust are expressions, not statements
+
 
 ## Example statements
 ```rust
-fn my_fun() {
-    println!("{}", 5);
-}
+println!("{}", 5);
 ```
 
 ```rust
@@ -571,37 +547,25 @@ let x = 10;
 ```
 
 ```rust
-return 42;
+fn do_nothing() {}
 ```
 
 <v-click>
 
 ```rust
-let x = (let y = 10); // invalid
+40 + (let y = 2); // invalid!
 ```
 
 </v-click>
-
-<!--
-- Note how `let` within a `let` is not allowed because of `let` being a statement,
-thus you may not declare multiple variables at the same time with the same
-value
-- `let` is a statement because ownership makes multiple assignments behave
-differently than many would expect, it is almost never what you want in
-Rust
-- It also makes sense if you think of all other declarations also being
-statements
--->
 
 ---
 
 # Expressions
 
-- Expressions evaluate to a resulting value
-- Expressions make up most of the Rust code you write
+- Expressions evaluate to a value
 - Includes all control flow such as `if` and `loop`
-- Includes scoping braces (`{` and `}`)
-- Semicolon (`;`) turns expression into statement
+- *Block expressions* (`{` and `}`): series of statements ending with an expression
+- Semicolon (`;`) turns any expression into a statement
 
 ```rust {all|2-5}
 fn main() {
@@ -615,38 +579,72 @@ fn main() {
 
 ---
 
-# Expressions - control flow
+# Functions
 
+```rust
+fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+fn returns_nothing() {
+    println!("Nothing to report");
+}
+
+fn fib(n: u64) -> u64 {
+    if n <= 1 {
+        return n;
+    }
+
+    fib(n - 1) + fib(n - 2)
+}
+```
+
+- Function body is a *block expression*: series of statements followed by an expression!
+- `return` statement only necessary for early exits
+- `fn` declaration must always be explicitly annotated with types
+
+<!--
+- Rust always uses snake case for variables and functions
+- We must annotate each function parameter with a type, using a colon
+- We must annotate the function return type using an arrow (`->`) followed by
+the return type
+- Unit may be omitted, note the syntax looks like an empty tuple: a tuple with
+no value members has no instances, just as with unit.
+- In Rust you must always specify your type signatures for function boundaries
+-->
+
+---
+
+# Expressions can be everywhere
+
+```rust {all|5,7|all}
+fn main() {
+    let mut y = 11;
+    // if as an expression
+    let x = if y % 2 != 0 {
+        "odd"
+    } else {
+        "even"
+    };
+}
+```
+
+- The types of both branches of an `if` expression need to be the same
+- Without `else`, that type is the *unit type* `()`
+
+<!--
 - Control flow expressions as a statement do not need to end with a semicolon
 if they return *unit* (`()`)
 - Remember: A block/function can end with an expression, but it needs to have
 the correct type
-
-```rust {all|3-8|10-15}
-fn main() {
-    let y = 11;
-    // if as an expression
-    let x = if y < 10 {
-        42
-    } else {
-        24
-    };
-
-    // if as a statement
-    if x == 42 {
-        println!("Foo");
-    } else {
-        println!("Bar");
-    }
-}
-```
+-->
 
 ---
 
 # Scope
 
-- We just mentioned the scope braces (`{` and `}`)
-- Variable scopes are actually very important for how Rust works
+- We've just seen scope braces (`{` and `}`)
+- Variable scopes are important for how Rust works!
 
 ```rust
 fn main() {
