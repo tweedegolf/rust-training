@@ -62,14 +62,14 @@ layout: with-footer
 </tr>
 <tr>
     <td>
-        <center><img src="https://foundation.rust-lang.org/img/rust-logo-blk.svg" width="75" height="75"></center>
+        <center><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Rust_programming_language_black_logo.svg" width="75" height="75"></center>
         <center>
             <img style="display:inline-block" src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg" width="75" height="75">
             <img style="display:inline-block" src="https://upload.wikimedia.org/wikipedia/commons/1/19/C_Logo.png" width="75" height="75">
         </center>
     </td>
     <td></td>
-    <td><center><img src="https://foundation.rust-lang.org/img/cargo.png" width="75" height="75"></center></td>
+    <td><center><img src="https://doc.rust-lang.org/1.85.0/cargo/images/Cargo-Logo-Small.png" width="75" height="75"></center></td>
     <td><center><img src="https://probe.rs/images/banner.svg" width="75" height="75"></center></td>
 </tr>
 </table>
