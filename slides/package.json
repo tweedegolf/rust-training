@@ -20,6 +20,8 @@
     "dev-2_5": "slidev 2_5-closures-and-dynamic-dispatch.md",
     "dev-2_6": "slidev 2_6-interior-mutability.md",
     "dev-3_1": "slidev 3_1-crate-engineering.md",
+    "dev-3_2": "slidev 3_2-testing-and-fuzzing.md",
+    "dev-3_3": "slidev 3_3-cargo.md",
     "dev-4_1": "slidev 4_1-introduction-to-multitasking.md",
     "dev-4_2": "slidev 4_2-parallel-multitasking.md",
     "dev-4_3": "slidev 4_3-asynchronous-multitasking.md",
