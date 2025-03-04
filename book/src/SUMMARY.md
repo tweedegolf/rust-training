@@ -13,6 +13,8 @@
 
 - [Crate Engineering]()
 	- [Crate Engineering](crate-engineering.md)
+	- [Testing and Fuzzing](testing-and-fuzzing.md)
+	- [Cargo Tooling](cargo-tooling.md)
 
 - [Multitasking]()
 	- [Introduction to Multitasking](introduction-to-multitasking.md)

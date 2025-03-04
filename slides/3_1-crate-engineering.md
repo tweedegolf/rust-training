@@ -38,6 +38,14 @@ layout: two-cols
 - Defined by Rust project
 - [Checklist available](https://rust-lang.github.io/api-guidelines/checklist.html) (Link in exercises)
 
+
+- Contains advice on:
+    * Camel case vs underscores
+    * Method naming
+    * Error types
+    * Common traits
+    * ... and more
+
 ::right::
 <img src="/images/B-api-guidelines.png" style="margin-top: 20%; margin-left:5%;max-width: 100%; max-height: 90%;">
 
@@ -83,13 +91,13 @@ layout: default
 # Naming your methods
 
 ```rust {all|7-10|12-15}
-pub struct S {
+pub struct Pair {
     first: First,
     second: Second,
 }
 
-impl S {
-    // Not get_first.
+impl Pair {
+    // Not get_first
     pub fn first(&self) -> &First {
         &self.first
     }
@@ -103,7 +111,7 @@ impl S {
 
 Other example: conversion methods `as_`, `to_`, `into_`, name depends on:
 - Runtime cost
-- Owned &harr; borrowed
+- Borrowed (`as_`), Cloned (`to_`), Owned (`into_`)
 
 
 <!--
@@ -116,26 +124,30 @@ An easy way of making your API unsurprising is by adhering to naming conventions
 layout: two-cols
 ---
 
-# Implement/derive common traits
+# Commonly derived traits
 
+You will *very often* want:
 
-*As long as it makes sense* public types should implement:
-
+- `Debug`
 - `Copy`
 - `Clone`
-- `Eq`
 - `PartialEq`
-- `Ord`
+- `Eq`
 - `PartialOrd`
+- `Ord`
 
 ::right::
 
-<div style="margin-top: 150px"></div>
+<div style="margin-top: 20px"></div>
 
-- `Hash`
-- `Debug`
-- `Display`
+Also common:
+
 - `Default`
+- `Display`
+- `Hash`
+
+For serializing:
+
 - `serde::Serialize`
 - `serde::Deserialize`
 
@@ -156,19 +168,45 @@ Now, let's take a look at some ways to make your API flexible
 layout: default
 ---
 
-# Use generics
+# Use slices for borrowed parameters where possible
 
 ```rust {all|1-3|5-9}
-pub fn add(x: u32, y: u32) -> u32 {
-    x + y
+pub fn print_string(path: &String) {
+    todo!()
 }
 
-/// Adds two values that implement the `Add` trait,
-/// returning the specified output
-pub fn add_generic<O, T: std::ops::Add<Output = O>>(x: T, y: T) -> O {
-    x + y
+// This will also accept &String, but also string literals
+pub fn print_string(path: &str) {
+    todo!()
 }
 ```
+
+- Similarly: `&Vec<T>` as a parameter should be turned into `&[T]`
+
+<!--
+An great way to lift restrictions on your API is to write your functions in terms of traits. That is, use generics to describe what exactly is needed to perform a certain action.
+- In this example, the first function only accepts `u32`, whereas there are many other numeric types for which addition makes sense.
+- The second example, though, accepts anything for which the `Add` trait is implemented. It is even generic over the addition output.
+-->
+
+---
+layout: default
+---
+
+# You can use generics
+
+```rust {all|1-3|5-9}
+pub fn read_file(path: &Path) -> String {
+    todo!()
+}
+
+// This will also accept String, &str, &PathBuf, ...
+pub fn read_file<P: AsRef<Path>>(path: P) -> O {
+    todo!()
+}
+```
+
+- `AsRef<T>` trait: types has a `as_ref()` method that returns a `&T`
 
 <!--
 An great way to lift restrictions on your API is to write your functions in terms of traits. That is, use generics to describe what exactly is needed to perform a certain action.
@@ -183,8 +221,8 @@ layout: default
 # Accept borrowed data if possible
 
 - User decides whether calling function should own the data
-- Avoids unnecessary moves
-- Exception: non-big array `Copy` types
+- Avoids unnecessary moves or `.clone()`
+- Exception: small `Copy` types
 
 ```rust {all|6-9|11-14}
 /// Some very large struct
@@ -192,8 +230,8 @@ pub struct LargeStruct {
     data: [u8; 4096],
 }
 
-/// Takes owned [LargeStruct] and returns it when done
-pub fn manipulate_large_struct(mut large: LargeStruct) -> LargeStruct {
+/// Forces caller to `clone()` [LargeStruct] if it wants to do anything with it
+pub fn manipulate_large_struct(mut large: LargeStruct) {
     todo!()
 }
 
@@ -229,9 +267,9 @@ layout: two-cols
 - You can add code examples, too
 
 ```rust
-/// A well-documented struct.
+/// Use three forward-slashes start a doc comment.
+/// You can add code examples, too:
 /// ```rust
-/// # // lines starting with a `#` are hidden
 /// # use ex_b::MyDocumentedStruct;
 /// let my_struct = MyDocumentedStruct {
 ///     field: 1,
@@ -278,10 +316,10 @@ $ tree
 └── src
     └── lib.rs
 $ cargo run --example say_hello
-   Compiling my_app v0.1.0 (/home/henkdieter/tg/edu/my_app)
+   Compiling my_app v0.1.0 (/home/hugo/tg/edu/my_app)
     Finished dev [unoptimized + debuginfo] target(s) in 0.30s
      Running `target/debug/examples/say_hello`
-Hello, henkdieter!
+Hello, Hugo!
 
 ```
 
@@ -306,7 +344,7 @@ fn load_page(url: &str) -> String {
 }
 
 fn main() {
-  let page = load_page("https://teach-rs.tweede.golf");
+  let page = load_page("https://training.tweede.golf");
   let crab = load_page("🦀"); // Ouch!
 }
 ```
@@ -327,33 +365,34 @@ layout: two-cols
 # Use semantic typing (2)
 
 ```rust{all|1-3,14-16|5-12,22-24|18-20|all}
-struct Url<'u> {
-  url: &'u str,
+struct Url {
+  inner: String
 }
 
-impl<'u> Url<'u> {
-  fn new(url: &'u str) -> Self {
+impl Url {
+  fn new<S: ToString>(url: S) -> Result<Url, Error> {
     if !valid(url) {
-      panic!("URL invalid: {}", url);
+        Err(UrlError)
+    } else {
+        Ok(Url { inner: url.to_string() })
     }
-    Self { url }
   }
 }
 
-fn load_page(remote: Url) -> String {
-    todo!("load it");
-}
 fn main() {
-    let content = load_page(Url::new("🦀")); // Not good
+    let content = load_page(Url::new("🦀")); // BAD
 }
+
 fn valid(url: &str) -> bool {
-    url != "🦀" // Far from complete
+    // ...
 }
 ```
 ::right::
 
 <v-click>
+
 <div style="padding-left:10px; padding-top: 50px;">
+
 ```txt
    Compiling playground v0.0.1 (/playground)
     Finished dev [unoptimized + debuginfo] target(s) in 2.90s
@@ -365,7 +404,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 - Clear intent
 - Input validation: security!
 
-*Use the [`url`](https://lib.rs/url) crate*
+* Note: use the [`url`](https://lib.rs/url) crate: https://docs.rs/url/
 </div>
 
 </v-click>
@@ -375,20 +414,6 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
  - what's more, the `Url` struct can only be instantiated with strings that represent valid URLs
 -->
 
----
-layout: quote
----
-
-# Use Clippy and Rustfmt for all your projects!
-
-```bash
-$ cargo clippy
-$ cargo fmt
-```
-
-<!--
-Use Clippy and Rustfmt to help adhering to the guidelines
--->
 ---
 layout: cover
 ---
@@ -418,7 +443,6 @@ layout: default
 const PATTERNS: &[Pattern] = &[
     Pattern::new("Newtype"),
     Pattern::new("RAII with guards"),
-    Pattern::new("Typestate"),
     Pattern::new("Strategy"),
 ];
 fn main() {
@@ -473,8 +497,8 @@ impl TryFrom<String> for Imei {
     type Error = ValidateImeiError;
 
     fn try_from(imei: String) -> Result<Self, Self::Error> {
-        Self::validate(&imei)?;
-        Ok(Self(imei))
+        Imei::validate(&imei)?;
+        Ok(Imei(imei))
     }
 }
 
@@ -491,7 +515,7 @@ layout: default
 
 Newtype solves some problems:
 - Orphan rule: no `impl`s for external `trait`s on external types
-- Allow for semantic typing (`url` example from mod B)
+- Allow for semantic typing (recall `url` example)
 - Enforce input validation
 
 ---
@@ -529,10 +553,10 @@ pub struct Transaction<'c> {
 
 impl<'c> Transaction<'c> {
     pub fn begin(connection: &'c mut Connection)
-     -> Self {
+     -> Transaction {
         let id = 
             connection.start_transaction();
-        Self {
+        Transaction {
             did_commit: false,
             id,
             connection,
@@ -575,106 +599,24 @@ layout: default
 
 - Ensure a resource is freed at some point
 - Ensure invariants hold while guard lives
+- Common example: `RwLock`, `Mutex`
+
+```rust
+use std::sync::RwLock;
+
+let lock = RwLock::new(vec![1,2,3]);
+
+let data = lock.read().unwrap();
+println!("{:?}", data);
+
+let data_mut = lock.try_write().unwrap(); // FAILS! read-lock on data still active!
+```
 
 ---
 layout: cover
 ---
 
-# 3. The Typestate pattern
-Encode state in the type
-
----
-layout: default
----
-
-# Typestate: introduction
-
-- Define uninitializable types for each state of your object
-```rust
-pub enum Ready {} // No variants, cannot be initialized
-```
-<v-click>
-
-- Make your type generic over its state using `std::marker::PhantomData`
-- Implement methods only for relevant states
-- Methods that update state take owned `self` and return instance with new state
-
-*👻 `PhantomData<T>` makes types act like they own a `T`, and takes no space*
-</v-click>
----
-layout: three-slots
----
-
-# Typestate: example
-
-::left::
-
-```rust
-pub enum Idle {} // Nothing to do
-pub enum ItemSelected {} // Item was selected
-pub enum MoneyInserted {} // Money was inserted
-
-pub struct CoffeeMachine<S> {
-    _state: PhantomData<S>,
-}
-impl<CS> CoffeeMachine<CS> {
-    /// Just update the state
-    fn into_state<NS>(self) -> CoffeeMachine<NS> {
-        CoffeeMachine {
-            _state: PhantomData,
-        }
-    }
-}
-impl CoffeeMachine<Idle> {
-    pub fn new() -> Self {
-        Self {
-            _state: PhantomData,
-        }
-    }
-}
-```
-
-::right::
-<div style="padding-left:10px; padding-top: 0;">
-
-```rust
-impl CoffeeMachine<Idle> {
-    fn select_item(self, item: usize) -> CoffeeMachine<ItemSelected> {
-        println!("Selected item {item}");
-        self.into_state()
-    }
-}
-
-impl CoffeeMachine<ItemSelected> {
-    fn insert_money(self) -> CoffeeMachine<MoneyInserted> {
-        println!("Money inserted!");
-        self.into_state()
-    }
-}
-
-impl CoffeeMachine<MoneyInserted> {
-    fn make_beverage(self) -> CoffeeMachine<Idle> {
-        println!("There you go!");
-        self.into_state()
-    }
-}
-```
-</div>
-
----
-layout: default
----
-
-# Typestate: when to use
-
-- If your problem is like a state machine
-- Ensure *at compile time* that no invalid operation is done
-
----
-layout: cover
----
-
-# 4. The Strategy pattern
+# 3. The Strategy pattern
 Select behavior dynamically
 
 ---
@@ -698,21 +640,18 @@ layout: two-cols
 ```rust
 
 trait PaymentStrategy {
-    fn pay(&self);
+    fn pay(&self, amount: u32);
 }
 
 struct CashPayment;
+struct CardPayment;
+
 impl PaymentStrategy for CashPayment {
-    fn pay(&self) {
-        println!("🪙💸");
-    }
+    fn pay(&self, amount: u32) { /* ... */ }
 }
 
-struct CardPayment;
 impl PaymentStrategy for CardPayment {
-    fn pay(&self) {
-        println!("💳");
-    }
+    fn pay(&self, amount: u32) { /* ... */ }
 }
 ```
 ::right::
@@ -720,19 +659,23 @@ impl PaymentStrategy for CardPayment {
 <div style="padding-left:10px; padding-top: 50px;">
 
 ```rust
+fn buy_car(method: &dyn PaymentStrategy) {
+    method.pay(CAR_PRICE);
+}
 
 fn main() {
-    let method: &str 
-        = todo!("Read input");
-    let strategy: &dyn PaymentStrategy 
-        = match method {
+    let user_input: &str = /* ... */;
+    let method = match user_input {
         "card" => &CardPayment,
         "cash" => &CashPayment,
-        _ => panic!("Oh no!"),
+        _ => panic!()
     };
-    strategy.pay();
+
+    buy_car(method);
 }
 ```
+
+Note: `&dyn` allows use to use *late binding* (similar to dynamic dispatch in Python, C++ or Java).
 
 </div> 
 
@@ -838,12 +781,11 @@ layout: default
 - This is no 'real' inheritance: `Dog` is no subtype of `Animal`
 - Traits implemented on `Animal` are not implemented on `Dog` automatically
 - `Deref` and `DerefMut` are intended 'pointer-to-`T`' to `T` conversions
-- Deref coercion by `.` 'converts' `self` from `Dog` to `Animal`
 - Rust favours explicit conversions for easier reasoning about code
 
 *It will only add confusion: for OOP programmers it's incomplete, for Rust programmers it is unidiomatic*
 
-## ⚠️ Don't do OOP in Rust!
+ ⚠️ Don't do **struct inheritance** in Rust!
 
 ---
 layout: default
@@ -863,8 +805,8 @@ layout: default
 # More anti-patterns
 
 - Forcing dynamic dispatch in libraries
-- `clone()` _to satisfy the borrow checker_
-- `unwrap()` or `expect()` _to handle conditions that are recoverable or not impossible_
+- `clone()` everything out of fear for _the borrow checker_
+- `unwrap()` or `expect()` outside of test code to handle conditions that should be _recoverable_ 
 
 ---
 layout: cover
