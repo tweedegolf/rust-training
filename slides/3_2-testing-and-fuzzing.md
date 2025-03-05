@@ -52,7 +52,7 @@ It is also easy in Rust:
 ```rust
 #[cfg(test)]
 mod test {
-    user super::*;
+    use super::*;
 
     #[test]
     fn my_first_test() {
@@ -256,7 +256,7 @@ use libfuzzer_sys::arbitrary::{self, Arbitrary};
 
 struct Point2D { x: u8, y: u8 };
 
-impl Arbitrary<'_> for Coord {
+impl Arbitrary<'_> for Point2D {
     fn arbitrary(u: &mut arbitrary::Unstructured<'_>) -> arbitrary::Result<Point2D> {
         let x = u.arbitrary()?;
         let y = u.arbitrary()?;

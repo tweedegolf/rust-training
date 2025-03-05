@@ -167,7 +167,7 @@ layout: default
 
 #### The Algorithm:
 
-1. Go to https://lib.rs ir https://crates.io and search
+1. Go to https://lib.rs or https://crates.io and search
 2. Evaluate the https://docs.rs page for the crate
 3. Evaluate the liveness of the crate::
    - How many downloads?
