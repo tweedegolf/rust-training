@@ -57,6 +57,6 @@ Hints:
 
 * Try checking the two other properties that must hold for `dns_decode`, that is: 
   - the maximum length of a part is 63 bytes
-  - the maximum length of a domain anme is 255 bytes.
+  - the maximum length of a domain name is 255 bytes.
 
 * As in unit tests, `assert!` is your friend.
