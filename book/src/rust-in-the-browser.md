@@ -5,7 +5,7 @@ In exercise 5.1.1, we build a web server that hosts an image cropping service. B
 
 In this exercise, we will create a new version of our Lettuce Crop website that crops images with [WebAssembly](https://webassembly.org/). WebAssembly allows you to run compiled code in a safe sandboxed environment in the browser. This means we will not need a dedicated server anymore, as the website will only consist of static files which we can be hosted using any HTTP server. You could even host it for free using [GitHub pages](https://pages.github.com/)!
 
-### 3.2.1.A Building with Wasm Pack
+### 5.3.1.A Building with Wasm Pack
 In `exercises/5-rust-for-web/3-rust-in-the-browser/1-lettuce-crop-wasm` we have set up a basic WebAssembly project. As you can see in the `Cargo.toml`, the project has been configured as a dynamic library (`"cdylib"`). We've also added the `wasm-bindgen` crate as a dependency, which is used to generate WebAssembly bindings.
 
 To build the project, we will use `wasm-pack`. First, install `wasm-pack` with:
@@ -22,7 +22,7 @@ Now, a bunch of files should appear in the `assets/pkg` folder:
 - Some `.d.ts` files, which describe the TypeScript types of the generated bindings
 - A `.js` files, which contains the JavaScript bindings for our WebAssembly binary
 
-### 3.2.1.B Interacting with JavaScript
+### 5.3.1.B Interacting with JavaScript
 So what functionality does the compiled WebAssembly currently include? In `lib.rs` you can see two functions: an extern `alert()` function, and a `hello()` function. Both of these functions have been annotated with `#[wasm_bindgen]` to indicate that we want to bind them with WebAssembly. Extern functions will be bound to existing JavaScript methods, in this case the [window's `alert()` function](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) which shows a popup dialog.
 
 Let's add the WebAssembly to our website. Add the following JavaScript in the `<body>` of the `index.html` to load the WebAssembly binary and call our `hello()` function when we press the submit button:
@@ -40,7 +40,7 @@ Let's add the WebAssembly to our website. Add the following JavaScript in the `<
 
 To try out the website, you can use any HTTP server that is able to serve local files. You could use `axum` to host the files like we did in exercise 5.1.1, but you can also use for example `npx http-server` if you have `npm` installed.
 
-### 3.2.1.C Cropping images
+### 5.3.1.C Cropping images
 Let's add a `crop_image(bytes: Vec<u8>, max_size: u32) -> Vec<u8>` function to our Rust library that will crop our images. You can use the same logic as in exercise 5.1.1 (part D and E) to create a `DynamicImage` from the input bytes, crop it, and export it as WebP. Mark the function with `#[wasm_bindgen]` and rebuild the library to generate WebAssembly bindings for it.
 
 If you look at the generated JavaScript bindings, you will see that the `Vec<u8>`s for the `crop_image` function have been turned into `Uint8Array`s. We will need to write some JavaScript to read the user's selected image and give it to our `crop_image` as a `Uint8Array`.
@@ -67,7 +67,7 @@ window.location.href = URL.createObjectURL(new Blob([cropped_bytes]));
 ```
 If you select an invalid file, you will get an error in the browser console. Feel free to add some better error handling by using a [try-catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch), and by validating whether `image.files[0]` exists before reading it. It would also be nice to verify that `max_size` has a sensible value.
 
-### 3.2.1.D Using the web-sys crate (bonus)
+### 5.3.1.D Using the web-sys crate (bonus)
 Instead of using JavaScript to interact with the HTML document or manually binding extern JavaScript functions using `#[wasm_bindgen]` like we saw with `alert()`, we can also use the [`web-sys`](https://crates.io/crates/web-sys) crate. This crate provides bindings for the JavaScript web APIs available in the browser. However, most of these APIs have to be manually enabled with individual features.
 
 Add the `web-sys` crate to your project with all the needed features enabled:
