@@ -9,7 +9,7 @@ For this exercise, the [AWS free tier](https://aws.amazon.com/free/) should be s
 
 </div>
 
-### 3.2.1.A Setting up Cargo Lambda
+### 5.2.1.A Setting up Cargo Lambda
 To build for AWS Lambda with Rust, we will use [Cargo Lambda](https://www.cargo-lambda.info/). You can install Cargo Lambda with [Cargo Binstall](https://github.com/cargo-bins/cargo-binstall):
 ```
 cargo binstall cargo-lambda
@@ -19,7 +19,7 @@ You may also need to install [Zig](https://ziglang.org/), which is used for [cro
 
 Alternatively, you can use any of the other installation methods for Cargo Lambda found [here](https://www.cargo-lambda.info/guide/installation.html).
 
-### 3.2.1.B Axum router with Lambda HTTP
+### 5.2.1.B Axum router with Lambda HTTP
 The [`lambda_runtime`](https://crates.io/crates/lambda_runtime/) crate provides the runtime for AWS Lambdas written in Rust. The [`lambda_http`](https://crates.io/crates/lambda_http) crate provides an abstraction layer on top of the `lambda_runtime` to make it easy to develop HTTP servers on AWS Lambda with Rust, which is ideal for small dynamic websites or REST APIs.
 
 Add `lambda_http` to the Rust project with:
@@ -49,7 +49,7 @@ cargo lambda watch
 ```
 This will emulate the Lambda locally on your device, serving it on [http://localhost:9000/](http://localhost:9000/) by default.
 
-### 3.2.1.C Setting up a Lambda function in the AWS console
+### 5.2.1.C Setting up a Lambda function in the AWS console
 Now that we've tested our Lambda locally, let's create a Lambda function in the AWS console. Go to the [AWS Lambda page](https://console.aws.amazon.com/lambda/home) in the AWS console, and click "Create a function". Then, configure it as follows:
 
 1. Select "Author from scratch"
@@ -60,7 +60,7 @@ Now that we've tested our Lambda locally, let's create a Lambda function in the 
 
 Finally, click "Create function" and wait a few seconds for your Lambda to be created.
 
-### 3.2.1.D Building & deploying our Lambda function
+### 5.2.1.D Building & deploying our Lambda function
 Before we deploy our Lambda, we first have to build our project with the appropriate architecture:
 ```
 cargo lambda build --release --arm64 --output-format zip
@@ -84,7 +84,7 @@ You can also use `cargo lambda deploy` to deploy your Lambda via the CLI. Howeve
 
 Note that AWS Lambda only accepts files up to 50 MB, for larger projects you can instead upload to an [S3 bucket](https://aws.amazon.com/s3/). S3 does not have a free tier, but it does have a 12-month free trial.
 
-### 3.2.1.E Analyzing Lambda usage via CloudWatch
+### 5.2.1.E Analyzing Lambda usage via CloudWatch
 Now that our Lambda is up and running, let's take a look around the AWS console. If you go to the "Monitor" tab, you can see some metrics about the requests handled by the Lambda function. These basic metrics are automatically gathered by CloudWatch free of charge.
 
 If you scroll down to CloudWatch Logs, you will see recent invocations of the Lambda function. If you click on the log stream of one of these requests, you will see the logs produced while handling the request. The outputs from any `println!`'s or logs from the [`tracing`](https://docs.rs/tracing/latest/tracing/) crate should show up here. The free tier of CloudWatch allows you to store up to 5 GB of log data for free.

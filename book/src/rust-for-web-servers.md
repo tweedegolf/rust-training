@@ -5,14 +5,14 @@
 ## Exercise 5.1.1: Lettuce Crop
 In this exercise, we will build a simple web server with [`axum`](https://lib.rs/crates/axum) which allows users to upload images to crop them. You will learn how to serve static HTML pages along with their associated style sheets and images, and you will learn how to handle POST requests with multipart form data to receive the uploaded images.
 
-### 3.1.1.A Hello axum
+### 5.1.1.A Hello axum
 In `exercises/5-rust-for-web/1-rust-for-web/1-lettuce-crop` we have set up the start of our web server. It currently only serves "Hello, world!" for GET requests on the main page. Run the program and go to [http://[::]:7000/](http://[::]:7000/) in your browser to see if it works.
 
 Note that [http://[::]:7000/](http://[::]:7000/) is the default address for [IPv6](https://en.wikipedia.org/wiki/IPv6). If you do not want to use IPv6, you can use [http://0.0.0.0:7000/](http://0.0.0.0:7000/) instead. The website will also be available on local host, see for example [http://localhost:7000/](http://localhost:7000/), [http://127.0.0.1:7000/](http://127.0.0.1:7000/), or [http://[::1]:7000/](http://[::1]:7000/) (IPv6).
 
 In `main.rs` you can see the `Router` that is used to serve "Hello, world!". We can chain multiple routes to serve multiple end-points. Try adding a second route which serves GET requests on another page (e.g. `/hello`).
 
-### 3.1.1.B Serving static files
+### 5.1.1.B Serving static files
 Currently, our web server only serves static strings. To serve static HTML documents, CSS style sheets, images and other files, we will use the [`ServeDir`](https://docs.rs/tower-http/latest/tower_http/services/struct.ServeDir.html) file server from `tower_http`. We can add this file server to our router as a fallback service to resolve any request which does not match any other defined route with our file server.
 
 Add a [`fallback_service`](https://docs.rs/axum/latest/axum/routing/struct.Router.html#method.fallback_service) to the router with a `ServeDir` that serves files from the `assets` folder.
@@ -21,7 +21,7 @@ If you now go to [http://0.0.0.0:7000/index.html](http://0.0.0.0:7000/index.html
 
 By default, `ServeDir` will automatically append `index.html` when requesting a path that leads to a directory. This means that if you remove the "Hello, world!" route for `/` from the router, you will also see the Lettuce Crop page on the main page of the website!
 
-### 3.1.1.C POST requests and dynamic responses
+### 5.1.1.C POST requests and dynamic responses
 On the Lettuce Crop page we have set up an HTML form, which when submitted sends a POST request to `/crop`:
 ```html
 <form action="/crop" method="post" enctype="multipart/form-data">
@@ -39,7 +39,7 @@ async fn crop_image() -> String {
 }
 ```
 
-### 3.1.1.D Handling uploaded files (multipart form data)
+### 5.1.1.D Handling uploaded files (multipart form data)
 So how do we get the form data from the POST request? With `axum`, we use [extractors](https://docs.rs/axum/latest/axum/extract/) to get information about the request, such as headers, path names or query parameters. Normally, we would use the [`Form` extractor](https://docs.rs/axum/latest/axum/struct.Form.html) to get the submitted form data. However, because we want the user to be able to upload an image, we use the [multipart form data](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST#multipart_form_submission) encoding, as specified by the `enctype` in the HTML `form` tag.
 
 To extract multipart form data in `axum`, we use the [`Multipart` extractor](https://docs.rs/axum/latest/axum/extract/struct.Multipart.html). Unlike the `Form` extractor, the `Multipart` extractor does not automatically deserialize the data into a convenient struct. Instead, we will have to manually loop through the fields and deserialize the data we need.
@@ -70,7 +70,7 @@ Change the string returned by `crop_image` to the following to verify that it wo
 format!("Image size: {}x{}\nMax size: {}", image.width(), image.height(), max_size)
 ```
 
-### 3.1.1.E Sending the cropped image as response
+### 5.1.1.E Sending the cropped image as response
 Let's crop the `DynamicImage` into a square using the following code:
 ```rust
 let size = min(min(image.width(), image.height()), max_size);
@@ -90,7 +90,7 @@ To send these bytes as an image to the client, we will have to create a response
 
 If you now submit an image on the site, it should be returned to you cropped into a square!
 
-### 3.1.1.F Error handling & input validation
+### 5.1.1.F Error handling & input validation
 Currently, the handler likely contains many `.unwrap()`s, which may panic. Luckily, `axum` catches these panics from our handler and will keep running after printing the panic. However, the user will not get any proper response from `axum` when these panics happen. To give the client some feedback about what went wrong, we can implement some better error handling.
 
 Let's change our `crop_image` function to return a `Result<Response, (StatusCode, &'static str)>`. This gives us the ability to return errors consisting of an HTTP status code and a static string.
@@ -106,7 +106,7 @@ Currently, our the size of our cropped image is defined as the minimum of the or
 
 By default, there is a 2 MB limit for request bodies. If a user submits an image larger than this limit, the `.bytes()` call on the multipart field will return an error. In this case, we could return a `StatusCode::PAYLOAD_TOO_LARGE`. If you want to accept larger images, you can configure a larger limit by setting a custom [`DefaultBodyLimit`](https://docs.rs/axum/latest/axum/extract/struct.DefaultBodyLimit.html).
 
-### 3.1.1.G Serving files from memory (bonus)
+### 5.1.1.G Serving files from memory (bonus)
 Currently, the static files are served from the `assets` folder. Instead, we can also bundle these files into the binary with [memory-serve](https://docs.rs/memory-serve/latest/memory_serve/). Not only is it convenient to bundle all files into a single binary, but it can also improve performance!
 
 After adding memory-serve to your project with `cargo add memory-serve`, we can define a memory router as follows:
