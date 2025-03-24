@@ -13,7 +13,7 @@ use panic_rtt_target as _; // Panic handler
 mod dial;
 
 hal::bind_interrupts!(struct Irqs {
-    SPIM0_SPIS0_TWIM0_TWIS0_SPI0_TWI0 => twim::InterruptHandler<hal::peripherals::TWISPI0>;
+    TWISPI0 => twim::InterruptHandler<hal::peripherals::TWISPI0>;
 });
 
 #[embassy_executor::main]
