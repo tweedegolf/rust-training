@@ -5,7 +5,7 @@ use embassy_nrf as hal;
 use hal::twim;
 use rtt_target::{rprintln, rtt_init_print};
 
-// STEP 1: Bind the interrupt of TWISPI0 to the TWIM ISR (hint: it has a really long and weird name)
+// STEP 1: Bind the interrupt of TWISPI0 to the TWIM ISR
 
 #[cortex_m_rt::entry]
 fn main() -> ! {
