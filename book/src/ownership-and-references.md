@@ -4,7 +4,7 @@
 
 ## Exercise 2.2.1: Move Semantics
 
-*This exercise is adapted from the [move semantics exercise](https://github.com/rust-lang/rustlings/tree/main/exercises/move_semantics) from Rustlings*
+*This exercise is adapted from the [move semantics exercise](https://github.com/rust-lang/rustlings/tree/main/exercises/06_move_semantics) from Rustlings*
 
 While inside the `exercises/2-foundations-of-rust/2-ownership-and-references/1-move-semantics` folder, to get started, run:
 ```bash
