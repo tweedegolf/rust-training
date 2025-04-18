@@ -1,0 +1,11 @@
+[package]
+name = "lettuce-crop-scaleway"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+axum = { version = "0.8", features = ["multipart"] }
+image = "0.25.6"
+tower-service = "0.3"
+tower-http = { version = "0.6.2", features = ["fs"] }
+memory-serve = "1.2.1"
