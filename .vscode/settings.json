@@ -24,6 +24,7 @@
         "exercises/4-multitasking/3-asynchronous-multitasking/1-async-channels/Cargo.toml",
         "exercises/4-multitasking/3-asynchronous-multitasking/2-async-chat/Cargo.toml",
         "exercises/5-rust-for-web/1-rust-for-web-servers/1-lettuce-crop/Cargo.toml",
+        "exercises/5-rust-for-web/2-rust-in-the-cloud/2-lettuce-crop-scaleway/Cargo.toml",
         "exercises/5-rust-for-web/3-rust-in-the-browser/1-lettuce-crop-wasm/Cargo.toml",
         "exercises/6-rust-for-systems-programming/1-foreign-function-interface/1-crc-in-c/Cargo.toml",
         "exercises/6-rust-for-systems-programming/1-foreign-function-interface/2-crc-in-rust/Cargo.toml",
