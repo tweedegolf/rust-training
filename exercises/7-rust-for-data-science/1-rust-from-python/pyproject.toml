@@ -1,0 +1,16 @@
+[project]
+name = "crab-dna"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "maturin>=1.8.3",
+]
+
+[tool.uv.workspace]
+members = ["rust-dna"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]

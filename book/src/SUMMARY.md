@@ -29,6 +29,7 @@
 
 - [Rust for Data Science]()
 	- [Rust from Python](rust-from-python.md)
+	- [Async Rust and Python](async-rust-python.md)
 
 - [Rust for Embedded]()
 	- [Ecosystem](embedded-ecosystem.md)
