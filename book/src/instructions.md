@@ -29,7 +29,7 @@ rustc 1.79.0 (129f3b996 2024-06-10)
 cargo 1.79.0 (ffa9cf99a 2024-06-03)
 ```
 
-Using Rustup, you can install Rust toolchains and components. More info: 
+Using Rustup, you can install Rust toolchains and components. More info:
 - <https://rust-lang.github.io/rustup>
 - <https://doc.rust-lang.org/cargo>
 
@@ -209,6 +209,11 @@ cargo install cargo-binutils
 ```
 
 Now, let's install [probe-rs](https://probe.rs). Follow the [installation instructions](https://probe.rs/docs/getting-started/installation/). Probe-rs talks with the debug interface on the micro:bit, to flash your application, log messages, or even set breakpoints and read out device memory.
+
+For Linux this is:
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/probe-rs/probe-rs/releases/latest/download/probe-rs-tools-installer.sh | sh
+```
 
 If you're on `linux`, you'll need to update your udev rules.
 On ubuntu or fedora, run the following inside the workshop folder you just cloned;
