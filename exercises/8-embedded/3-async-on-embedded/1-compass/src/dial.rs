@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 
-use embassy_nrf::gpio::{self, AnyPin, Pin};
+use embassy_futures::select::{select, Either};
+use embassy_nrf::gpio::{self, Pin};
 use embassy_sync::{blocking_mutex::raw::NoopRawMutex, once_lock::OnceLock};
 use lsm303agr::MagneticField;
 
@@ -161,41 +162,27 @@ impl Dial {
         receiver: embassy_sync::channel::Receiver<'_, NoopRawMutex, Direction, 4>,
     ) -> ! {
         use embassy_time::{Duration, Ticker};
-        use futures::FutureExt;
         let mut ticker = Ticker::every(Duration::from_millis(500));
+        let mut is_on = false;
         loop {
-            futures::select_biased!(
-                new_dir = receiver.receive().fuse() => {
+            match select(receiver.receive(), ticker.next()).await {
+                Either::First(new_dir) => {
                     if self.direction == new_dir {
+                        // The direction did not change so we do not need to do anything
                         continue;
                     }
 
                     rtt_target::rprintln!("Setting direction to {:?}", new_dir);
-                    let  (old_row, old_col) = self.direction.led_index();
-                    let (row, col) = (self.rows[old_row].is_set_high(), self.cols[old_col].is_set_high());
-                    self.clear();
-
-                    let (new_row, new_col) = new_dir.led_index();
-                    let (new_row, new_col) = (&mut self.rows[new_row], &mut self.cols[new_col]);
-                    if row {
-                        new_row.set_high();
-                    } else {
-                        new_row.set_low();
-                    }
-
-                    if col {
-                        new_col.set_high();
-                    } else {
-                        new_col.set_low();
-                    }
                     self.direction = new_dir;
-                },
-                _ = ticker.next().fuse() => {
-                    let  (row, col) = self.direction.led_index();
-                    self.rows[row].toggle();
-                    self.cols[col].toggle();
                 }
-            )
+                Either::Second(()) => is_on = !is_on,
+            }
+
+            if is_on {
+                self.set_light_direction(self.direction);
+            } else {
+                self.clear();
+            }
         }
     }
 }
