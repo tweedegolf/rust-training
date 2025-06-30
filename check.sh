@@ -1,10 +1,11 @@
 #!/bin/bash
 set -eo pipefail
 
-TARGETS=$(find exercises/ -name Cargo.toml | sort)
+mkdir -p target
 
-echo "Check all examples are covered by dependabot"
-for target in $TARGETS; do
-  DIRNAME=$(dirname "$target")
-  grep -Fxq "      - \"/$DIRNAME\"" .github/dependabot.yml || echo "Missing entry in dependabot.yml: $DIRNAME" 1>&2
-done
+find exercises/ -name Cargo.toml | sort > target/on-disk.txt
+json5 .zed/settings.json | jq --raw-output '.lsp."rust-analyzer".initialization_options.linkedProjects[]' > target/zed.txt
+json5 .vscode/settings.json | jq --raw-output '."rust-analyzer.linkedProjects"[]' > target/vscode.txt
+cat .github/dependabot.yml | yq --raw-output '.updates[0].directories[] + "/Cargo.toml" | sub("^/";"")' > target/dependabot.txt
+
+diff --unified=0 --from-file target/on-disk.txt target/dependabot.txt target/vscode.txt target/zed.txt && rm -r target || (echo "Projects and configs do not match"; exit 1)
