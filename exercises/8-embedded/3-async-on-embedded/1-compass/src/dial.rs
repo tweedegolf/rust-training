@@ -49,7 +49,29 @@ impl Direction {
     }
 
     fn from_xy(x: f32, y: f32) -> Self {
-        todo!("Determine Direction based on x and y. Use libm::atan2f to convert the vector to an angle");
+        let alpha = libm::atan2f(-y, x);
+        let part =
+            libm::roundf((alpha + core::f32::consts::PI) * 8.0 / core::f32::consts::PI) as u32;
+
+        match (part + 4) % 16 {
+            0 => Self::North,
+            1 => Self::NorthNorthEast,
+            2 => Self::NorthEast,
+            3 => Self::EastNorthEast,
+            4 => Self::East,
+            5 => Self::EastSouthEast,
+            6 => Self::SouthEast,
+            7 => Self::SouthSouthEast,
+            8 => Self::South,
+            9 => Self::SouthSouthWest,
+            10 => Self::SouthWest,
+            11 => Self::WestSouthWest,
+            12 => Self::West,
+            13 => Self::WestNorthWest,
+            14 => Self::NorthWest,
+            15 => Self::NorthNorthWest,
+            x => unreachable!("{x}"),
+        }
     }
 }
 
@@ -132,7 +154,7 @@ impl Dial {
 
     /// Operate the dial autonomously. This function is useful for running
     /// in a separate task.
-    /// 
+    ///
     /// Useful for exercise 8.1.2
     pub async fn run(
         mut self,
@@ -177,7 +199,6 @@ impl Dial {
         }
     }
 }
-
 
 /// Sets up a channel over which [Direction]s can be sent and received.
 /// Useful for exercise 8.1.2
