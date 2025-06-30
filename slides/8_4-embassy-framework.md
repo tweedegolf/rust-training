@@ -46,6 +46,7 @@ layout: with-footer
 
 - Very much in flux
   - use [docs.embassy.dev](https://docs.embassy.dev/) for latest git version docs
+  - or run `cargo doc --open` in your project
 - Uses [`chiptool`](https://github.com/embassy-rs/chiptool) instead of `svd2rust` for PACs (experimental)
 - [Multi-priority using multiple executors](https://github.com/embassy-rs/embassy/blob/main/examples/nrf52840/src/bin/multiprio.rs)
 
