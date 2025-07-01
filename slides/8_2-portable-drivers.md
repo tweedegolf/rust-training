@@ -196,7 +196,7 @@ char example(Spi_t spi) {
     spi.spi_transfer(123);
     char result = spi.spi_transfer(124);
     spi.disable_cs();
-    
+
     return result;
 }
 ```
@@ -470,7 +470,7 @@ impl<SPI: SpiDevice> Device<SPI> {
         Self { interface }
     }
 
-    pub fn read_register<Spi: SpiDevice>(&mut self, address: Register) -> u8 {
+    pub fn read_register(&mut self, address: Register) -> u8 {
         let mut buffer = [address as u8, 0];
         self.interface.transfer_in_place(&mut buffer).unwrap();
         buffer[1]
@@ -517,14 +517,14 @@ pub struct Device<SPI, STATE> {
 
 impl<SPI: SpiDevice> Device<SPI, Idle> {
     pub fn send(self, data: &[u8]) ->
-        Device<SPI, Sending> 
+        Device<SPI, Sending>
     {
         todo!("Start sending, go to Sending state")
     }
 }
 
 impl<SPI: SpiDevice> Device<SPI, Sending> {
-    pub fn wait_ready(self) 
+    pub fn wait_ready(self)
         -> Device<SPI, Ready> {
         todo!("Block until done, go to Idle state")
     }

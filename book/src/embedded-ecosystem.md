@@ -20,8 +20,8 @@ In both cases you can add the `--release` flag to turn on optimizations.
 <details>
     <summary><b>Some pointers to help you get started</b></summary>
 
-- You can find the documentation on the HAL here on [docs.embassy.dev](https://docs.embassy.dev/embassy-nrf/git/nrf52833/index.html). This website houses the docs for embassy for every available chip. Normally you'd search at [docs.rs](https://docs.rs), but that only shows one possible configuration of the HAL.
-- To find out how to configure I2C for the nRF52833: [embassy-nrf TWIM demo example](https://github.com/embassy-rs/embassy/blob/main/examples/nrf52840/src/bin/twim.rs).
+- You can find the documentation on the HAL here by running `cargo doc --open`. This will build the documentation for the exact chip and version we are using. Normally you'd search at [docs.rs](https://docs.rs), but that may show the HAL for a different NRF variant.
+- To find out how to configure I2C for the nRF52833: [embassy-nrf TWIM demo example](https://github.com/embassy-rs/embassy/blob/embassy-nrf-v0.3.1/examples/nrf52840/src/bin/twim.rs).
 - You can find the LSM303AGR data sheet here: <https://www.st.com/resource/en/datasheet/lsm303agr.pdf>. You can find the accelerometer device ID in the `WHO_AM_I_A` register, at register address `0x0F`. You'll need `0x19` to address the accelerometer itself.
-- Use the [`Twim::blocking_write_read`](https://docs.embassy.dev/embassy-nrf/git/nrf52833/twim/struct.Twim.html#method.blocking_write_read) method to first write the device address, then write the register address, and then read its contents into a buffer.
+- Use the `Twim::blocking_write_read` method to first write the device address, then write the register address, and then read its contents into a buffer. (Note: You can search in your generated docs)
 </details>

@@ -10,7 +10,7 @@ cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7.5"
 rtt-target = "0.6.1"
 embedded-hal = "1.0.0"
-embassy-nrf = { version = "0.3.1", features = ["nrf52833", "unstable-pac"] }
+embassy-nrf = { version = "0.3.1", features = ["nrf52833", "unstable-pac"] } # NOTE: When updating the HAL also update the link to the example in the book
 
 [profile.release]
 debug = true
