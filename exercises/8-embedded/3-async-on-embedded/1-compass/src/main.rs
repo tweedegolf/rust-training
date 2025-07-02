@@ -31,12 +31,15 @@ async fn main(s: embassy_executor::Spawner) -> ! {
     let twim0 = Twim::new(dp.TWISPI0, Irqs, dp.P0_16, dp.P0_08, config);
     let delay = embassy_time::Delay;
 
-    let dial: Dial = todo!("Initialize Dial");
+    let dial = Dial::new(
+        dp.P0_21, dp.P0_22, dp.P0_15, dp.P0_24, dp.P0_19, dp.P0_28, dp.P0_11, dp.P0_31, dp.P1_05,
+        dp.P0_30,
+    );
 
     let mut sensor: Lsm303agr<I2cInterface<Twim<TWISPI0>>, MagOneShot> =
         todo!("Initialize LSM303AGR driver given the twim0 peripheral");
     let id: MagnetometerId = todo!("Read the magnetometer ID using the driver");
-    rprintln!("{:#02x?}", id);
+    rprintln!("Magnetometer ID: {:#02x?}", id);
 
     todo!("Initialize the driver");
     todo!("Set magnetometer mode to high resolution and output data rate to 100Hz");
