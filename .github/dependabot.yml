@@ -1,7 +1,6 @@
 version: 2
 updates:
   - package-ecosystem: "cargo"
-    versioning-strategy: increase-if-necessary
     directories:
       - "/exercises/1-course-introduction/1-introduction/1-setup-your-installation"
       - "/exercises/1-course-introduction/1-introduction/2-embedded"
