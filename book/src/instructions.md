@@ -6,8 +6,8 @@ In this file you'll find instructions on how to install the tools we'll use duri
 
 All of these tools are available for Linux, macOS and Windows users.
 We'll need the tools to write and compile our Rust code, and allow for remote mentoring.
-*Important: these instructions are to be followed at home, before the start of the first tutorial.*
-*If you have any problems with installation, contact the lecturers! We won't be addressing installation problems during the first tutorial.*
+*Important: these instructions are to be followed before the start of the first tutorial.*
+*If you have any problems with installation, please contact the trainers ahead of time. We would prefer not to have to be address installation problems during the first session.*
 
 ## Rust and Cargo
 First we'll need `rustc`, the standard Rust compiler.
@@ -72,7 +72,7 @@ This plugin enables debugging Rust code from within vscode.
 You can find instructions here: <https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb>.
 
 If you're following the training remotely, install the Live Share plugin as well.
-We will use the plugin to share code and provide help during remote tutorial sessions.
+We will use the plugin to share code and provide help during remote training sessions.
 Installation instructions can be found here: <https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare>
 
 More info:
@@ -86,7 +86,7 @@ This repo contains quite a lot of rust projects and due to the complicated setup
 To fix this we've specified the projects manually in the `.vscode/settings.json` file. To reduce the burden on your computer, you can comment out any of the projects that we're not using in our training.
 
 ## Git
-During the trainings, you'll need the Git version control tool.
+During the training, you'll need the Git version control tool.
 If you haven't installed Git already, you can find instructions here: <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>.
 If you're new to Git, you'll also appreciate GitHubs intro to Git <https://docs.github.com/en/get-started/using-git/about-git> and the Git intro with vscode, which you can find here: <https://www.youtube.com/watch?v=i_23KUAEtUM>.
 
@@ -124,7 +124,7 @@ Play a little with setting breakpoints by clicking on a line number, making a re
 You can view variable values by hovering over them while execution is paused, or by expanding the 'Local' view under 'Variables' in the left panel during a debug session.
 
 # Instructions for FFI module
-*This part is relevant only if you're partaking in one of the modules on Rust FFI.*
+*This section is relevant only if you're taking part in one of the modules on Rust FFI.*
 
 For doing FFI we will need to compile some C code and for that we need a C compiler installed.
 We've chosen to use `clang` in our excercises.
@@ -183,7 +183,7 @@ source ~/.zshrc
 ```
 
 # Instructions for embedded
-*This part is relevant only if you're partaking in one of the modules on embedded Rust.*
+*This section is relevant only if you're taking part in one of the modules on embedded Rust.*
 
 ## Hardware
 We will use the [BBC micro:bit](https://microbit.org/buy/bbc-microbit-single) V2 and either you've already got it or we will bring it with us.
