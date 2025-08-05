@@ -70,7 +70,7 @@ Now, let's say we have a stream of JSON. Could be from someone on the internet o
 
 This JSON is an array of objects that each represent the following:
 - `lhs`: a matrix with `m` rows and `n` columns. `m` can be derived from `n` and the length of `d`. In this case `m = len / n = 12 / 3 = 4`.
-- `op`: a sequence of operations that need to take place given `lhs` and, if the operation takes two operands, its `rhs` field. `x` corresponds to the operation that should be executed, and should more or less correspond to the methods provided on [nalgebra](https://nalgebra.org/)'s [Matrix](https://docs.rs/nalgebra/0.32.4/nalgebra/base/struct.Matrix.html) type. In this case, the [`Matrix::dot`](https://docs.rs/nalgebra/0.32.4/nalgebra/base/struct.Matrix.html#dotscalar-product) method should be run, which, for probably good reason, is describead as 'the dot product between two vectors or matrices (seen as vectors)'.
+- `op`: a sequence of operations that need to take place given `lhs` and, if the operation takes two operands, its `rhs` field. `x` corresponds to the operation that should be executed, and should more or less correspond to the methods provided on [nalgebra](https://nalgebra.rs/)'s [Matrix](https://docs.rs/nalgebra/0.32.4/nalgebra/base/struct.Matrix.html) type. In this case, the [`Matrix::dot`](https://docs.rs/nalgebra/0.32.4/nalgebra/base/struct.Matrix.html#dotscalar-product) method should be run, which, for probably good reason, is describead as 'the dot product between two vectors or matrices (seen as vectors)'.
 
 Our library should streamingly deserialize each incoming object from an [`asyncio`](https://docs.python.org/3/library/asyncio.html) stream of bytes, apply the given operation, and pass on the result.
 

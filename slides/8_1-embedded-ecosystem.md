@@ -70,7 +70,7 @@ layout: with-footer
     </td>
     <td></td>
     <td><center><img src="https://doc.rust-lang.org/1.85.0/cargo/images/Cargo-Logo-Small.png" width="75" height="75"></center></td>
-    <td><center><img src="https://probe.rs/images/banner.svg" width="75" height="75"></center></td>
+    <td><center><img src="https://raw.githubusercontent.com/probe-rs/webpage/044a6bc2d87cecb1784d0def1f460a3dfbc062eb/src/images/banner.svg" width="75" height="75"></center></td>
 </tr>
 </table>
 

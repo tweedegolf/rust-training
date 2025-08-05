@@ -844,7 +844,7 @@ pub trait Future {
 - `&mut self` &rarr; `Pin<&mut Self>`: makes `Self` immovable
 - `wake: fn()` &rarr; `cx: &mut Context<'_>`: contains a `Waker`
 
-*More on `Pin<&mut Self>` in the [Rust async book](https://rust-lang.github.io/async-book/04_pinning/01_chapter.html)*
+*More on `Pin<&mut Self>` in the [Rust async book](https://rust-lang.github.io/async-book/part-reference/pinning.html)*
 </div>
 </v-click>
 
