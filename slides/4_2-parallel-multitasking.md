@@ -313,7 +313,7 @@ layout: default
 
 # Fearless concurrency
 
-<img src="https://arctype.com/blog/content/images/size/w1750/2021/02/deadlock.jpeg" alt="Photo Ferris" width="500" />
+<img src="https://tweedegolf.nl/images/gridlock.png" alt="Gridlock" width="500" />
 
 - borrowing rules prevent data races & deadlocks
 - but also any shared mutable state between threads
