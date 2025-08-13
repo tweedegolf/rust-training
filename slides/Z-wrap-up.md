@@ -55,7 +55,7 @@ layout: with-footer
 
 # What's next?
 
-- Follow us on [Twitter (X)](https://twitter.com/tweedegolfbv), [Fosstodon](https://fosstodon.org/@tweedegolf) or [LinkedIn](https://nl.linkedin.com/company/tweede-golf-software-engineering) for our latest articles on [Rust](https://tweedegolf.nl/en/blog/rust)
+- Follow us on [Bluesky](https://bsky.app/profile/tweedegolf.bsky.social), [Fosstodon](https://fosstodon.org/@tweedegolf) or [LinkedIn](https://nl.linkedin.com/company/tweede-golf-software-engineering) for our latest articles on [Rust](https://tweedegolf.nl/en/blog/rust)
 - Dive into the [Rust Book](https://doc.rust-lang.org/book/)
 - Dive into [teach-rs](https://tweedegolf.nl/en/blog/117/teach-rs-rust-101-evolved)
 - Attend one of the upcoming [Rust Meetups](https://www.meetup.com/rust-nederland/events/)
