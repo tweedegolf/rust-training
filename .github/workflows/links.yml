@@ -28,10 +28,10 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          fail: false
+          fail: "${{ github.event_name != 'schedule' }}"
 
       - name: Create Issue From File
-        if: steps.lychee.outputs.exit_code != 0
+        if: github.event_name == 'schedule' && steps.lychee.outputs.exit_code != 0
         uses: peter-evans/create-issue-from-file@v5
         with:
           title: Link Checker Report
