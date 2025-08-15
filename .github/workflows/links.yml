@@ -5,6 +5,16 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "00 18 * * *"
+  push:
+    branches:
+      - main
+  pull_request:
+    branches-ignore:
+      - "release/**"
+  merge_group:
+    branches:
+      - main
+  workflow_call: {}
 
 jobs:
   linkChecker:
