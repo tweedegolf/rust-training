@@ -18,7 +18,7 @@ Serde comes with two traits: `Serializable` and `Deserializable`. These traits c
 > ***How come `main` returns an `anyhow::Result<()>`?***
 > By having `main` return a result, we can bubble errors up all the way to runtime. You can find more information about it in [Rust By Example](https://doc.rust-lang.org/rust-by-example/error/result.html#using-result-in-main). The `anyhow::Result` is a more flexible type of `Result`, which allows for easy conversion of error types.
 
-> ***What is that `r#"...` thing?***  
+> ***What is that `r#"...` thing?***
 > `r` in front of a string literal means it's a "raw" string. Escape sequences (`\n`, `\"`, etc.) don't work, and thus they are very convenient for things like regular expressions, JSON literals, etc.
 >
 > Optionally `r` can be followed by one or more symbols (like `#` in our case), and then your string ends when there's a closing double quote followed by the same number of the same symbols. This is great for cases when you want to have double quotes inside your string literal. For our example `r#" ... "#` works great for JSON. In rare cases you'd want to put two or more pound signs. Like, when you store CSS color values in your JSON strings:
@@ -52,11 +52,11 @@ $ tree
 
 ```
 
-Add the following dependencies to your `Cargo.toml` file. Below items contain links to their page on lib.rs. Make sure you get a general idea of what these crates are for and how they can be used. Don't dive too deep just yet.
-   -  [`anyhow` 1.0](https://lib.rs/crates/anyhow)
-   -  [`clap` 4.0](https://lib.rs/crates/clap) Also, skim over <https://docs.rs/clap/latest/clap/_derive/_tutorial/index.html>
-   -  [`serde-json` 1.0](https://lib.rs/crates/serde_json)
-   -  [`serde` 1.0](https://lib.rs/crates/serde)
+Add the following dependencies to your `Cargo.toml` file. Below items contain links to their page on docs.rs. Make sure you get a general idea of what these crates are for and how they can be used. Don't dive too deep just yet.
+   -  [`anyhow` 1.0](https://docs.rs/anyhow)
+   -  [`clap` 4.0](https://docs.rs/clap) Also, skim over <https://docs.rs/clap/latest/clap/_derive/_tutorial/index.html>
+   -  [`serde-json` 1.0](https://docs.rs/serde_json)
+   -  [`serde` 1.0](https://docs.rs/serde)
 
 Your `Cargo.toml` should look like this:
 
