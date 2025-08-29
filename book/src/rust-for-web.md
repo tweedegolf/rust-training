@@ -4,7 +4,7 @@
 
 ## Exercise 5.1.1: Pastebin
 
-This exercise is about writing a simple [pastebin](https://en.wikipedia.org/wiki/Pastebin) web server. Like the quizzer app, you will need to set up the project yourself. This webserver will be powered by [`axum`](https://lib.rs/crates/axum).
+This exercise is about writing a simple [pastebin](https://en.wikipedia.org/wiki/Pastebin) web server. Like the quizzer app, you will need to set up the project yourself. This webserver will be powered by [`axum`](https://docs.rs/axum).
 
 - Data is kept in memory. Bonus if you use a database or `sqlite`, but first make the app function properly without.
 - Expose a route to which a POST request can be sent, that accepts some plain text, and stores it along with a freshly generated UUID. The UUID is sent in the response. You can use the [`uuid` crate](https://docs.rs/uuid/latest/uuid/) to generate UUIDs.

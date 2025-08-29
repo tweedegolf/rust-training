@@ -41,7 +41,7 @@ A Broadcast channel is a channel that supports multiple senders and receivers. E
 For this bonus exercise, we provide no scaffolding. Take your inspiration from the `mpsc` and `oneshot` modules, and implement a `broadcast` module yourself.
 ## Exercise 4.3.2: Async Chat
 
-In this exercise, you'll write a simple chat server and client based on [Tokio](https://lib.rs/crates/tokio). Open `exercises/4-multitasking/3-asynchronous-multitasking/2-async-chat` in your editor. The project contains a `lib.rs` file, in which a type `Message` resides. This `Message` defines the data the chat server and clients use to communicate.
+In this exercise, you'll write a simple chat server and client based on [Tokio](https://docs.rs/tokio). Open `exercises/4-multitasking/3-asynchronous-multitasking/2-async-chat` in your editor. The project contains a `lib.rs` file, in which a type `Message` resides. This `Message` defines the data the chat server and clients use to communicate.
 
 ### 4.3.2.A Server ⭐⭐⭐
 The chat server, which resides in `src/bin/server.rs` listens for incoming TCP connections on port 8000, and spawns two tasks (futures):

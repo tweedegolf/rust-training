@@ -117,7 +117,7 @@ Other example: conversion methods `as_`, `to_`, `into_`, name depends on:
 <!--
 An easy way of making your API unsurprising is by adhering to naming conventions.
 - For example, the guidelines specify a naming convention for getters. Note that getter names do not start with 'get', and that the mutable getter ends with 'mut'.
-- Another example is the way conversion methods are named, based on their runtime cost and whether the conversion is between references, owned values, or from reference to owned and vice-versa. 
+- Another example is the way conversion methods are named, based on their runtime cost and whether the conversion is between references, owned values, or from reference to owned and vice-versa.
 -->
 
 ---
@@ -242,7 +242,7 @@ pub fn manipulate_large_struct_borrowed(large: &mut LargeStruct) {
 ```
 
 <!--
-An even neater way to make your API flexible is by allowing the user to decide whether the data that is passed to your function is owned by the calling function or not. This is done by accepting borrowed data wherever possible. This avoids unnecessary moves. An exception to this guideline is for `Copy` types, as they are cheap to clone. 
+An even neater way to make your API flexible is by allowing the user to decide whether the data that is passed to your function is owned by the calling function or not. This is done by accepting borrowed data wherever possible. This avoids unnecessary moves. An exception to this guideline is for `Copy` types, as they are cheap to clone.
 - The first function in the example moves the `LargeStruct` into its own scope, and then moves it out again. That may be costly and requires ownership from calling function!
 - The second function merely borrows the `LargeStruct`, which is cheap and flexible.
 -->
@@ -404,7 +404,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 - Clear intent
 - Input validation: security!
 
-* Note: use the [`url`](https://lib.rs/url) crate: https://docs.rs/url/
+* Note: use the [`url`](https://docs.rs/url) crate: https://docs.rs/url/
 </div>
 
 </v-click>
@@ -554,7 +554,7 @@ pub struct Transaction<'c> {
 impl<'c> Transaction<'c> {
     pub fn begin(connection: &'c mut Connection)
      -> Transaction {
-        let id = 
+        let id =
             connection.start_transaction();
         Transaction {
             did_commit: false,
@@ -580,7 +580,7 @@ impl Drop for Transaction<'_> {
             self
                 .connection
                 .commit_transaction(self.id);
-            
+
         } else {
             self
                 .connection
@@ -677,7 +677,7 @@ fn main() {
 
 Note: `&dyn` allows use to use *late binding* (similar to dynamic dispatch in Python, C++ or Java).
 
-</div> 
+</div>
 
 ---
 layout: default
@@ -748,7 +748,7 @@ impl Deref for Dog {
         &self.animal
     }
 }
-fn main (){ 
+fn main (){
     let dog: Dog = todo!("Instantiate Dog");
     dog.bark();
     dog.walk();
@@ -806,7 +806,7 @@ layout: default
 
 - Forcing dynamic dispatch in libraries
 - `clone()` everything out of fear for _the borrow checker_
-- `unwrap()` or `expect()` outside of test code to handle conditions that should be _recoverable_ 
+- `unwrap()` or `expect()` outside of test code to handle conditions that should be _recoverable_
 
 ---
 layout: cover
@@ -830,7 +830,7 @@ layout: default
   - Benchmarks
 
 <!--
-Automatic testing can help you verify the correctness of your code, as well as test performance. 
+Automatic testing can help you verify the correctness of your code, as well as test performance.
 - A common of testing correctness are by setting up unit tests, which test a small piece of functionality, a unit.
 - If you want to test the correctness of interaction between those units, you can set up integration test.
 - However, if you want to test performance, you can use benchmarking.
@@ -892,7 +892,7 @@ mod tests {
     use crate::slice_swap_items;
 
     // Mark function as test
-    #[test] 
+    #[test]
     fn test_swap_items() {
         let mut array = [0, 1, 2, 3, 4, 5];
         slice_swap_items(&mut array[..], 1, 4);
@@ -901,7 +901,7 @@ mod tests {
 
     #[test]
     // This should panic
-    #[should_panic] 
+    #[should_panic]
     fn test_swap_oob() {
         let mut array = [0, 1, 2, 3, 4, 5];
         slice_swap_items(&mut array[..], 1, 6);

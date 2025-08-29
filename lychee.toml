@@ -1,3 +1,4 @@
 exclude = [
     '^https://www.st.com/resource/en/datasheet/lsm303agr.pdf$',
+    '^https://lib.rs/$', # lib.rs is blocking access from GitHub actions
 ]
