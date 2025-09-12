@@ -33,7 +33,7 @@ Steps:
 3. In `main.rs`, define an extern (fill in the argument and return types)
     ```rust
     extern "C" {
-        fn CRC32( ... ) -> ...; // hint: https://doc.rust-lang.org/std/os/raw
+        fn CRC32( ... ) -> ...; // hint: https://doc.rust-lang.org/std/ffi/
     }
     ```
 4. Now, create a rust wrapper that calls the extern function
