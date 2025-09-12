@@ -221,7 +221,7 @@ fn main() {
 
 # Control flow
 
-```rust {all|2-10|12-16|18-20|all}
+```rust
 fn main() {
     let mut x = 0;
     loop {
@@ -621,7 +621,7 @@ no value members has no instances, just as with unit.
 fn main() {
     let mut y = 11;
     // if as an expression
-    let x = if y % 2 != 0 {
+    let x = if y.is_multiple_of(2) {
         "odd"
     } else {
         "even"
