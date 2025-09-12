@@ -21,8 +21,6 @@ Steps:
     ```
 2. Create `build.rs` (in the same directory as `Cargo.toml`) with contents
     ```rust
-    extern crate cc;
-
     fn main() {
         println!("cargo:rerun-if-changed=crc32.h");
         println!("cargo:rerun-if-changed=crc32.c");
@@ -40,7 +38,7 @@ Steps:
     ```
 4. Now, create a rust wrapper that calls the extern function
     ```rust
-    fn crc32( ... ) -> ... { 
+    fn crc32( ... ) -> ... {
         ... // (hints: `unsafe`, `.as_ptr()`, `.len()`)
     }
     ```
@@ -111,7 +109,7 @@ Steps:
     #include <stdio.h> // printf
     #include "crc_in_rust.h"
 
-    int main() { 
+    int main() {
         uint8_t data[] = { 0,1,2,3,4,5,6 };
         size_t data_length = 7;
 
@@ -149,11 +147,11 @@ Steps:
 ## Exercise 6.1.3: QOI Bindgen
 In this exercise, we will use `cargo bindgen` to generate the FFI bindings for a C library. Bindgen will look at a C header file, and generate Rust functions, types and constants based on the C definitions.
 
-However, the generated code will likely be ugly and non-idiomatic. To wrap a C library properly, good API design and documentation is needed. 
+However, the generated code will likely be ugly and non-idiomatic. To wrap a C library properly, good API design and documentation is needed.
 
 ### Background
 The [image crate](https://crates.io/crates/image) provides functionality for encoding, decoding and editing images in Rust. It supports many image formats, like JPEG, PNG and GIF, but also QOI. QOI is a "Quite OK Image format", which aims for fast encoding and decoding of images, while providing a file size similar to PNGs.
-In this exercise, we test if the image crate produces the same results when decoding QOI images as the [QOI reference C library](https://github.com/phoboslab/qoi). 
+In this exercise, we test if the image crate produces the same results when decoding QOI images as the [QOI reference C library](https://github.com/phoboslab/qoi).
 
 The QOI C library is a header-only library, which means the function implementations are included within the header file instead of in a separate C file. We've added a separate C file which includes the header to make it easier to compile and include the library in our Rust program.
 
