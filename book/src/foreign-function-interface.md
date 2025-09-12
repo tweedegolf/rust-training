@@ -46,10 +46,10 @@ Steps:
 5. Call our wrapper on some example input
     ```rust
     fn main() {
-        println!("{:#x}", crc32(b"12345678"));
+        println!("{:#x}", crc32(b"abcde"));
     }
     ```
-    In the above example, the correct output is `0x9ae0daaf`
+    In the above example, the correct output is `0x8587d865`
 
 ## Exercise 6.1.2: CRC in Rust
 
@@ -89,24 +89,24 @@ Steps:
     #include <stdint.h> // uint32_t, uint8_t
     #include <stddef.h> // size_t
 
-    uint32_t crc32(const uint8_t data[], size_t data_length);
+    uint32_t crc32(const uint8_t* data, size_t data_length);
     ```
 
 4. Create `main.c` and use the rust `crc32` function
 
     ```c
-    #include <stdint.h> // uint32_t, uint8_t
-    #include <stddef.h> // size_t
-    #include <stdio.h> // printf
     #include "crc_in_rust.h"
+    #include <stddef.h> // size_t
+    #include <inttypes.h> // uint32_t, uint8_t
+    #include <stdio.h>  // printf
 
     int main() {
-        uint8_t data[] = { 0,1,2,3,4,5,6 };
-        size_t data_length = 7;
+        uint8_t data[] = "abcde";
+        size_t data_length = 5;
 
         uint32_t hash = crc32(data, data_length);
 
-        printf("Hash: %d\n", hash);
+        printf("Hash: 0x%"PRIx32"\n", hash);
 
         return 0;
     }
@@ -118,21 +118,19 @@ Steps:
     Linux & MacOS:
     ```sh
     # Build main.c, link it to the dynamic library and output the executable called main
-    $ clang main.c target/debug/libcrc_in_rust.so -omain
+    $ clang main.c target/debug/libcrc_in_rust.a -omain
     # Run the executable
     $ ./main
-    Hash: -1386739207
+    Hash: 0x8587d865
     ```
 
     Windows:
     ```ps
     # Build main.c, link it to the import library of the DLL and output the executable called main.exe
-    ❯ clang main.c .\target\debug\crc_in_rust.dll.lib -o "main.exe"
-    # Move the dll to the same folder as the exe so it can find it
-    ❯ cp .\target\debug\crc_in_rust.dll crc_in_rust.dll
+    ❯ clang main.c .\target\debug\crc_in_rust.lib -o "main.exe"
     # Run the executable
     ❯ .\main.exe
-    Hash: -1386739207
+    Hash: 0x8587d865
     ```
 
 ## Exercise 6.1.3: QOI Bindgen
