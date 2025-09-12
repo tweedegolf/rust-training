@@ -63,27 +63,18 @@ Prerequisites:
 
 Steps:
 
-1. Change Cargo.toml to
+1. Add this to Cargo.toml
 
     ```toml
-    [package]
-    name = "crc-in-rust"
-    version = "0.1.0"
-    edition = "2021"
-
     [lib]
     name = "crc_in_rust"
-    crate-type = ["dylib"]
-
-    # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-    [dependencies]
+    crate-type = ["staticlib"]
     ```
 
 2. Expose an extern rust function in the `lib.rs`
 
     ```rust
-    #[no_mangle]
+    #[unsafe(no_mangle)]
     pub extern "C" fn crc32(...) -> ... {
 
         ...
