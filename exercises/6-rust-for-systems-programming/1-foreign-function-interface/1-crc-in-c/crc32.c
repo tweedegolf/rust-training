@@ -68,7 +68,7 @@ uint32_t CRCTable[256] = {
 };
 
 
-uint32_t CRC32(const uint8_t data[], size_t data_length) {
+uint32_t CRC32(const char* data, size_t data_length) {
 	uint32_t crc32 = 0xFFFFFFFFu;
 
 	for (size_t i = 0; i < data_length; i++) {
