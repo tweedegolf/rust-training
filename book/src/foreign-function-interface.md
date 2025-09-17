@@ -97,7 +97,7 @@ Steps:
     ```c
     #include "crc_in_rust.h"
     #include <stddef.h> // size_t
-    #include <inttypes.h> // uint32_t, uint8_t
+    #include <inttypes.h> // uint32_t, uint8_t, PRIx32
     #include <stdio.h>  // printf
 
     int main() {
