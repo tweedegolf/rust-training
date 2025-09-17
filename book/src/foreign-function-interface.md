@@ -127,7 +127,7 @@ Steps:
     Windows:
     ```ps
     # Build main.c, link it to the import library of the DLL and output the executable called main.exe
-    ❯ clang main.c .\target\debug\crc_in_rust.lib -o "main.exe"
+    ❯ clang main.c .\target\debug\crc_in_rust.lib -lkernel32 -lntdll -luserenv -lws2_32 -ldbghelp -o "main.exe"
     # Run the executable
     ❯ .\main.exe
     Hash: 0x8587d865
