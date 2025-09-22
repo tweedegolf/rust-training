@@ -21,8 +21,6 @@ Steps:
     ```
 2. Create `build.rs` (in the same directory as `Cargo.toml`) with contents
     ```rust
-    extern crate cc;
-
     fn main() {
         println!("cargo:rerun-if-changed=crc32.h");
         println!("cargo:rerun-if-changed=crc32.c");
@@ -35,12 +33,12 @@ Steps:
 3. In `main.rs`, define an extern (fill in the argument and return types)
     ```rust
     extern "C" {
-        fn CRC32( ... ) -> ...; // hint: https://doc.rust-lang.org/std/os/raw
+        fn CRC32( ... ) -> ...; // hint: https://doc.rust-lang.org/std/ffi/
     }
     ```
 4. Now, create a rust wrapper that calls the extern function
     ```rust
-    fn crc32( ... ) -> ... { 
+    fn crc32( ... ) -> ... {
         ... // (hints: `unsafe`, `.as_ptr()`, `.len()`)
     }
     ```
@@ -48,10 +46,10 @@ Steps:
 5. Call our wrapper on some example input
     ```rust
     fn main() {
-        println!("{:#x}", crc32(b"12345678"));
+        println!("{:#x}", crc32(b"abcde"));
     }
     ```
-    In the above example, the correct output is `0x9ae0daaf`
+    In the above example, the correct output is `0x8587d865`
 
 ## Exercise 6.1.2: CRC in Rust
 
@@ -65,27 +63,18 @@ Prerequisites:
 
 Steps:
 
-1. Change Cargo.toml to
+1. Add this to Cargo.toml
 
     ```toml
-    [package]
-    name = "crc-in-rust"
-    version = "0.1.0"
-    edition = "2021"
-
     [lib]
     name = "crc_in_rust"
-    crate-type = ["dylib"]
-
-    # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-    [dependencies]
+    crate-type = ["staticlib"]
     ```
 
 2. Expose an extern rust function in the `lib.rs`
 
     ```rust
-    #[no_mangle]
+    #[unsafe(no_mangle)]
     pub extern "C" fn crc32(...) -> ... {
 
         ...
@@ -100,24 +89,24 @@ Steps:
     #include <stdint.h> // uint32_t, uint8_t
     #include <stddef.h> // size_t
 
-    uint32_t crc32(const uint8_t data[], size_t data_length);
+    uint32_t crc32(const uint8_t* data, size_t data_length);
     ```
 
 4. Create `main.c` and use the rust `crc32` function
 
     ```c
-    #include <stdint.h> // uint32_t, uint8_t
-    #include <stddef.h> // size_t
-    #include <stdio.h> // printf
     #include "crc_in_rust.h"
+    #include <stddef.h> // size_t
+    #include <inttypes.h> // uint32_t, uint8_t, PRIx32
+    #include <stdio.h>  // printf
 
-    int main() { 
-        uint8_t data[] = { 0,1,2,3,4,5,6 };
-        size_t data_length = 7;
+    int main() {
+        uint8_t data[] = "abcde";
+        size_t data_length = 5;
 
         uint32_t hash = crc32(data, data_length);
 
-        printf("Hash: %d\n", hash);
+        printf("Hash: 0x%"PRIx32"\n", hash);
 
         return 0;
     }
@@ -129,31 +118,29 @@ Steps:
     Linux & MacOS:
     ```sh
     # Build main.c, link it to the dynamic library and output the executable called main
-    $ clang main.c target/debug/libcrc_in_rust.so -omain
+    $ clang main.c target/debug/libcrc_in_rust.a -omain
     # Run the executable
     $ ./main
-    Hash: -1386739207
+    Hash: 0x8587d865
     ```
 
     Windows:
     ```ps
     # Build main.c, link it to the import library of the DLL and output the executable called main.exe
-    ❯ clang main.c .\target\debug\crc_in_rust.dll.lib -o "main.exe"
-    # Move the dll to the same folder as the exe so it can find it
-    ❯ cp .\target\debug\crc_in_rust.dll crc_in_rust.dll
+    ❯ clang main.c .\target\debug\crc_in_rust.lib -lkernel32 -lntdll -luserenv -lws2_32 -ldbghelp -o "main.exe"
     # Run the executable
     ❯ .\main.exe
-    Hash: -1386739207
+    Hash: 0x8587d865
     ```
 
 ## Exercise 6.1.3: QOI Bindgen
 In this exercise, we will use `cargo bindgen` to generate the FFI bindings for a C library. Bindgen will look at a C header file, and generate Rust functions, types and constants based on the C definitions.
 
-However, the generated code will likely be ugly and non-idiomatic. To wrap a C library properly, good API design and documentation is needed. 
+However, the generated code will likely be ugly and non-idiomatic. To wrap a C library properly, good API design and documentation is needed.
 
 ### Background
 The [image crate](https://crates.io/crates/image) provides functionality for encoding, decoding and editing images in Rust. It supports many image formats, like JPEG, PNG and GIF, but also QOI. QOI is a "Quite OK Image format", which aims for fast encoding and decoding of images, while providing a file size similar to PNGs.
-In this exercise, we test if the image crate produces the same results when decoding QOI images as the [QOI reference C library](https://github.com/phoboslab/qoi). 
+In this exercise, we test if the image crate produces the same results when decoding QOI images as the [QOI reference C library](https://github.com/phoboslab/qoi).
 
 The QOI C library is a header-only library, which means the function implementations are included within the header file instead of in a separate C file. We've added a separate C file which includes the header to make it easier to compile and include the library in our Rust program.
 

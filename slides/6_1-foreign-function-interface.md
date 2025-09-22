@@ -232,7 +232,7 @@ these need special, manual treatment
 ---
 layout: default
 ---
-# `cargo-bindgen`
+# `bindgen`
 
 Generates rust API bindings based on C header files
 
@@ -270,7 +270,7 @@ C and Rust don't just work together, we must
 - tell rust the name and type of extern functions
 - force rust to use the C calling convention
 - use only types that have a C-compatible representation
-- `cargo-bindgen` automates parts of this process
+- `bindgen` automates parts of this process
 
 ---
 layout: default

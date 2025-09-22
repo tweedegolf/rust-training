@@ -1,7 +1,6 @@
-#include <inttypes.h> // uint32_t, uint8_t
-#include <stddef.h> // size_t
+#include "crc32.h"
 
-unsigned int CRCTable[256] = { 
+uint32_t CRCTable[256] = {
      0x00000000, 0x77073096, 0xEE0E612C, 0x990951BA,
      0x076DC419, 0x706AF48F, 0xE963A535, 0x9E6495A3,
      0x0EDB8832, 0x79DCB8A4, 0xE0D5E91E, 0x97D2D988,
@@ -69,14 +68,14 @@ unsigned int CRCTable[256] = {
 };
 
 
-uint32_t CRC32(const uint8_t data[], size_t data_length) {
+uint32_t CRC32(const char* data, size_t data_length) {
 	uint32_t crc32 = 0xFFFFFFFFu;
-	
+
 	for (size_t i = 0; i < data_length; i++) {
 		const uint32_t lookupIndex = (crc32 ^ data[i]) & 0xff;
 		crc32 = (crc32 >> 8) ^ CRCTable[lookupIndex];  // CRCTable is an array of 256 32-bit constants
 	}
-	
+
 	// Finalize the CRC-32 value by inverting all the bits
 	crc32 ^= 0xFFFFFFFFu;
 	return crc32;
