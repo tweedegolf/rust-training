@@ -4,7 +4,7 @@
 
 ## Exercise 7.1.1: Test your environment
 
-Install uv (https://docs.astral.sh/uv/#installation) and Rust (https://www.rust-lang.org/tools/install)
+Install [uv](https://docs.astral.sh/uv/#installation) and [Rust](https://www.rust-lang.org/tools/install)
 
 Check it is working:
 ```bash
@@ -34,4 +34,4 @@ test_validation.py .                                                     [100%]
 
 ## Exercise 7.1.2: Translating Python to rust
 
-Follow the steps in `exercises/7-rust-for-data-science/1-rust-from-python/main.py` to translate the logic to Rust in `exercises/7-rust-for-data-science/1-rust-from-python/rust-dna/lib.rs`.
+Open `exercises/7-rust-for-data-science/1-rust-from-python/` in your editor and follow the steps in `main.py` to translate the logic to Rust in `rust-dna/lib.rs`.
