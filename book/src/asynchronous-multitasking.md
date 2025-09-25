@@ -2,6 +2,12 @@
 
 <a href="/slides/4_3-asynchronous-multitasking/" target="_blank">Slides</a>
 
+## Exercise 4.3.1: From sync to async
+
+Synchronous and asynchronous Rust code does not look too different from each other. In this excercise we will turn a synchronous Rust TCP echo server into an asynchronous one.
+
+Open `exercises/4-multitasking/3-asynchronous-multitasking/1-sync-to-async` in your editor. Follow the steps in `main.rs` to first test the program works, then convert it to `async`, and then test it still works.
+
 ## Exercise 4.3.3: Async Channels
 
 Channels are a very useful way to communicate between threads and `async` tasks. They allow for decoupling your application into many tasks. You'll see how that can come in nicely in exercise E.2. In this exercise, you'll implement two variants: a oneshot channel and a multi-producer-single-consumer (MPSC) channel. If you're up for a challenge, you can write a broadcast channel as well.

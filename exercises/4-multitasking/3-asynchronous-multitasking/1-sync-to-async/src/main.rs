@@ -1,10 +1,13 @@
 #![allow(unused_doc_comments)]
-/// 0. Verify this program by:
+/// 0. Verify this program works by:
 /// - Run this binary with `cargo run`
 /// - Run a client with `cargo run --bin client` or `nc 127.0.0.1 8080`
 
 /// 1. Remove me!
-use std::{io::{Read, Write}, net::TcpListener};
+use std::{
+    io::{Read, Write},
+    net::TcpListener,
+};
 
 /// 2. Uncomment us
 // use tokio::net::TcpListener;
