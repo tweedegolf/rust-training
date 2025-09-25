@@ -39,31 +39,3 @@ cargo test -- broadcast
 A Broadcast channel is a channel that supports multiple senders and receivers. Each message that is sent by any of the senders, is received by every receiver. Therefore, the implemenentation has to hold on to messages until they have been sent to every receiver that has not yet been dropped. This furthermore implies that the message shoud be cloned upon broadcasting.
 
 For this bonus exercise, we provide no scaffolding. Take your inspiration from the `mpsc` and `oneshot` modules, and implement a `broadcast` module yourself.
-## Exercise 4.3.2: Async Chat
-
-In this exercise, you'll write a simple chat server and client based on [Tokio](https://docs.rs/tokio). Open `exercises/4-multitasking/3-asynchronous-multitasking/2-async-chat` in your editor. The project contains a `lib.rs` file, in which a type `Message` resides. This `Message` defines the data the chat server and clients use to communicate.
-
-### 4.3.2.A Server ⭐⭐⭐
-The chat server, which resides in `src/bin/server.rs` listens for incoming TCP connections on port 8000, and spawns two tasks (futures):
-
-- `handle_incoming`: reads lines coming in from the TCP connection. It reads the username the client provides, and broadcasts incoming `Messages`, possibly after some modification.
-- `handle_outgoing`: sends messages that were broadcasted by the `handle_incoming` tasks to the client over TCP.
-
-Both `handle_incoming` and `handle_outgoing` contain a number to `todo`s. Fix them.
-
-To start the server, run
-
-```bash
-cargo run --bin server
-```
-
-### 4.3.2.B Client ⭐⭐
-The chat client, residing in `src/bin/client.rs` contains some todo's as well. Fix them to allow for registration and sending `Message`s to the server.
-
-To start the client, run
-
-```bash
-cargo run --bin client
-```
-
-If everything works well, you should be able to run multiple clients and see messages sent from each client in every other.
