@@ -2,19 +2,17 @@ use std::net::IpAddr;
 
 use anyhow::{anyhow, Context};
 use clap::{arg, Parser};
-use rand::{Rng, thread_rng};
+use data_sink::message::{KeepAlive, Measurement, Mood};
 use rand::distributions::{Bernoulli, Open01, Uniform};
+use rand::{thread_rng, Rng};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader, Lines};
 use tokio::net::tcp::{ReadHalf, WriteHalf};
-use tokio::select;
 use tokio::signal::ctrl_c;
 use tokio::task::JoinSet;
-use tokio::time::{Duration, Instant, interval, Interval, timeout_at};
 use tokio::time::error::Elapsed;
-use tracing_subscriber::EnvFilter;
+use tokio::time::{interval, timeout_at, Duration, Instant, Interval};
 use tracing_subscriber::filter::LevelFilter;
-
-use many_sensors::{KeepAlive, Measurement, Mood};
+use tracing_subscriber::EnvFilter;
 
 /// A tool that simulates (potentially many) clients sending measurements
 #[derive(Parser, Debug)]
@@ -42,7 +40,7 @@ struct Args {
 async fn main() -> anyhow::Result<()> {
     // Set up logging
     let filter = EnvFilter::builder()
-        .with_default_directive(LevelFilter::INFO.into())
+        .with_default_directive(LevelFilter::TRACE.into())
         .from_env()
         .context("Invalid log filter in RUST_LOG")?;
     tracing_subscriber::fmt().with_env_filter(filter).init();
@@ -121,11 +119,11 @@ async fn run_client(id: usize, args: &'static Args) -> anyhow::Result<()> {
 #[tracing::instrument(skip(args), err)]
 async fn run_broken_client(id: usize, args: &'static Args) -> anyhow::Result<()> {
     let mut sock = tokio::net::TcpStream::connect((args.target, args.port)).await?;
-    let (rx, mut tx) = sock.split();
-    let mut lines = BufReader::new(rx).lines();
+    let (_rx, mut tx) = sock.split();
 
     tracing::debug!("Connected to server");
 
+    let start = std::time::Instant::now();
     let mut interval = interval(Duration::from_millis(1000));
     loop {
         let measurement = measure(id);
@@ -150,8 +148,8 @@ async fn run_broken_client(id: usize, args: &'static Args) -> anyhow::Result<()>
         }
 
         tracing::debug!(
-            "Sent measurement... only took {} seconds",
-            json.as_bytes().len() / 10
+            "Sent measurement... only took {}",
+            humantime::format_duration(start.elapsed())
         );
     }
 }
