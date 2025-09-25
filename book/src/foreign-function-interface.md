@@ -118,7 +118,7 @@ Steps:
     Linux & MacOS:
     ```sh
     # Build main.c, link it to the dynamic library and output the executable called main
-    $ clang main.c target/debug/libcrc_in_rust.a -omain
+    $ clang main.c target/debug/libcrc_in_rust.a -lpthread -ldl -omain
     # Run the executable
     $ ./main
     Hash: 0x8587d865
