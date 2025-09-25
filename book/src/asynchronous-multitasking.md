@@ -2,14 +2,14 @@
 
 <a href="/slides/4_3-asynchronous-multitasking/" target="_blank">Slides</a>
 
-## Exercise 4.3.1: Async Channels
+## Exercise 4.3.3: Async Channels
 
 Channels are a very useful way to communicate between threads and `async` tasks. They allow for decoupling your application into many tasks. You'll see how that can come in nicely in exercise E.2. In this exercise, you'll implement two variants: a oneshot channel and a multi-producer-single-consumer (MPSC) channel. If you're up for a challenge, you can write a broadcast channel as well.
 
-### 4.3.1.A MPSC channel ⭐⭐
+### 4.3.3.A MPSC channel ⭐⭐
 A multi-producer-single-consumer (MPSC) channel is a channel that allows for multiple `Sender`s to send many messages to a single `Receiver`.
 
-Open `exercises/4-multitasking/3-asynchronous-multitasking/1-async-channels` in your editor. You'll find the scaffolding code there. For part A, you'll work in `src/mpsc.rs`. Fix the `todo!`s in that file in order to make the test pass. To test, run:
+Open `exercises/4-multitasking/3-asynchronous-multitasking/3-async-channels` in your editor. You'll find the scaffolding code there. For part A, you'll work in `src/mpsc.rs`. Fix the `todo!`s in that file in order to make the test pass. To test, run:
 
 ```bash
 cargo test -- mpsc
@@ -17,7 +17,7 @@ cargo test -- mpsc
 
 If your tests are stuck, probably either your implementation does not use the `Waker` correctly, or it returns `Poll::Pending` where it shouldn't.
 
-### 4.3.1.B Oneshot channel ⭐⭐⭐
+### 4.3.3.B Oneshot channel ⭐⭐⭐
 A oneshot is a channel that allows for one `Sender` to send exactly one message to a single `Receiver`.
 
 For part B, you'll work in `src/broadcast.rs`. This time, you'll have to do more yourself. Intended behavior:
@@ -35,7 +35,7 @@ To test, run:
 cargo test -- broadcast
 ```
 
-### 4.3.1.C Broadcast channel (bonus) ⭐⭐⭐⭐
+### 4.3.3.C Broadcast channel (bonus) ⭐⭐⭐⭐
 A Broadcast channel is a channel that supports multiple senders and receivers. Each message that is sent by any of the senders, is received by every receiver. Therefore, the implemenentation has to hold on to messages until they have been sent to every receiver that has not yet been dropped. This furthermore implies that the message shoud be cloned upon broadcasting.
 
 For this bonus exercise, we provide no scaffolding. Take your inspiration from the `mpsc` and `oneshot` modules, and implement a `broadcast` module yourself.
