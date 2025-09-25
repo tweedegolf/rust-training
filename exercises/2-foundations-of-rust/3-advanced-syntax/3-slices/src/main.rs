@@ -56,6 +56,9 @@ fn read_numbers() -> Vec<i32> {
     result
 }
 
+// This wil keep reading numbers from stdin until stdin is closed.
+// You can pipe in a text file or close the std in using ctrl+D on linux or the equivalent on your platform.
+// You can also just run `cargo test` to finish this exercise.
 fn main() {
     let input = read_numbers();
     println!("Data to be sorted:");
