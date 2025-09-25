@@ -28,9 +28,19 @@ cargo run --bin sensor-nodes
 
 You should see regular log messages about received measurements. Every 60 seconds new lines should be appended to `database.csv`.
 
+### Exercise 4.3.2A: `async`ify
+
 Then address the `TODO:` comments in `src/bin/server.rs`. Check that running the application still works as before.
 
-Once the code has been converted to `async`, address that the `KeepAlive` messages are send every second, and only if the node has sent data. [`tokio::select!`](https://docs.rs/tokio/latest/tokio/macro.select.html) might be useful here.
+### Exercise 4.3.2B: Requirements change
+
+Run the clients with an interval of 10 seconds like this:
+
+```bash
+cargo run --bin sensor-nodes -- -i 10s
+```
+
+Investigate and address upcoming bugs.
 
 ## Exercise 4.3.3: Async Channels
 
