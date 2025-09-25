@@ -8,6 +8,30 @@ Synchronous and asynchronous Rust code does not look too different from each oth
 
 Open `exercises/4-multitasking/3-asynchronous-multitasking/1-sync-to-async` in your editor. Follow the steps in `main.rs` to first test the program works, then convert it to `async`, and then test it still works.
 
+## Exercise 4.3.2: Measurement Data Sink
+
+In this scenario we have a set of IoT sensors that measure air quality in different rooms. They send the data via a TCP socket to a server. The server aggregates the data per room and writes the data to CSV file. The functionality is currently implemented in a synchronous way. Your task is to make the server code `async`.
+
+Open `exercises/4-multitasking/3-asynchronous-multitasking/2-measurement-data-sink` in your editor.
+
+In two different terminals run:
+
+```bash
+cargo run --bin server
+```
+
+and
+
+```bash
+cargo run --bin sensor-nodes
+```
+
+You should see regular log messages about received measurements. Every 60 seconds new lines should be appended to `database.csv`.
+
+Then address the `TODO:` comments in `src/bin/server.rs`. Check that running the application still works as before.
+
+Once the code has been converted to `async`, address that the `KeepAlive` messages are send every second, and only if the node has sent data. [`tokio::select!`](https://docs.rs/tokio/latest/tokio/macro.select.html) might be useful here.
+
 ## Exercise 4.3.3: Async Channels
 
 Channels are a very useful way to communicate between threads and `async` tasks. They allow for decoupling your application into many tasks. You'll see how that can come in nicely in exercise E.2. In this exercise, you'll implement two variants: a oneshot channel and a multi-producer-single-consumer (MPSC) channel. If you're up for a challenge, you can write a broadcast channel as well.
