@@ -2,7 +2,7 @@ use std::net::IpAddr;
 
 use anyhow::{anyhow, Context};
 use clap::{arg, Parser};
-use data_sink::message::{KeepAlive, Measurement, Mood};
+use data_sink::{KeepAlive, Measurement, Mood};
 use rand::distributions::{Bernoulli, Open01, Uniform};
 use rand::{thread_rng, Rng};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader, Lines};
