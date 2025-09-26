@@ -15,7 +15,7 @@ mv book/target/* ./public/
 
 # build slides
 pushd slides
-  npm install
+  npm ci
   for f in *.md; do
     npm run build -- --out "dist/${f%.md}" --base "/slides/${f%.md}/" "$f"
   done
