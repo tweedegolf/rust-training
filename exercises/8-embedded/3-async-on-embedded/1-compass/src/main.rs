@@ -38,10 +38,12 @@ async fn main(s: embassy_executor::Spawner) -> ! {
 
     let mut sensor: Lsm303agr<I2cInterface<Twim<TWISPI0>>, MagOneShot> =
         todo!("Initialize LSM303AGR driver given the twim0 peripheral");
+
+    todo!("Initialize the driver");
+
     let id: MagnetometerId = todo!("Read the magnetometer ID using the driver");
     rprintln!("Magnetometer ID: {:#02x?}", id);
 
-    todo!("Initialize the driver");
     todo!("Set magnetometer mode to high resolution and output data rate to 100Hz");
 
     todo!("Change the magnetometer to continuous mode");

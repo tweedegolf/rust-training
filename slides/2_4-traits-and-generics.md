@@ -657,7 +657,7 @@ layout: default
 - two `'_` lifetimes in the same type represent **different** lifetimes
 
 ```rust
-fn foo(b: &'_ str: , b: &'_ str) {
+fn foo(a: &'_ str, b: &'_ str) {
     // a and b have different lifetimes now!
 }
 ```

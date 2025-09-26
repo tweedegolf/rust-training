@@ -24,7 +24,7 @@ Steps:
     fn main() {
         println!("cargo:rerun-if-changed=crc32.h");
         println!("cargo:rerun-if-changed=crc32.c");
-        cc::Build::new().file("crc32.c").compile("crc32.a");
+        cc::Build::new().file("crc32.c").compile("crc32");
     }
     ```
 
@@ -118,7 +118,7 @@ Steps:
     Linux & MacOS:
     ```sh
     # Build main.c, link it to the dynamic library and output the executable called main
-    $ clang main.c target/debug/libcrc_in_rust.a -omain
+    $ clang main.c target/debug/libcrc_in_rust.a -lpthread -ldl -omain
     # Run the executable
     $ ./main
     Hash: 0x8587d865
