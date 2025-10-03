@@ -127,9 +127,9 @@ layout: cover
 ```rust {all|2|all}
 fn main() {
     let some_x = 5;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
     some_x = 6;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
 }
 ```
 
@@ -147,7 +147,7 @@ error[E0384]: cannot assign twice to immutable variable `some_x`
   |         |
   |         first assignment to `some_x`
   |         help: consider making this binding mutable: `mut some_x`
-3 |     println!("some_x = {}", some_x);
+3 |     println!("some_x = {some_x}");
 4 |     some_x = 6;
   |     ^^^^^^^^^^ cannot assign twice to immutable variable
 
@@ -172,9 +172,9 @@ variable names
 ```rust
 fn main() {
     let mut some_x = 5;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
     some_x = 6;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
 }
 ```
 
@@ -207,9 +207,9 @@ that variable
 fn main() {
     let mut some_x: i32 = 5;
     //            ^^^^^ Type annotation
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
     some_x = 6;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
 }
 ```
 
@@ -226,7 +226,7 @@ fn main() {
     let mut x = 0;
     loop {
         if x < 6 {
-            println!("x: {}", x);
+            println!("x: {x}");
             x += 1;
         } else {
             break;
@@ -235,12 +235,12 @@ fn main() {
 
     let mut y = 0;
     while y < 6 {
-        println!("y: {}", y);
+        println!("y: {y}");
         y += 1;
     }
 
     for z in 0..6 {
-        println!("z: {}", z);
+        println!("z: {z}");
     }
 }
 ```
@@ -476,7 +476,7 @@ fn main() {
 fn main() {
     let tup = (1, 2.0, 'Z');
     let (a, b, c) = tup;
-    println!("({}, {}, {})", a, b, c);
+    println!("({a}, {b}, {c})");
 
     let another_tuple = (true, 42);
     println!("{}", another_tuple.1);
@@ -505,7 +505,7 @@ fn main() {
     let arr: [i32; 3] = [1, 2, 3];
     println!("{}", arr[0]);
     let [a, b, c] = arr;
-    println!("[{}, {}, {}]", a, b, c);
+    println!("[{a}, {b}, {c}]");
 }
 ```
 
