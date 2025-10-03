@@ -33,225 +33,6 @@ Ownership and References
 layout: section
 ---
 
-# Move Semantics
-
----
-layout: two-cols
----
-# Memory management
-
-- Most of what we have seen so far is stack-based and small in size
-- All these primitive types are `Copy`: create a copy on the stack every time
-we need them somewhere else
-- We don't want to pass a copy all the time
-- Large data that we do not want to copy
-- Modifying original data
-- What about data structures with a variable size?
-
-::right::
-
-<Transform scale="0.9">
-
-![Memory Layout](/images/A1-memory-expanded.svg)
-
-</Transform>
-
----
-layout: default
----
-# Memory
-
-- A computer program consists of a set of instructions
-- Those instructions manipulate some memory
-- How does a program know what memory can be used?
-
-<!--
-* A program is not just the code that is running, it is also the current state
-of that program (the memory).
-* But central here is the question: when does a program know when it can use
-a specific part of that memory, when is it available?
--->
-
----
-
-# Fundamentals
-
-There are two mechanisms at play here, generally known as the stack and the heap
-
-<div class="grid grid-cols-2">
-    <div class="flex flex-col rounded-md p-1 bg-teal-100 text-center w-md h-250px">
-        <div class="bg-red-100 rounded-t-md flex flex-col">
-            <div class="bg-red-200 rounded-t-md p-1 border-red-500 border">Frame 1</div>
-            <div class="bg-red-200 p-1 border-red-500 border border-t-0">Frame 2</div>
-        </div>
-        <div class="bg-blue-100 flex-1 align-middle flex flex-col">
-            <div class="text-gray-500 p-1">Free memory</div>
-        </div>
-        <div class="bg-yellow-100 rounded-b-md h-130px flex flex-col">
-            <div class="text-gray-500 p-2">Heap</div>
-            <div class="bg-yellow-300 mb-3 h-7">Allocated</div>
-            <div class="bg-yellow-300 mb-1 h-9"></div>
-            <div class="bg-yellow-300 h-4"></div>
-        </div>
-    </div>
-    <div>
-        <div class="relative top-12 left-6">🠔 Stack pointer</div>
-    </div>
-</div>
-
-<!--
-* In this simplified view we see the stack mechanism and the heap mechanism
-* The stack is a growing stack of used memory, where the only way to remove
-memory from being used is by removing it from the top of the stack and the
-only way to add is to put it on top of the stack.
-* Somehow, as with a lot of CS stuff, we like to turn things around and think
-of stacks growing down instead of up in the real world. That is because they are
-at the end of the virtual memory address range. So if the stack grows, the stack
-pointer (to the current stack frame) is decreased.
--->
-
----
-
-# Fundamentals
-
-There are two mechanisms at play here, generally known as the stack and the heap
-
-<div class="grid grid-cols-2">
-    <div class="flex flex-col rounded-md p-1 bg-teal-100 text-center w-md h-350px">
-        <div class="bg-red-100 rounded-t-md flex flex-col">
-            <div class="bg-red-200 rounded-t-md p-1 border-red-500 border">Frame 1</div>
-            <div class="bg-red-200 p-1 border-red-500 border border-t-0">Frame 2</div>
-            <div class="bg-red-200 p-1 border-red-500 border border-t-0">Frame 3</div>
-        </div>
-        <div class="bg-blue-100 flex-1 align-middle flex flex-col">
-            <div class="text-gray-500 p-1">Free memory</div>
-        </div>
-        <div class="bg-yellow-100 rounded-b-md h-130px flex flex-col">
-            <div class="text-gray-500 p-2">Heap</div>
-            <div class="bg-yellow-300 mb-3 h-7">Allocated</div>
-            <div class="bg-yellow-300 mb-1 h-9"></div>
-            <div class="bg-yellow-300 h-4"></div>
-        </div>
-    </div>
-    <div>
-        <div class="relative top-19 left-6">🠔 Stack pointer</div>
-        <div class="relative pl-7 top-20">
-            A stack frame is allocated for every function call. It contains exactly
-            enough space for all local variables, arguments and stores where the
-            previous stack frame starts.
-        </div>
-    </div>
-</div>
-
-<!--
-* We create a new part of the stack, called stack frame, every time we enter a function, meanwhile
-we have a small special bit of memory, register, where the current top of the stack is
-recorded.
--->
-
----
-
-# Fundamentals
-
-There are two mechanisms at play here, generally known as the stack and the heap
-
-<div class="grid grid-cols-2">
-    <div class="flex flex-col rounded-md p-1 bg-teal-100 text-center w-md h-250px">
-        <div class="bg-red-100 rounded-t-md flex flex-col">
-            <div class="bg-red-200 rounded-t-md p-1 border-red-500 border">Frame 1</div>
-            <div class="bg-red-200 p-1 border-red-500 border border-t-0">Frame 2</div>
-        </div>
-        <div class="bg-blue-100 flex-1 align-middle flex flex-col">
-            <div class="text-gray-500 p-1">Free memory</div>
-        </div>
-        <div class="bg-yellow-100 rounded-b-md h-130px flex flex-col">
-            <div class="text-gray-500 p-2">Heap</div>
-            <div class="bg-yellow-300 mb-3 h-7">Allocated</div>
-            <div class="bg-yellow-300 mb-1 h-9"></div>
-            <div class="bg-yellow-300 h-4"></div>
-        </div>
-    </div>
-    <div>
-        <div class="relative top-12 left-6">🠔 Stack pointer</div>
-        <div class="relative pl-7 top-13">
-            Once a function call ends we just move back up, and everything below is
-            available as free memory once more.
-        </div>
-    </div>
-</div>
-
-<!--
-* And as we leave a function, we just put the stack pointer back down and we
-just act as if everything above it doesn't exist.
-* Also take a look at the heap memory instead, look at how there are many
-differently sized blocks of memory scattered across the heap.
--->
-
----
-
-# Stack limitations
-
-The stack has limitations though, because it only grows as a result of a
-function call.
-
-* Size of items on stack frame must be known at compile time
-* If I don't know the size of a variable up front: What size should my stack
-frame be?
-* How can I handle arbitrary user input efficiently?
-
-<style>
-    .footnotes-sep {
-        margin-top: 45px;
-    }
-
-    .footnotes {
-        @apply text-xs opacity-65;
-    }
-
-    .footnote-backref {
-        display: none;
-    }
-</style>
-
-<!--
-* You can definitely do a lot with just a stack, but really there are some
-scenarios that aren't possible, or can only be done very inefficient when
-we can only ever push and pop from the top of the stack.
-* Because stack frames (at least for low level compiled languages such as Rust,
-C and C++) need to be known at compile time, we also have somewhat limited
-capabilities for dynamic variable sizes and dynamic user input
-* Note that stack based operations are very much a solved problem, and you can
-very safely use stack based variables in C and C++, because you don't have to
-worry about cleaning them up, there are no pointers.
--->
-
----
-
-# The Heap
-
-If the lifetime of some data needs to outlive a certain scope, it can not be placed on the stack.
-We need another construct: the heap.
-
-It's all in the name, the heap is just one big pile of memory for you to store
-stuff in. But what part of the heap is in use? What part is available?
-
-* Data comes in all shapes and sizes
-* When a new piece of data comes in we need to find a place in the heap that
-still has a large enough chunk of data available
-* When is a piece of heap memory no longer needed?
-* Where does it start? Where does it end?
-* When can we start using it?
-
-<!--
-* Meanwhile on the other side of our memory the heap is an unstructured pile
-of data just waiting to be used. But how do we know what to use, when to use,
-when to stop using? We can't keep on adding more and more memory or we would
-run into a runaway memory leak quickly.
-* Let's take a look how Rust solves working with the heap for us.
--->
-
----
-
 # Variable scoping (recap)
 
 ```rust
@@ -303,8 +84,6 @@ println!("{}", x);
 
 <div class="no-line-numbers">
 
-<v-click>
-
 ```text
 Compiling playground v0.0.1 (/playground)
 Finished dev [unoptimized + debuginfo] target(s) in 4.00s
@@ -312,13 +91,9 @@ Running `target/debug/playground`
 5
 ```
 
-</v-click>
-
 </div>
 
 ::bottomleft::
-
-<v-click>
 
 ```rust
 // Create an owned, heap allocated string
@@ -327,17 +102,9 @@ let s2 = s1;
 println!("{}, world!", s1);
 ```
 
-</v-click>
-
-<v-click at="4">
-
-Strings store their data on the heap because they can grow
-
-</v-click>
+Copying a large string can be expensive, we don't want to do that silently.
 
 ::bottomright::
-
-<v-click at="3">
 
 <div class="no-line-numbers">
 
@@ -355,8 +122,6 @@ error[E0382]: borrow of moved value: `s1`
 ```
 
 </div>
-
-</v-click>
 
 <!--
 * Let's take the previous example and get rid of some scopes, instead we are
@@ -385,10 +150,9 @@ them somewhere else.
 
 # Ownership
 
-- There is always ever only one owner of a stack value
-- Once the owner goes out of scope (and is removed from the stack), any associated values on the
-  heap will be cleaned up as well
-- Rust transfers ownership for non-copy types: *move semantics*
+- There is always ever only one owner of a value
+- Once the owner goes out of scope the value is cleaned up
+- Rust *moves* ownership for non-`Copy` types
 
 <!--
 * What we've just seen is the Rust ownership system in action.
@@ -411,7 +175,7 @@ variable and removes it from the first variable, instead of aliasing it
 fn main() {
     let s1 = String::from("Dave");
     display_length(s1);
-    println!("Hello {}!", s1);
+    println!("Hello {s1}!");
 }
 
 fn display_length(name: String) {
@@ -430,7 +194,7 @@ Compiling playground v0.0.1 (/playground)
   |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
 3 |     display_length(s1);
   |                    -- value moved here
-4 |     println!("Hello {}!", s1);
+4 |     println!("Hello {s1}!");
   |                           ^^ value borrowed here after move
 ```
 </div>
@@ -479,14 +243,14 @@ So, there are two solutions:
 <img src="/images/A1-clone.jpg" class="float-right w-40" />
 
 - Many (not all!) types in Rust are `Clone`-able
-- Only is done explicitly (in contrast to `Copy` is implicit)
+- Cloning must be done explicitly (in contrast, `Copy` is implicit)
 - Creating a clone can be expensive and wasteful
 
 ```rust
 fn main() {
     let s1 = String::from("Dave");
     display_length(s1.clone());
-    println!("Hello {}!", s1);
+    println!("Hello {s1}!", s1);
 }
 
 fn display_length(name: String) {
@@ -520,11 +284,11 @@ layout: section
 - Borrowing: temporary rights to use the object, but ownership is unchanged.
 - Very similar to *call-by-reference* in other languages
 
-```rust {all|3|7|all}
+```rust 
 fn main() {
     let s1 = String::from("Dave");
     display_length(&s1);
-    println!("Hello {}!", s1);
+    println!("Hello {s1}!");
 }
 
 fn display_length(name: &String) {
@@ -540,7 +304,7 @@ fn display_length(name: &String) {
 fn main() {
     let s1 = String::from("Dave");
     change(&s1);
-    println!("Hello {}!", s1);
+    println!("Hello {s1}!");
 }
 
 fn change(name: &String) {
@@ -582,7 +346,7 @@ help: consider changing this to be a mutable reference
 fn main() {
     let mut s1 = String::from("Dave");
     change(&mut s1);
-    println!("Hello {}!", s1);
+    println!("Hello {s1}!");
 }
 
 fn change(name: &mut String) {
@@ -604,7 +368,7 @@ Hello, Dave Coder
 
 <v-click>
 
-- A mutable reference can even fully replace the original value
+- A mutable reference can even be used to fully replace the original value
 - To do this, you can use the dereference operator (`*`) to modify the value:
 
 ```rust
@@ -671,7 +435,7 @@ fn main() {
     let s1 = &s;
     let s2 = &s;
     let s3 = &mut s;
-    println!("{} - {} - {}", s1, s2, s3);
+    println!("{s1} - {s2} - {s3}");
 }
 ```
 
@@ -689,8 +453,8 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 4 |     let s2 = &s;
 5 |     let s3 = &mut s;
   |              ^^^^^^ mutable borrow occurs here
-6 |     println!("{} - {} - {}", s1, s2, s3);
-  |                              -- immutable borrow later used here
+6 |     println!("{s1} - {s2} - {s3}");
+  |                -- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
 error: could not compile `playground` due to previous error
