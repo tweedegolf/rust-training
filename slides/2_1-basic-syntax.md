@@ -124,12 +124,12 @@ layout: cover
 
 # Variables
 
-```rust {all|2|all}
+```rust
 fn main() {
     let some_x = 5;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
     some_x = 6;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
 }
 ```
 
@@ -147,7 +147,7 @@ error[E0384]: cannot assign twice to immutable variable `some_x`
   |         |
   |         first assignment to `some_x`
   |         help: consider making this binding mutable: `mut some_x`
-3 |     println!("some_x = {}", some_x);
+3 |     println!("some_x = {some_x}");
 4 |     some_x = 6;
   |     ^^^^^^^^^^ cannot assign twice to immutable variable
 
@@ -172,9 +172,9 @@ variable names
 ```rust
 fn main() {
     let mut some_x = 5;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
     some_x = 6;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
 }
 ```
 
@@ -207,9 +207,9 @@ that variable
 fn main() {
     let mut some_x: i32 = 5;
     //            ^^^^^ Type annotation
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
     some_x = 6;
-    println!("some_x = {}", some_x);
+    println!("some_x = {some_x}");
 }
 ```
 
@@ -226,7 +226,7 @@ fn main() {
     let mut x = 0;
     loop {
         if x < 6 {
-            println!("x: {}", x);
+            println!("x: {x}");
             x += 1;
         } else {
             break;
@@ -235,12 +235,12 @@ fn main() {
 
     let mut y = 0;
     while y < 6 {
-        println!("y: {}", y);
+        println!("y: {y}");
         y += 1;
     }
 
     for z in 0..6 {
-        println!("z: {}", z);
+        println!("z: {z}");
     }
 }
 ```
@@ -476,7 +476,7 @@ fn main() {
 fn main() {
     let tup = (1, 2.0, 'Z');
     let (a, b, c) = tup;
-    println!("({}, {}, {})", a, b, c);
+    println!("({a}, {b}, {c})");
 
     let another_tuple = (true, 42);
     println!("{}", another_tuple.1);
@@ -505,7 +505,7 @@ fn main() {
     let arr: [i32; 3] = [1, 2, 3];
     println!("{}", arr[0]);
     let [a, b, c] = arr;
-    println!("[{}, {}, {}]", a, b, c);
+    println!("[{a}, {b}, {c}]");
 }
 ```
 
@@ -532,12 +532,57 @@ layout: cover
 
 ---
 
-# Statements
-- Statements either *declare* something, or *perform an action*
-- Most things Rust are expressions, not statements
+# Expressions
 
+- Expressions evaluate to a value
+- Includes all control flow such as `if` and `loop`
+- *Block expressions* (`{` and `}`): series of statements ending with an expression
+- Semicolon (`;`) turns any expression into a statement
+
+```rust
+fn main() {
+    let y = {
+        let x = 3;
+        x + 1
+    };
+    println!("{y}"); // 4
+}
+```
+
+---
+
+# Expressions can be everywhere
+
+```rust
+fn check(y: u32) {
+    let x = if y.is_multiple_of(2) {
+        "odd"
+    } else {
+        "even"
+    };
+    println!("{x}");
+}
+```
+
+- The types of both branches of an `if` expression need to be the same
+- Without `else`, that type is the *unit type* `()`
+
+<!--
+- Control flow expressions as a statement do not need to end with a semicolon
+if they return *unit* (`()`)
+- Remember: A block/function can end with an expression, but it needs to have
+the correct type
+-->
+
+
+---
+
+# Statements
+- Statements either *declare* an item, or *perform an action*
+- Most constructs you're used to are expressions in rust, not statements
 
 ## Example statements
+
 ```rust
 println!("{}", 5);
 ```
@@ -557,25 +602,6 @@ fn do_nothing() {}
 ```
 
 </v-click>
-
----
-
-# Expressions
-
-- Expressions evaluate to a value
-- Includes all control flow such as `if` and `loop`
-- *Block expressions* (`{` and `}`): series of statements ending with an expression
-- Semicolon (`;`) turns any expression into a statement
-
-```rust {all|2-5}
-fn main() {
-    let y = {
-        let x = 3;
-        x + 1
-    };
-    println!("{}", y); // 4
-}
-```
 
 ---
 
@@ -615,29 +641,24 @@ no value members has no instances, just as with unit.
 
 ---
 
-# Expressions can be everywhere
+# Closures
 
-```rust {all|5,7|all}
-fn main() {
-    let mut y = 11;
-    // if as an expression
-    let x = if y.is_multiple_of(2) {
-        "odd"
-    } else {
-        "even"
-    };
-}
+A closure is an inline function definition.
+
+```rust
+let add_one = |x| x + 1;
+
+assert_eq!(add_one(1), 2);
 ```
 
-- The types of both branches of an `if` expression need to be the same
-- Without `else`, that type is the *unit type* `()`
+It can capture values from its environment
 
-<!--
-- Control flow expressions as a statement do not need to end with a semicolon
-if they return *unit* (`()`)
-- Remember: A block/function can end with an expression, but it needs to have
-the correct type
--->
+```rust
+let n = 5;
+let add_n = |x| x + n;
+
+assert_eq!(add_n(1), 6);
+```
 
 ---
 
@@ -658,8 +679,7 @@ fn main() {
 
 # Scope
 
-As soon as a scope ends, all variables for that scope can be removed from the
-stack
+As soon as a scope ends, all variables for that scope become inaccessible.
 
 ```rust
 fn main() { // nothing in scope here
