@@ -214,25 +214,10 @@ impl<'a> PartialEq<String> for &'a str {
 layout: default
 ---
 
-# Associated types
+# `trait Iterator` 
 
-```rust
-pub trait Iterator {
-    type Item;
 
-    fn next(&mut self) -> Option<Self::Item>;
-
-    // 75 provided methods
-}
-```
-
-https://doc.rust-lang.org/std/iter/trait.Iterator.html
-
----
-layout: default
----
-
-Iterator make `for`-loops work
+The `Iterator` trait makes `for`-loops work
 
 
 ```rust
@@ -250,6 +235,24 @@ loop {
     }
 }
 ```
+
+---
+
+# `trait Iterator` 
+
+```rust
+pub trait Iterator {
+    type Item;
+
+    fn next(&mut self) -> Option<Self::Item>;
+
+    // 75 provided methods
+}
+```
+
+Traits can have *associated types* (and associated `const` items too).
+
+https://doc.rust-lang.org/std/iter/trait.Iterator.html
 
 ---
 layout: default
@@ -304,11 +307,10 @@ layout: default
 
 *Coherence: There must be **at most one** implementation of a trait for any given type*
 
-Trait can be implemented for a type **iff**:
-- Either your crate defines the trait
-- Or your crate defines the type
-
-Or both, of course
+You can `impl Trait for T` if *either*: 
+ 
+- your crate defines the trait `Trait` 
+- your crate defines the type `T`
 
 ---
 layout: section
@@ -354,13 +356,19 @@ struct MyCounter {
   count: u32,
 }
 
-// Or, implement it
 impl Default for MyCounter {
   fn default() -> Self {
-    MyCounter {
-      count: 1, // If you feel so inclined
-    }
+    // If you feel so inclined
+    MyCounter { count: 1 }
   }
+}
+
+#[derive(Default)]
+enum Color { 
+    #[default]
+    Red,
+    Green,
+    Blue,
 }
 ```
 
@@ -405,6 +413,7 @@ pub trait Into<T>: Sized {
     fn into(self) -> T;
 }
 
+// An generic implementation like this is called a *blanket implementation*.
 impl <T, U> Into<U> for T
   where U: From<T>
 {
@@ -414,9 +423,7 @@ impl <T, U> Into<U> for T
 }
 ```
 
-- Blanket implementation
-
-*Prefer `From` over `Into` if orphan rule allows to*
+*Prefer `From` over `Into`*
 
 ---
 layout: default
@@ -438,12 +445,19 @@ pub trait AsMut<T: ?Sized>
 - Provide flexibility to API users
 - `T` need not be `Sized`, e.g. slices `[T]` can implement `AsRef<T>`, `AsMut<T>`
 
+```rust
+/// Reads the entire contents of a file into a bytes vector.
+pub fn read<P: AsRef<Path>>(path: P) -> Result<Vec<u8>> { /* ... */ }
+```
+
+https://doc.rust-lang.org/std/fs/fn.read.html
+
 ---
 layout: default
 ---
-# Reference conversion: `AsRef<T>` & `AsMut<T>` (2)
+# Reference conversion: `AsRef<T>` & `AsMut<T>`
 
-```rust{all|1-2|10-11|13-14}
+```rust
 fn print_bytes<T: AsRef<[u8]>>(slice: T) {
   let bytes: &[u8] = slice.as_ref();
   for byte in bytes {
@@ -462,6 +476,8 @@ fn main() {
 ```
 
 *Have user of `print_bytes` choose between stack local `[u8; N]` and heap-allocated `Vec<u8>`*
+
+<!-- note about code size? -->
 
 ---
 layout: default
@@ -610,7 +626,8 @@ error[E0106]: missing lifetime specifier
 2 | fn longer(a: &str, b: &str) -> &str {
   |              ----     ----     ^ expected named lifetime parameter
   |
-  = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `a` or `b`
+  = help: this function's return type contains a borrowed value, but the signature does not
+          say whether it is borrowed from `a` or `b`
 help: consider introducing a named lifetime parameter
   |
 2 | fn longer<'a>(a: &'a str, b: &'a str) -> &'a str {
@@ -645,7 +662,7 @@ English:
 
 *Note: Annotations do NOT change the lifetime of variables! Their scopes do!*
 
-They just provide information for the borrow checker
+Annotations just provide information for the borrow checker
 
 ---
 layout: default
