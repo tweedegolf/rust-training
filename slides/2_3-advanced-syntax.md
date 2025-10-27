@@ -142,7 +142,7 @@ enum IpAddressType {
 * Each variant is an alternative value of the enum, you pick a single value to
   create an instance
 * Each variant has a discriminant (hidden by default)
-  * a numeric value (`isize` by default, can be changed by using `#[repr(numeric_type)]`) used to determine the variant that the enumeration holds 
+  * a numeric value (`isize` by default, can be changed by using `#[repr(numeric_type)]`) used to determine the variant that the enumeration holds
   * one cannot rely on the fact that the discriminant is an `isize`, the compiler may always decide to optimize it
 
 </v-click>
@@ -164,7 +164,7 @@ Enums get more powerful, because each variant can have associated data with
 it
 
 ```rust
-enum IpAddress { 
+enum IpAddress {
   Ipv4(u8, u8, u8, u8),                           // = 0 (default discriminant)
   Ipv6(u16, u16, u16, u16, u16, u16, u16, u16),   // = 1 (default discriminant)
 }
@@ -231,7 +231,8 @@ fn accept_ipv4(ip: IpAddress) {
 ---
 
 # Match
-Pattern matching is very powerful if combined with the match statement
+
+Pattern matching is very powerful if combined with `match`
 
 ```rust
 fn accept_home(ip: IpAddress) {
@@ -249,16 +250,16 @@ fn accept_home(ip: IpAddress) {
 }
 ```
 
-* Every part of the match is called an arm
-* A match is exhaustive, meaning all possible values must be handled by one of
-  the match arms
-* You can use a catch-all `_` arm to catch any remaining cases if there are any
-  left
+* the body of a `match` contains one or more *arm*s
+* arms are evaluated from top to bottom
+* the patterns must be exhaustive: every possible value must be matched by an arm
+* You can use a catch-all `_` arm to catch any remaining cases
 
 ---
 
 # Match as an expression
-The match statement can even be used as an expression
+
+A `match` evaluates to a value:
 
 ```rust
 fn get_first_byte(ip: IpAddress) {
@@ -270,9 +271,10 @@ fn get_first_byte(ip: IpAddress) {
 }
 ```
 
-* The match arms can return a value, but their types have to match
+* The match arms can evaluate to a value, but their types have to match
 * Note how here we do not need a catch all (`_ =>`) arm because all cases have
   already been handled by the two arms
+
 ---
 layout: section
 ---
@@ -309,7 +311,7 @@ enum IpAddress {
 impl IpAddress {
   fn as_u32(&self) -> Option<u32> {
     match self {
-      IpAddress::Ipv4(a, b, c, d) => Some(a << 24 + b << 16 + c << 8 + d),
+      IpAddress::Ipv4(a, b, c, d) => Some(u32::from_le_bytes([a, b, c, d])),
       _ => None,
     }
   }
@@ -548,11 +550,13 @@ fn divide(x: i64, y: i64) -> Option<i64> {
 }
 ```
 
+https://doc.rust-lang.org/std/primitive.i64.html#method.checked_div
+
 ---
 
 # Result
-Another really powerful enum is the result, which is even more useful if we
-think about error handling
+
+A `Result` provides a reason for the failure:
 
 ```rust
 enum Result<T, E> {
@@ -562,17 +566,15 @@ enum Result<T, E> {
 
 enum DivideError {
   DivisionByZero,
-  CannotDivideOne,
+  Overflow
 }
 
 fn divide(x: i64, y: i64) -> Result<i64, DivideError> {
-  if x == 1 {
-    Err(DivideError::CannotDivideOne)
-  } else if y == 0 {
-    Err(DivideError::DivisionByZero)
-  } else {
-    Ok(x / y)
-  }
+    match y { 
+        0 => Err(DivideError::DivisionByZero),
+        -1 if x == i64::MIN => Err(DivideError::Overflow),
+        _ => Ok(x / y),
+    }
 }
 ```
 
@@ -585,8 +587,8 @@ we handle that error at the call-site
 ```rust
 fn div_zero_fails() {
   match divide(10, 0) {
-    Ok(div) => println!("{}", div),
-    Err(e) => panic!("Could not divide by zero"),
+    Ok(div) => println!("{div}"),
+    Err(e) => panic!("invalid operands"),
   }
 }
 ```
@@ -612,7 +614,7 @@ to help you for both `Option` and `Result`:
 ```rust
 fn div_zero_fails() {
   let div = divide(10, 0).unwrap();
-  println!("{}", div);
+  println!("{div}");
 }
 ```
 
@@ -633,7 +635,7 @@ to help you for both `Option` and `Result`:
 ```rust
 fn div_zero_fails() {
   let div = divide(10, 0).unwrap_or(-1);
-  println!("{}", div);
+  println!("{div}");
 }
 ```
 
@@ -704,7 +706,7 @@ fn can_fail() -> Result<i64, DivideError> {
 layout: section
 ---
 
-# `Vec`
+# Data Structures 
 
 ---
 
@@ -950,11 +952,12 @@ Using ranges
 fn sum(data: &[i32]) -> i32 { /* ... */ }
 
 fn main() {
-  let v = vec![0, 1, 2, 3, 4, 5, 6];
+  let v = vec![0, 1, 2, 3, 4, 5, 6, 7];
   let all = sum(&v[..]);
   let except_first = sum(&v[1..]);
   let except_last = sum(&v[..5]);
   let except_ends = sum(&v[1..5]);
+  let middle = sum(&v[4..][..4]);
 }
 ```
 
@@ -1034,6 +1037,8 @@ fn main() {
   }
 }
 ```
+
+https://doc.rust-lang.org/std/string/struct.String.html
 
 ---
 
@@ -1193,6 +1198,29 @@ struct Node {
   sized dynamically, but even so, a vector can be large, whereas an array will
   generally always have a limited size
 -->
+
+---
+
+# `HashMap` and `HashSet`
+
+```rust
+use std::collections::HashMap;
+
+let mut map = HashMap::new();
+map.insert(1, "a");
+assert_eq!(map.contains_key(&1), true);
+assert_eq!(map.contains_key(&2), false);
+```
+
+And other collections:
+
+- Sequences: `Vec`, `VecDeque`, `LinkedList`
+- Maps: `HashMap`, `BTreeMap`
+- Sets: `HashSet`, `BTreeSet`
+- Misc: `BinaryHeap`
+
+
+---
 
 # Practice time!
 
