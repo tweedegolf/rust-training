@@ -77,7 +77,7 @@ Installation instructions can be found here: <https://marketplace.visualstudio.c
 
 More info:
 - <https://rust-analyzer.github.io/>
-- <https://code.visualstudio.com/learn/collaboration/live-share>
+- [Live Share](http://aka.ms/vsls)
 
 ### Tip
 
