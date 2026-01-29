@@ -67,6 +67,15 @@ DNA_TO_AMINO = {
     "TGG": "W",
 }
 
+CRAB_SOURCE = """
+The following sequence is from:
+
+Miller AD, Murphy NP, Burridge CP, Austin CM.
+Complete mitochondrial DNA sequences of the decapod crustaceans Pseudocarcinus gigas (Menippidae) and Macrobrachium rosenbergii (Palaemonidae).
+Mar Biotechnol (NY). 2005 Jul-Aug;7(4):339-49. doi: 10.1007/s10126-004-4077-8. PMID: 15902543.
+https://pubmed.ncbi.nlm.nih.gov/15902543/
+"""
+
 CRAB = """
 ATGCAACGATGATTCTTTTCTACAAATCATAAAGACATTGGTACATTATATTTTATTTTTGGAGCATGAG
 CTGGGATAGTAGGCACATCCTTAAGATTAATTATCCGAGCCGAACTAGGTCAACCAGGAACTCTTATTGG
