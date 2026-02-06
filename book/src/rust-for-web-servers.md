@@ -8,7 +8,7 @@ In this exercise, we will build a simple web server with [`axum`](https://lib.rs
 ### 5.1.1.A Hello axum
 In `exercises/5-rust-for-web/1-rust-for-web/1-lettuce-crop` we have set up the start of our web server. It currently only serves "Hello, world!" for GET requests on the main page. Run the program and go to [http://[::]:7000/](http://[::]:7000/) in your browser to see if it works.
 
-Note that [http://[::]:7000/](http://[::]:7000/) is the default address for [IPv6](https://en.wikipedia.org/wiki/IPv6). If you do not want to use IPv6, you can use [http://0.0.0.0:7000/](http://0.0.0.0:7000/) instead. The website will also be available on local host, see for example [http://localhost:7000/](http://localhost:7000/), [http://127.0.0.1:7000/](http://127.0.0.1:7000/), or [http://[::1]:7000/](http://[::1]:7000/) (IPv6).
+Note that [http://[::]:7000/](http://[::]:7000/) is an unspecified wildcard address for [IPv6](https://en.wikipedia.org/wiki/IPv6). If you want to use IPv4, you can use [http://0.0.0.0:7000/](http://0.0.0.0:7000/) instead. If you only want to host it on localhost, use [http://127.0.0.1:7000/](http://127.0.0.1:7000/) or [http://[::1]:7000/](http://[::1]:7000/) instead.
 
 In `main.rs` you can see the `Router` that is used to serve "Hello, world!". We can chain multiple routes to serve multiple end-points. Try adding a second route which serves GET requests on another page (e.g. `/hello`).
 
