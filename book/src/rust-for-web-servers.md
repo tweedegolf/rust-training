@@ -3,7 +3,7 @@
 <a href="/slides/5_1-rust-for-web/" target="_blank">Slides</a>
 
 ## Exercise 5.1.1: Lettuce Crop
-In this exercise, we will build a simple web server with [`axum`](https://lib.rs/crates/axum) which allows users to upload images to crop them. You will learn how to serve static HTML pages along with their associated style sheets and images, and you will learn how to handle POST requests with multipart form data to receive the uploaded images.
+In this exercise, we will build a simple web server with [`axum`](https://docs.rs/axum/) which allows users to upload images to crop them. You will learn how to serve static HTML pages along with their associated style sheets and images, and you will learn how to handle POST requests with multipart form data to receive the uploaded images.
 
 ### 5.1.1.A Hello axum
 In `exercises/5-rust-for-web/1-rust-for-web/1-lettuce-crop` we have set up the start of our web server. It currently only serves "Hello, world!" for GET requests on the main page. Run the program and go to [http://[::]:7000/](http://[::]:7000/) in your browser to see if it works.
