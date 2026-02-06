@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Lettuce Crop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="styles.css">
+    <link rel="shortcut icon" type="image/webp" href="crop.webp" />
+</head>
+
+<body>
+    <header>
+        <div><img src="crop.webp" alt="lettuce crop" class="logo"></div>
+        <hgroup>
+            <h1>Lettuce Crop</h1>
+            <p>Upload an image to make it square!</p>
+        </hgroup>
+    </header>
+    </div>
+    <form>
+        <p class="box">
+            <label for="image">Choose an image to crop:</label>
+            <input type="file" name="image" id="image" required
+                accept="image/png, image/jpeg, image/bmp, image/gif, image/webp">
+        </p>
+        <p>
+            <label for="max_size">Max size:</label>
+            <input type="number" name="max_size" id="max_size" min="1" max="2048" value="512" required>
+            <span class="divider">—</span>
+            <input type="submit" value="Crop!">
+        </p>
+    </form>
+</body>
+
+</html>
