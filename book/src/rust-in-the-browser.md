@@ -20,7 +20,7 @@ wasm-pack build --target web --out-dir assets/pkg
 Now, a bunch of files should appear in the `assets/pkg` folder:
 - A `.wasm` file, which contains the compiled WebAssembly code
 - Some `.d.ts` files, which describe the TypeScript types of the generated bindings
-- A `.js` files, which contains the JavaScript bindings for our WebAssembly binary
+- A `.js` file, which contains the JavaScript bindings for our WebAssembly binary
 
 ### 5.3.1.B Interacting with JavaScript
 So what functionality does the compiled WebAssembly currently include? In `lib.rs` you can see two functions: an extern `alert()` function, and a `hello()` function. Both of these functions have been annotated with `#[wasm_bindgen]` to indicate that we want to bind them with WebAssembly. Extern functions will be bound to existing JavaScript methods, in this case the [window's `alert()` function](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) which shows a popup dialog.

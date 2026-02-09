@@ -102,7 +102,7 @@ For example, let's say the user uploads a corrupted image. Then, the `.decode()`
 
 Similarly, you can also add appropriate error handling in other places, returning appropriate [HTTP status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status).
 
-Currently, our the size of our cropped image is defined as the minimum of the original image's width and height, and the set `max_size` value. The `max_size` value has a maximum of 2048 set in the HTML form. However, you should never trust the data coming from the client-side as HTML and JavaScript code running on the client's device can easily be modified, and the client can send modified HTTP requests. So let's also return a `StatusCode::BAD_REQUEST` if `max_size` is larger than 2048.
+Currently, the size of our cropped image is defined as the minimum of the original image's width and height, and the set `max_size` value. The `max_size` value has a maximum of 2048 set in the HTML form. However, you should never trust the data coming from the client-side as HTML and JavaScript code running on the client's device can easily be modified, and the client can send modified HTTP requests. So let's also return a `StatusCode::BAD_REQUEST` if `max_size` is larger than 2048.
 
 By default, there is a 2 MB limit for request bodies. If a user submits an image larger than this limit, the `.bytes()` call on the multipart field will return an error. In this case, we could return a `StatusCode::PAYLOAD_TOO_LARGE`. If you want to accept larger images, you can configure a larger limit by setting a custom [`DefaultBodyLimit`](https://docs.rs/axum/latest/axum/extract/struct.DefaultBodyLimit.html).
 
