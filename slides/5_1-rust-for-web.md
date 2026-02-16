@@ -111,6 +111,6 @@ layout: default
 
 &nbsp;
 
-Unit 5.1 exercise description: [training.tweede.golf](https://training.tweede.golf/rust-for-web.html)
+Unit 5.1 exercise description: [training.tweede.golf](https://training.tweede.golf/rust-for-web-servers.html)
 
 *Don't forget to* `git pull`!
