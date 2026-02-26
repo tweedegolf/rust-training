@@ -146,9 +146,8 @@ Go ahead and modify the handler to use a router with a couple of different route
 
 
 ### 5.2.2.D Serving files from serverless functions
-To be able to host Lettuce Crop on a Scaleway serverless function, we need to be able to serve the static assets for the website. Normally, we could use `ServeDir` for this, but Scaleway's serverless function don't have access to files during runtime. Instead, we can include the files in the binary using memory-serve, as described in [exercise 5.1.1.G](/rust-for-web-servers.html#511g-serving-files-from-memory-bonus).
+To be able to host Lettuce Crop on a Scaleway serverless function, we need to be able to serve the static assets for the website. Normally, we could use `ServeDir` for this, but Scaleway's serverless function don't have access to files during runtime. Instead, we can include the files in the binary using memory-serve, as described in [exercise 5.1.1.G](./rust-for-web-servers.md#511g-serving-files-from-memory-bonus).
 
 Copy over the `assets` folder and the `crop_image` function from exercise 5.1.1, and configure the router to crop images sent with POST requests to `/crop`, and serve the assets using memory-serve as a fallback service. If you now redeploy your code (don't forget to also include the `assets` folder in the zip), we should now have a fully working version of Lettuce Crop on Scaleway!
 
 > Note that in real world applications, it is better (and cheaper!) to host the static parts of the webpage separately using e.g. [storage buckets](https://www.scaleway.com/en/docs/object-storage/api-cli/bucket-website-api/), and only handle the interactive part (i.e. the post requests to crop images) in the serverless function.
-
