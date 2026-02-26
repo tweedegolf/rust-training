@@ -19,12 +19,12 @@ We will also need to update our addition and dot product implementations to supp
 
 <details>
     <summary><b>Hint 1 (generic implementations with trait bounds)</b></summary>
-    You can add a generic type to an `impl` block by writing `impl<T>`. This generic type can be bound to a trait by writing e.g. `impl<T: Display>` to specify that type `T` must have the `Display` trait (which you can also write as `impl<T> ... where T: Display`). You can add multiple trait bounds to a type by writing e.g. `impl<T: Clone + Display>`.
+    You can add a generic type to an `impl` block by writing `impl&lt;T&gt;`. This generic type can be bound to a trait by writing e.g. `impl&lt;T: Display&gt;` to specify that type `T` must have the `Display` trait (which you can also write as `impl&lt;T&gt; ... where T: Display`). You can add multiple trait bounds to a type by writing e.g. `impl&lt;T: Clone + Display&gt;`.
 </details>
 
 <details>
     <summary><b>Hint 2 (the `Add` and `Mul` traits)</b></summary>
-    The `Add` and `Mul` traits have a generic `Output` type. This allowed us to implement the dot product as the `Mul` trait of `Vec2D` by setting the output to be a number. For our generic implementation, we want the generic type `T` to be something we can add and/or multiply. To specify this, we add `Add` and/or `Mul` trait bounds to `T`, but we also need to specify what output we expect from adding or multiplying two `T` values by writing e.g. `T: Add<Output = T>`.
+    The `Add` and `Mul` traits have a generic `Output` type. This allowed us to implement the dot product as the `Mul` trait of `Vec2D` by setting the output to be a number. For our generic implementation, we want the generic type `T` to be something we can add and/or multiply. To specify this, we add `Add` and/or `Mul` trait bounds to `T`, but we also need to specify what output we expect from adding or multiplying two `T` values by writing e.g. `T: Add&lt;Output = T&gt;`.
 </details>
 
 Uncomment the `float_addition` and `float_dot_product` tests to check if our `Vec2D` now works with floating-point values!
