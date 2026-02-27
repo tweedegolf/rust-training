@@ -1,6 +1,15 @@
+exclude_all_private = true
 exclude = [
     '^https://www.st.com/resource/en/datasheet/lsm303agr.pdf$',
     '^https://lib.rs/$', # lib.rs is blocking access from GitHub actions
     '^http://0.0.0.0',
     '^http://\[::\]',
 ]
+exclude_path = [
+    "exercises/5-rust-for-web/1-rust-for-web-servers/1-lettuce-crop/assets/index.html",
+]
+remap = [
+    '(file://.*)/slides/(.*) $1/slides/$2.md',
+    '(file://.*)/images/(.*) $1/slides/images/$2',
+]
+root_dir = './'

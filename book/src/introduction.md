@@ -31,6 +31,6 @@ Studying on your own is good, but being guided through an interactive tailor-mad
 
 For all testimonials, an introduction of our expert trainers, and more information about the programs we offer, please refer to [our professional training page](https://tweedegolf.nl/en/expertise/rust/workshops).
 
-<p><br><p>
+<p><br></p>
 
 ![Tweede golf logo](tweedegolf-logo.svg)
