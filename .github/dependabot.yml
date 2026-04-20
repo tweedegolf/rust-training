@@ -2,6 +2,7 @@ version: 2
 updates:
   - package-ecosystem: "cargo"
     directories:
+      - "/exercises/1-course-introduction/1-introduction/2-embedded"
       - "/exercises/5-rust-for-web/1-rust-for-web-servers/1-lettuce-crop"
       - "/exercises/5-rust-for-web/2-rust-in-the-cloud/2-lettuce-crop-scaleway"
       - "/exercises/5-rust-for-web/3-rust-in-the-browser/1-lettuce-crop-wasm"
