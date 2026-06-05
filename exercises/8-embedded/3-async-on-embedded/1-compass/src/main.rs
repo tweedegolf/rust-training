@@ -28,7 +28,15 @@ async fn main(s: embassy_executor::Spawner) -> ! {
     rprintln!("Starting");
 
     let config = twim::Config::default();
-    let twim0 = Twim::new(dp.TWISPI0, Irqs, dp.P0_16, dp.P0_08, config);
+    let mut twim_tx_buf = [0; 64];
+    let twim0 = Twim::new(
+        dp.TWISPI0,
+        Irqs,
+        dp.P0_16,
+        dp.P0_08,
+        config,
+        &mut twim_tx_buf,
+    );
     let delay = embassy_time::Delay;
 
     let dial = Dial::new(
@@ -36,7 +44,7 @@ async fn main(s: embassy_executor::Spawner) -> ! {
         dp.P0_30,
     );
 
-    let mut sensor: Lsm303agr<I2cInterface<Twim<TWISPI0>>, MagOneShot> =
+    let mut sensor: Lsm303agr<I2cInterface<Twim>, MagOneShot> =
         todo!("Initialize LSM303AGR driver given the twim0 peripheral");
 
     todo!("Initialize the driver");

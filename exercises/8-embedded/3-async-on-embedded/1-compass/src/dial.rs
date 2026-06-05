@@ -1,8 +1,11 @@
 #![allow(dead_code)]
 
 use embassy_futures::select::{select, Either};
-use embassy_nrf::gpio::{self, Pin};
-use embassy_sync::{blocking_mutex::raw::NoopRawMutex, once_lock::OnceLock};
+use embassy_nrf::{
+    gpio::{self, AnyPin, Pin},
+    Peri,
+};
+use embassy_sync::{blocking_mutex::raw::ThreadModeRawMutex, once_lock::OnceLock};
 use lsm303agr::MagneticField;
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -85,17 +88,17 @@ impl From<MagneticField> for Direction {
         Self::from_xy(x, y)
     }
 }
-type Row1Pin = embassy_nrf::peripherals::P0_21;
-type Row2Pin = embassy_nrf::peripherals::P0_22;
-type Row3Pin = embassy_nrf::peripherals::P0_15;
-type Row4Pin = embassy_nrf::peripherals::P0_24;
-type Row5Pin = embassy_nrf::peripherals::P0_19;
+type Row1Pin = Peri<'static, embassy_nrf::peripherals::P0_21>;
+type Row2Pin = Peri<'static, embassy_nrf::peripherals::P0_22>;
+type Row3Pin = Peri<'static, embassy_nrf::peripherals::P0_15>;
+type Row4Pin = Peri<'static, embassy_nrf::peripherals::P0_24>;
+type Row5Pin = Peri<'static, embassy_nrf::peripherals::P0_19>;
 
-type Col1Pin = embassy_nrf::peripherals::P0_28;
-type Col2Pin = embassy_nrf::peripherals::P0_11;
-type Col3Pin = embassy_nrf::peripherals::P0_31;
-type Col4Pin = embassy_nrf::peripherals::P1_05;
-type Col5Pin = embassy_nrf::peripherals::P0_30;
+type Col1Pin = Peri<'static, embassy_nrf::peripherals::P0_28>;
+type Col2Pin = Peri<'static, embassy_nrf::peripherals::P0_11>;
+type Col3Pin = Peri<'static, embassy_nrf::peripherals::P0_31>;
+type Col4Pin = Peri<'static, embassy_nrf::peripherals::P1_05>;
+type Col5Pin = Peri<'static, embassy_nrf::peripherals::P0_30>;
 
 pub struct Dial {
     rows: [gpio::Output<'static>; 5],
@@ -118,19 +121,19 @@ impl Dial {
         col_5: Col5Pin,
     ) -> Self {
         let rows = [
-            row_1.degrade(),
-            row_2.degrade(),
-            row_3.degrade(),
-            row_4.degrade(),
-            row_5.degrade(),
+            row_1.into::<AnyPin>(),
+            row_2.into::<AnyPin>(),
+            row_3.into::<AnyPin>(),
+            row_4.into::<AnyPin>(),
+            row_5.into::<AnyPin>(),
         ]
         .map(|pin| gpio::Output::new(pin, gpio::Level::Low, gpio::OutputDrive::Standard));
         let cols = [
-            col_1.degrade(),
-            col_2.degrade(),
-            col_3.degrade(),
-            col_4.degrade(),
-            col_5.degrade(),
+            col_1.into::<AnyPin>(),
+            col_2.into::<AnyPin>(),
+            col_3.into::<AnyPin>(),
+            col_4.into::<AnyPin>(),
+            col_5.into::<AnyPin>(),
         ]
         .map(|pin| gpio::Output::new(pin, gpio::Level::High, gpio::OutputDrive::Standard));
 
@@ -159,7 +162,7 @@ impl Dial {
     /// Useful for exercise 8.1.2
     pub async fn run(
         mut self,
-        receiver: embassy_sync::channel::Receiver<'_, NoopRawMutex, Direction, 4>,
+        receiver: embassy_sync::channel::Receiver<'_, ThreadModeRawMutex, Direction, 4>,
     ) -> ! {
         use embassy_time::{Duration, Ticker};
         let mut ticker = Ticker::every(Duration::from_millis(500));
@@ -190,11 +193,11 @@ impl Dial {
 /// Sets up a channel over which [Direction]s can be sent and received.
 /// Useful for exercise 8.1.2
 pub fn dir_channel() -> (
-    embassy_sync::channel::Receiver<'static, NoopRawMutex, Direction, 4>,
-    embassy_sync::channel::Sender<'static, NoopRawMutex, Direction, 4>,
+    embassy_sync::channel::Receiver<'static, ThreadModeRawMutex, Direction, 4>,
+    embassy_sync::channel::Sender<'static, ThreadModeRawMutex, Direction, 4>,
 ) {
     static DIR_CHANNEL: embassy_sync::once_lock::OnceLock<
-        embassy_sync::channel::Channel<NoopRawMutex, Direction, 4>,
+        embassy_sync::channel::Channel<ThreadModeRawMutex, Direction, 4>,
     > = OnceLock::new();
 
     let chan = DIR_CHANNEL.get_or_init(|| embassy_sync::channel::Channel::new());
