@@ -247,6 +247,6 @@ Datasheets, manuals, and schematics of the parts we are using in the embedded wo
 - [Hardware doc](https://tech.microbit.org/hardware/schematic/)
 - [Schematic](https://github.com/microbit-foundation/microbit-v2-hardware/blob/main/V2.21/MicroBit_V2.2.1_nRF52820%20schematic.PDF)
 ### nRF52833
-- [nRF52833 product specification](https://infocenter.nordicsemi.com/pdf/nRF52833_PS_v1.6.pdf)
+- [nRF52833 product specification](https://docs.nordicsemi.com/r/bundle/ps_nrf52833/page/keyfeatures_html5.html)
 ### LSM303AGR
 - [Datsheet](https://www.st.com/resource/en/datasheet/lsm303agr.pdf)
