@@ -10,26 +10,26 @@ crate-type = ["cdylib", "lib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-heapless = { version = "0.8.0", features = ["serde"] }
-nalgebra = { version = "0.32.4", default-features = false }
-serde = { version = "1.0.207", features = ["derive"] }
-serde_json = "1.0.125"
-futures = "0.3.30"
-crossbeam-queue = "0.3.11"
-pin-project = "1.1.5"
-pychan = "0.1.0"
+heapless = { version = "0.9.3", features = ["serde"] }
+nalgebra = { version = "0.35.0", default-features = false }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+futures = "0.3.34"
+crossbeam-queue = "0.3.14"
+pin-project = "1.1.13"
+pychan = "0.2.0"
 
 struson = { git = "https://github.com/hdoordt/struson.git", branch = "async-read-write" }
 
 [dependencies.pyo3]
-version = "0.21.2"
+version = "0.22"
 features = ["extension-module"]
 
 [dev-dependencies]
-futures-time = "3.0.0"
-nalgebra = { version = "0.32.4", default-features = false, features = [
+futures-time = "3.1.0"
+nalgebra = { version = "0.35.0", default-features = false, features = [
     "macros",
 ] }
-tokio = { version = "1.36.0", features = ["full"] }
-tokio-util = { version = "0.7.10", features = ["compat"] }
+tokio = { version = "1.54.1", features = ["full"] }
+tokio-util = { version = "0.7.20", features = ["compat"] }
 

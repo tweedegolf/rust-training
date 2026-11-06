@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 
-use rand::Rng;
+use rand::RngExt;
 
 pub struct Printer3D<S> {
     _marker: PhantomData<S>
@@ -19,6 +19,6 @@ pub enum ProductReadyState {}
 
 /// Check if we're out of filament
 fn out_of_filament() -> bool {
-    let rand: usize = rand::thread_rng().gen_range(0..100);
+    let rand: usize = rand::rng().random_range(0..100);
     rand > 95
 }

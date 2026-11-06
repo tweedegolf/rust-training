@@ -3,8 +3,8 @@ use std::net::IpAddr;
 use anyhow::{anyhow, Context};
 use clap::{arg, Parser};
 use data_sink::{KeepAlive, Measurement, Mood};
-use rand::distributions::{Bernoulli, Open01, Uniform};
-use rand::{thread_rng, Rng};
+use rand::distr::{Bernoulli, Open01, Uniform};
+use rand::RngExt;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader, Lines};
 use tokio::net::tcp::{ReadHalf, WriteHalf};
 use tokio::signal::ctrl_c;
@@ -208,12 +208,12 @@ async fn handle_keep_alive(
 }
 
 fn measure(id: usize) -> Measurement {
-    let mut rng = thread_rng();
+    let mut rng = rand::rng();
 
     Measurement {
         node_id: id,
         room_id: id % 256,
-        temperature: rng.sample(Uniform::new(15.0, 25.0)),
+        temperature: rng.sample(Uniform::new(15.0, 25.0).unwrap()),
         rel_humidity: rng.sample(Open01),
         fires: if rng.sample(Bernoulli::new(0.01).unwrap()) {
             1

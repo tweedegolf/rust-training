@@ -8,4 +8,4 @@ edition = "2024"
 [features]
 
 [dependencies]
-ntest = "0.9.3"
+ntest = "0.10.0"

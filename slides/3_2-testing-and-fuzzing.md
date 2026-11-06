@@ -134,6 +134,7 @@ pub fn increment_or_die(x: u32) -> u32 {
 ```
 
 <v-click>
+
 In `fuzz_targets/findcrash.rs`:
 ```rust
 use example::increment_or_die;
@@ -144,11 +145,14 @@ fuzz_target!(|data: u32| {
 ```
 
 <v-click>
+
 Then run:
 ```bash
 cargo +nightly fuzz run findcrash
 ```
+
 </v-click>
+
 </v-click>
 
 ---
