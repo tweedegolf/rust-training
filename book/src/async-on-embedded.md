@@ -12,6 +12,6 @@ Using the `lsm303agr` driver, implement a compass. You can use the `dial` module
 *Compiling the starter code yields a bunch of warnings. They'll be gone once your done.*
 
 ## Exercise 8.3.2: Blinky compass
-The [channel sender - receiver example](https://github.com/embassy-rs/embassy/blob/main/examples/nrf52840/src/bin/channel_sender_receiver.rs) in the embassy repository shows how to spawn separate tasks, and how to use channels to communicate between tasks. Using that knowledge, make the indicator LED in the `dial` module blink while magnetometer measurements are taken at the same time.
+The [channel sender - receiver example](https://github.com/embassy-rs/embassy/blob/embassy-nrf-v0.11.0/examples/nrf52840/src/bin/channel_sender_receiver.rs) in the embassy repository shows how to spawn separate tasks, and how to use channels to communicate between tasks. Using that knowledge, make the indicator LED in the `dial` module blink while magnetometer measurements are taken at the same time.
 
 As we're not using `defmt` in this exercise, replace the `unwrap!(<expr>)` macro invocations with `<expr>.unwrap()` calls.

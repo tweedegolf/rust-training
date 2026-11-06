@@ -8,9 +8,9 @@ name = "hello_py"              # Name of your module
 crate-type = ["cdylib", "lib"] # Usable from outside as well as from Rust
 
 [dependencies]
-futures-lite = "2.3.0"
-num = "0.4.1"
+futures-lite = "2.6.1"
+num = "0.4.3"
 
 [dependencies.pyo3]
-version = "0.21.2"
+version = "0.30.1"
 features = ["extension-module", "num-bigint", "experimental-async"]

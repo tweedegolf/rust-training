@@ -307,7 +307,7 @@ layout: with-footer
 
 # Blinky 💡
 
-<a href="https://github.com/embassy-rs/embassy/blob/main/examples/nrf52840/src/bin/blinky.rs" target="_blank">
+<a href="https://github.com/embassy-rs/embassy/blob/embassy-nrf-v0.11.0/examples/nrf52840/src/bin/blinky.rs" target="_blank">
 
 ```rust{all|9-10|16,18|all}
 #![no_std]
@@ -340,7 +340,7 @@ layout: with-footer
 
 # `#[embassy_executor::task]` & [`Channel`](https://docs.rs/embassy-sync/latest/embassy_sync/channel/struct.Channel.html)
 
-<a href="https://github.com/embassy-rs/embassy/blob/main/examples/nrf52840/src/bin/channel.rs" target="_blank">
+<a href="https://github.com/embassy-rs/embassy/blob/embassy-nrf-v0.11.0/examples/nrf52840/src/bin/channel.rs" target="_blank">
 
 ```rust{all|1,2|11,14|4-7,15-20|all}
 #[embassy_executor::task]

@@ -186,6 +186,7 @@ fn display_length(name: String) {
 <v-click>
 
 <div class="no-line-numbers">
+
 ```text
 Compiling playground v0.0.1 (/playground)
  --> src/main.rs:4:29
@@ -197,6 +198,7 @@ Compiling playground v0.0.1 (/playground)
 4 |     println!("Hello {s1}!");
   |                           ^^ value borrowed here after move
 ```
+
 </div>
 
 </v-click>
@@ -215,6 +217,7 @@ string and the length of the string after the function call.
 # The compiler has a solution!
 
 <div class="no-line-numbers">
+
 ```text
 note: consider changing this parameter type in function `say_hello` to borrow instead
  --> src/main.rs:7:20
@@ -229,6 +232,7 @@ help: consider cloning the value if the performance cost is acceptable
 3 |     display_length(s1.clone());
   |                    ++++++++
 ```
+
 </div>
 
 So, there are two solutions:

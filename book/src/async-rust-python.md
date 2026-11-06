@@ -6,7 +6,7 @@
 
 ### 7.2.1.A: Set up the tools ⭐
 
-Follow the instructions to instal the Maturin build tool: <https://pyo3.rs/v0.21.2/getting-started>. We recommend using pyenv:
+Follow the instructions to instal the Maturin build tool: <https://pyo3.rs/v0.30.1/getting-started>. We recommend using pyenv:
 <https://github.com/pyenv/pyenv>, but pyenv only supports UNIX and WSL. Of course, you can use your favourite venv manager, too.
 
 Navigate to the `exercises/7-rust-for-data-science/1-rust-from-python/1-hello-world/` folder in your terminal. Setup and activate your virtual environment, and install the things we need. If you're using pyenv, that means running the following commands:
@@ -70,7 +70,7 @@ Now, let's say we have a stream of JSON. Could be from someone on the internet o
 
 This JSON is an array of objects that each represent the following:
 - `lhs`: a matrix with `m` rows and `n` columns. `m` can be derived from `n` and the length of `d`. In this case `m = len / n = 12 / 3 = 4`.
-- `op`: a sequence of operations that need to take place given `lhs` and, if the operation takes two operands, its `rhs` field. `x` corresponds to the operation that should be executed, and should more or less correspond to the methods provided on [nalgebra](https://nalgebra.rs/)'s [Matrix](https://docs.rs/nalgebra/0.32.4/nalgebra/base/struct.Matrix.html) type. In this case, the [`Matrix::dot`](https://docs.rs/nalgebra/0.32.4/nalgebra/base/struct.Matrix.html#dotscalar-product) method should be run, which, for probably good reason, is describead as 'the dot product between two vectors or matrices (seen as vectors)'.
+- `op`: a sequence of operations that need to take place given `lhs` and, if the operation takes two operands, its `rhs` field. `x` corresponds to the operation that should be executed, and should more or less correspond to the methods provided on [nalgebra](https://nalgebra.rs/)'s [Matrix](https://docs.rs/nalgebra/0.35.0/nalgebra/base/struct.Matrix.html) type. In this case, the [`Matrix::dot`](https://docs.rs/nalgebra/0.35.0/nalgebra/base/struct.Matrix.html#dotscalar-product) method should be run, which, for probably good reason, is describead as 'the dot product between two vectors or matrices (seen as vectors)'.
 
 Our library should streamingly deserialize each incoming object from an [`asyncio`](https://docs.python.org/3/library/asyncio.html) stream of bytes, apply the given operation, and pass on the result.
 
@@ -81,7 +81,7 @@ The scaffolding code in `exercises/7-rust-for-data-science/1-rust-from-python/2-
 You can run `cargo test` to build and run the tests in `src/lib.rs`.
 
 ### Exercise 7.2.2.B: The sync way ⭐⭐
-During the next exercises, it's good to keep the [PyO3 User Guide](https://pyo3.rs/v0.21.2/) and the [PyO3 API docs](https://docs.rs/pyo3/0.21.2/pyo3/index.html) at hand.
+During the next exercises, it's good to keep the [PyO3 User Guide](https://pyo3.rs/v0.22.6/) and the [PyO3 API docs](https://docs.rs/pyo3/0.22.6/pyo3/index.html) at hand. Note that `strompy` uses PyO3 0.22, as its `pychan` dependency requires that version, while `hello-world` uses the latest PyO3. Some APIs differ, e.g. `Python::with_gil` is called `Python::attach` in recent versions.
 
 This exercise is about making `strompy_test.py` run. Therefore, fix the `todo!()` in the `exec` function in `src/lib.rs`. Don't forget to add the function to the exposed module!
 
@@ -103,10 +103,10 @@ $ python strompy_test_async.py
 ```
 
 ### 7.2.2.C: More features (Bonus) ⭐⭐⭐
-Can you make `strompy` support [more operations from Nalgebra](https://docs.rs/nalgebra/0.32.4/nalgebra/base/struct.Matrix.html)?
+Can you make `strompy` support [more operations from Nalgebra](https://docs.rs/nalgebra/0.35.0/nalgebra/base/struct.Matrix.html)?
 
 ### 7.2.2.D: Tidying up (Bonus) ⭐⭐⭐⭐
-Representing the vectors as `Vec<Vec<f64>>` works, but it's not great. Make the `StrompyJsonReader` produce [`PyResult<Option<Py<PyList>>>`](https://docs.rs/pyo3/0.21.2/pyo3/types/struct.PyList.html)s that constists of `PyList`s instead.
+Representing the vectors as `Vec<Vec<f64>>` works, but it's not great. Make the `StrompyJsonReader` produce [`PyResult<Option<Py<PyList>>>`](https://docs.rs/pyo3/0.22.6/pyo3/types/struct.PyList.html)s that constists of `PyList`s instead.
 
 
-*This is quite a hard exercise, as it involves working with PyO3s smart pointers: [`Py<T>`](https://docs.rs/pyo3/0.21.2/pyo3/struct.Py.html), [`Bound<'py, T>`](https://docs.rs/pyo3/0.21.2/pyo3/struct.Bound.html), and GIL tokens: [`Python`](https://docs.rs/pyo3/0.21.2/pyo3/marker/struct.Python.html)*
+*This is quite a hard exercise, as it involves working with PyO3s smart pointers: [`Py<T>`](https://docs.rs/pyo3/0.22.6/pyo3/struct.Py.html), [`Bound<'py, T>`](https://docs.rs/pyo3/0.22.6/pyo3/struct.Bound.html), and GIL tokens: [`Python`](https://docs.rs/pyo3/0.22.6/pyo3/marker/struct.Python.html)*

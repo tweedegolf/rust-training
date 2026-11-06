@@ -15,10 +15,9 @@ updates:
     schedule:
       interval: "monthly"
     groups:
-      frequent-updaters:
+      cargo-dependencies:
         patterns:
-          - "serde*"
-          - "anyhow"
+          - "*"
   - package-ecosystem: "npm"
     directory: "/slides/"
     schedule:

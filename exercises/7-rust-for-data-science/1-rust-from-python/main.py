@@ -72,8 +72,8 @@ class Sequence:
         return count_kmers(self.sequence, k)
 
 
-# 4. Implement a Rust struct that converts this dataclass from/to Python (https://pyo3.rs/v0.24.2/conversions/traits.html)
-#    Extra: Implement __eq__, __hash__, etc. with minimal code (see https://pyo3.rs/v0.24.2/class.html#customizing-the-class)
+# 4. Implement a Rust struct that converts this dataclass from/to Python (https://pyo3.rs/v0.30.1/conversions/traits.html)
+#    Extra: Implement __eq__, __hash__, etc. with minimal code (see https://pyo3.rs/v0.30.1/class.html#customizing-the-class)
 @dataclass
 class OpenReadingFrame:
     start: int
@@ -82,6 +82,7 @@ class OpenReadingFrame:
 
 
 # 5. Translate these functions to Rust
+#    Tip: to accept a `Sequence` by value, derive `Clone` and use `#[pyclass(from_py_object)]` (or take `PyRef<Sequence>`)
 def decode_orf(sequence: Sequence, start: int) -> OpenReadingFrame:
     sub_seq = str(sequence)[start:]
     decoded = str()

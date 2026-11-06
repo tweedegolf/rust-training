@@ -177,7 +177,7 @@ name = "hello_py"               # Name of your module
 crate-type = ["cdylib", "lib"]  # Usable from outside as well as from Rust
 
 [dependencies.pyo3]
-version = "0.21.0"
+version = "0.30.1"
 features = ["extension-module"]
 ```
 
@@ -215,11 +215,11 @@ $ pip install maturin
 $ maturin develop
 🔗 Found pyo3 bindings
 🐍 Found CPython 3.12 at /home/hd/.pyenv/versions/pyo3/bin/python
-   Compiling pyo3-build-config v0.21.1
-   Compiling pyo3-macros-backend v0.21.1
-   Compiling pyo3-ffi v0.21.1
-   Compiling pyo3 v0.21.1
-   Compiling pyo3-macros v0.21.1
+   Compiling pyo3-build-config v0.30.1
+   Compiling pyo3-macros-backend v0.30.1
+   Compiling pyo3-ffi v0.30.1
+   Compiling pyo3 v0.30.1
+   Compiling pyo3-macros v0.30.1
    Compiling hello-py v0.1.0 (/home/hd/dev/tg/edu/rust-training/exercises/7-rust-for-data-science/1-rust-from-python/1-hello-world)
     Finished dev [unoptimized + debuginfo] target(s) in 6.84s
 📦 Built wheel for CPython 3.12 to /tmp/.tmpWV4WTB/hello_py-0.1.0-cp312-cp312-linux_x86_64.whl
@@ -433,7 +433,7 @@ layout: with-footer
 - Enums
 - Many more magic methods
 
-[Have a look at the docs!](https://pyo3.rs/v0.21.1/class)
+[Have a look at the docs!](https://pyo3.rs/v0.30.1/class)
 
 ---
 layout: with-footer
@@ -534,7 +534,7 @@ Currently in active development
 
 ```toml{all|3}
 [dependencies.pyo3]
-version = "0.21.0"
+version = "0.30.1"
 features = ["extension-module", "experimental-async"]
 ```
 
@@ -594,7 +594,7 @@ async fn does_not_compile<'py>(arg: Bound<'py, PyAny>) -> Bound<'py, PyAny> {
 
 #[pyfunction]
 async fn does_compile(arg: Py<PyAny>) -> Py<PyAny> {
-    Python::with_gil(|py| { // (almost) no-op
+    Python::attach(|py| { // (almost) no-op
         let r: &Bound<'_, PyAny> = arg.bind(py);
 
         todo!()

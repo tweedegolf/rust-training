@@ -1,11 +1,21 @@
 exclude_all_private = true
+# Be gentle so rate limiters do not kick in
+max_concurrency = 8
+max_retries = 3
+retry_wait_time = 10
 exclude = [
     '^https://www.st.com/resource/en/datasheet/lsm303agr.pdf$',
     '^https://lib.rs/$', # lib.rs is blocking access from GitHub actions
+    # These return 403 to anything that is not a browser
+    '^https://docs.nordicsemi.com/',
+    '^https://www.scaleway.com/',
+    '^https://[a-z]+.linkedin.com/',
+    '^https://upload.wikimedia.org/', # rate limits generic clients with 429
     '^http://0.0.0.0',
     '^http://\[::\]',
 ]
 exclude_path = [
+    "book/src/SUMMARY.md", # draft chapters use empty links; mdbook validates the rest
     "exercises/5-rust-for-web/1-rust-for-web-servers/1-lettuce-crop/assets/index.html",
 ]
 remap = [
