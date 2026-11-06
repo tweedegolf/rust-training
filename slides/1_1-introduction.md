@@ -139,10 +139,10 @@ layout: with-footer
   <img class="logo-small" src="https://tweedegolf.nl/images/client-technolution.png" alt="Technolution">
   <img class="logo-smaller" style="width: 75px" src="https://tweedegolf.nl/images/gama-logo2.png" alt="GAMA">
   <br>
-  <img class="logo-small" src="https://tweedegolf.nl/assets/client-ferrous-BiR_kvPj.png" alt="Ferrous">
+  <img class="logo-small" src="https://media.tweedegolf.nl/images/client-ferrous.png" alt="Ferrous">
   <img class="logo-small" src="https://tweedegolf.nl/images/client-isrg.jpg" alt="ISRG">
-  <img class="logo-small" src="https://tweedegolf.nl/assets/client-nlnetlabs-CCcsDspS.png" alt="NLNet">
-  <img class="logo-small" src="https://tweedegolf.nl/assets/client-rustfoundation-Chh3nH12.png" alt="Rust Foundation">
+  <img class="logo-small" src="https://media.tweedegolf.nl/images/client-nlnetlabs.png" alt="NLNet">
+  <img class="logo-small" src="https://media.tweedegolf.nl/images/client-rustfoundation.png" alt="Rust Foundation">
 </center>
 
 ---
