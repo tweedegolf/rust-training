@@ -295,8 +295,9 @@ layout: default
 - Executed using `cargo criterion`
 - Does "warm up", outlier detection, detects improvements, ...
 
-```rust {all|5-9|6-8|7|all}
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+```rust {all|6-10|7-9|8|all}
+use std::hint::black_box;
+use criterion::{Criterion, criterion_group, criterion_main};
 use example::increment_or_die;
 
 pub fn criterion_benchmark(c: &mut Criterion) {

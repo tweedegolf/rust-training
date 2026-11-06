@@ -25,8 +25,8 @@ rustc -V && cargo -V
 The output should be something like this:
 
 ```bash
-rustc 1.79.0 (129f3b996 2024-06-10)
-cargo 1.79.0 (ffa9cf99a 2024-06-03)
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+cargo 1.99.1 (5f94df478 2026-08-27)
 ```
 
 Using Rustup, you can install Rust toolchains and components. More info:

@@ -1,6 +1,6 @@
 #![no_std]
 
-use panic_probe as _;
+use panic_rtt_target as _;
 
 pub use nrf52833_hal as hal;
 

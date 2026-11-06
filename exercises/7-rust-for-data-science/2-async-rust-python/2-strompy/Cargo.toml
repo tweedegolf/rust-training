@@ -23,7 +23,7 @@ struson = { git = "https://github.com/hdoordt/struson.git", branch = "async-read
 
 [dependencies.pyo3]
 version = "0.22"
-features = ["extension-module"]
+features = ["extension-module", "experimental-async"]
 
 [dev-dependencies]
 futures-time = "3.1.0"
