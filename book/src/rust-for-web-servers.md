@@ -109,9 +109,15 @@ By default, there is a 2 MB limit for request bodies. If a user submits an image
 ### 5.1.1.G Serving files from memory (bonus)
 Currently, the static files are served from the `assets` folder. Instead, we can also bundle these files into the binary with [memory-serve](https://docs.rs/memory-serve/latest/memory_serve/). Not only is it convenient to bundle all files into a single binary, but it can also improve performance!
 
-After adding memory-serve to your project with `cargo add memory-serve`, we can define a memory router as follows:
+Memory-serve loads the assets at compile time from a build script, so it has to be added both as a normal and as a build dependency: `cargo add memory-serve` and `cargo add --build memory-serve`. Then create a `build.rs` file next to `Cargo.toml` that loads the assets folder:
 ```rust
-let memory_router = MemoryServe::new(load_assets!("assets"))
+fn main() {
+    memory_serve::load_directory("assets");
+}
+```
+Now we can define a memory router in `main.rs` as follows:
+```rust
+let memory_router = memory_serve::load!()
     .index_file(Some("/index.html"))
     .into_router();
 ```
